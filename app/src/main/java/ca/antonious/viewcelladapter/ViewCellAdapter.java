@@ -25,6 +25,10 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.layoutTypes = new HashMap<>();
     }
 
+    public void add(ViewCell viewCell) {
+        this.viewCells.add(viewCell);
+    }
+
     public void addAll(Collection<? extends ViewCell> viewCells) {
         this.viewCells.addAll(viewCells);
     }
