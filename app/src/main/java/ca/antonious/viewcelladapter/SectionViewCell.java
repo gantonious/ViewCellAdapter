@@ -35,8 +35,8 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
 
     @Override
     public int getLayoutId(int position) {
-        int viewCellIndex = getViewCellIndex(position);
-        int internalViewCellIndex = getInternalViewCellIndex(position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
         return viewCells.get(viewCellIndex).getLayoutId(internalViewCellIndex);
     }
@@ -53,36 +53,9 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
     @Override
     @SuppressWarnings("unchecked")
     public void bindViewCell(BaseViewHolder viewHolder, int position) {
-        int viewCellIndex = getViewCellIndex(position);
-        int internalViewCellIndex = getInternalViewCellIndex(position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
         viewCells.get(viewCellIndex).bindViewCell(viewHolder, internalViewCellIndex);
-    }
-
-    private int getViewCellIndex(int position) {
-        int viewCellIndex = 0;
-
-        for (ViewCell viewCell : viewCells) {
-            if (position > viewCell.getItemCount() - 1) {
-                viewCellIndex += 1;
-                position -= viewCell.getItemCount();
-            } else {
-                break;
-            }
-        }
-
-        return viewCellIndex;
-    }
-
-    private int getInternalViewCellIndex(int position) {
-        for (ViewCell viewCell: viewCells) {
-            if (position > viewCell.getItemCount() - 1) {
-                position -= viewCell.getItemCount();
-            } else {
-                break;
-            }
-        }
-
-        return position;
     }
 }
