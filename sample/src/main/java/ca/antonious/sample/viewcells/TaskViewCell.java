@@ -27,8 +27,8 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
     public void bindViewCell(ViewHolder viewHolder) {
         Task task = getModel();
 
-        viewHolder.setTaskName(task.getName());
-        viewHolder.setNumberOfCompletions(task.getNumCompletions());
+        viewHolder.setTaskName(task.name);
+        viewHolder.setNumberOfCompletions(task.timesCompleted);
     }
 
     public static class ViewHolder extends BaseViewHolder {
