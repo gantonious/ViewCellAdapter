@@ -16,16 +16,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.antonious.sample.models.Task;
+import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
 import ca.antonious.viewcelladapter.SectionViewCell;
+import ca.antonious.viewcelladapter.SectionWithHeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ViewCellAdapter viewCellAdapter;
 
-    private SectionViewCell section1;
-    private SectionViewCell section2;
+    private SectionWithHeaderViewCell section1;
+    private SectionWithHeaderViewCell section2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         viewCellAdapter = new ViewCellAdapter();
-        section1 = new SectionViewCell();
-        section2 = new SectionViewCell();
+        section1 = new SectionWithHeaderViewCell();
+        section1.setSectionHeader(new HeaderViewCell("Section 1"));
+        section2 = new SectionWithHeaderViewCell();
+        section2.setSectionHeader(new HeaderViewCell("Section 222"));
+
         viewCellAdapter.add(section1);
         viewCellAdapter.add(section2);
 

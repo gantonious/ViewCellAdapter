@@ -12,7 +12,7 @@ public class SectionWithHeaderViewCell extends SectionViewCell {
     private ViewCell headerViewCell;
 
     public void setSectionHeader(ViewCell headerViewCell) {
-        if (headerViewCell != null) {
+        if (this.headerViewCell != null) {
             viewCells.remove(0);
         }
         viewCells.add(0, headerViewCell);
