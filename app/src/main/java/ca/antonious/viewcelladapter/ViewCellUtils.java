@@ -7,6 +7,16 @@ import java.util.List;
  */
 
 public class ViewCellUtils {
+    public static int getTotalCount(List<? extends ViewCell> viewCells) {
+        int count = 0;
+
+        for (ViewCell viewCell: viewCells) {
+            count += viewCell.getItemCount();
+        }
+
+        return count;
+    }
+
     public static int getViewCellIndex(List<? extends ViewCell> viewCells, int listPosition) {
         int viewCellIndex = 0;
 

@@ -58,4 +58,13 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
 
         viewCells.get(viewCellIndex).bindViewCell(viewHolder, internalViewCellIndex);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Class<? extends BaseViewHolder> getViewHolderClass(int position) {
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+
+        return viewCells.get(viewCellIndex).getViewHolderClass(internalViewCellIndex);
+    }
 }
