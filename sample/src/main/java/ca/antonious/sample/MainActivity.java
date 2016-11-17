@@ -54,27 +54,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateSection1() {
         List<Task> tasks = Arrays.asList(new Task("Make lib", 0));
-        List<TaskViewCell> viewCells = new ArrayList<>();
 
-        for (Task task: tasks) {
-            viewCells.add(new TaskViewCell(task));
-        }
-
-        section1.addAll(viewCells);
+        section1.addAll(getTaskViewCells(tasks));
         viewCellAdapter.notifyDataSetChanged();
     }
 
     private void populateSection2() {
-        List<Task> tasks = Arrays.asList(new Task("Make lib better", 2), new Task("Buy a cat", 0));
+        List<Task> tasks = Arrays.asList(new Task("Make lib better", 2),
+                                         new Task("Buy a cat", 0));
 
+        section2.addAll(getTaskViewCells(tasks));
+        viewCellAdapter.notifyDataSetChanged();
+    }
+
+    private List<TaskViewCell> getTaskViewCells(List<? extends Task> tasks) {
         List<TaskViewCell> viewCells = new ArrayList<>();
 
         for (Task task: tasks) {
             viewCells.add(new TaskViewCell(task));
         }
 
-        section2.addAll(viewCells);
-        viewCellAdapter.notifyDataSetChanged();
+        return viewCells;
     }
 
     @Override

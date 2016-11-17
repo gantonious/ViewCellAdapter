@@ -9,7 +9,7 @@ import java.lang.reflect.ParameterizedType;
 public abstract class SingleViewCell<VH extends BaseViewHolder> extends ViewCell<VH> {
     @Override
     public int getLayoutId(int position) {
-        return getItemCount();
+        return getLayoutId();
     }
 
     @Override
@@ -20,13 +20,6 @@ public abstract class SingleViewCell<VH extends BaseViewHolder> extends ViewCell
     @Override
     public void bindViewCell(VH viewHolder, int position) {
         bindViewCell(viewHolder);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Class<? extends VH> getViewHolderClass(int position) {
-        return (Class<? extends VH>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     public abstract int getLayoutId();

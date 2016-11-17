@@ -47,7 +47,7 @@ public class TaskViewCell extends GenericSingleViewCell<Task, TaskViewCell.ViewH
         }
 
         public void setNumberOfCompletions(int numCompletions) {
-            numberOfCompletionsTextView.setText(numCompletions);
+            numberOfCompletionsTextView.setText(String.valueOf(numCompletions));
         }
     }
 }

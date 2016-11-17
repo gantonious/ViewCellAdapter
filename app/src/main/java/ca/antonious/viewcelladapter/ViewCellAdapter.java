@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
 
             Class<? extends BaseViewHolder> layoutViewHolder = layoutTypes.get(viewType);
-            Constructor<? extends BaseViewHolder> viewHolderConstructor = layoutViewHolder.getConstructor(String.class);
+            Constructor<? extends BaseViewHolder> viewHolderConstructor = layoutViewHolder.getConstructor(View.class);
 
             return viewHolderConstructor.newInstance(view);
         } catch (Exception e) {
@@ -77,7 +78,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public long getItemId(int position) {
+    public int getItemViewType(int position) {
         int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
         int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
