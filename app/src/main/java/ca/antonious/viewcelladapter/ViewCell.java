@@ -1,7 +1,5 @@
 package ca.antonious.viewcelladapter;
 
-import java.lang.reflect.ParameterizedType;
-
 /**
  * Created by George on 2016-11-17.
  */
