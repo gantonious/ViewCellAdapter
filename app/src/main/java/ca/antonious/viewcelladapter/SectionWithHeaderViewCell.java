@@ -40,4 +40,12 @@ public class SectionWithHeaderViewCell extends SectionViewCell {
         this.viewCells.clear();
         this.viewCells.addAll(tempList);
     }
+
+    @Override
+    public void clear() {
+        super.clear();
+        if (headerViewCell != null) {
+            this.viewCells.add(headerViewCell);
+        }
+    }
 }

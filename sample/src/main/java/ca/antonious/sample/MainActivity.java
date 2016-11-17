@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private SectionWithHeaderViewCell section1;
     private SectionWithHeaderViewCell section2;
 
+    int new_item_id = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
         populateSection2();
         populateSection1();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Task task = new Task("New Task", new_item_id);
+                new_item_id++;
+                section1.add(new TaskViewCell(task));
+                viewCellAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void setUpRecyclerView() {
         viewCellAdapter = new ViewCellAdapter();
+
         section1 = new SectionWithHeaderViewCell();
         section1.setSectionHeader(new HeaderViewCell("Section 1"));
+
         section2 = new SectionWithHeaderViewCell();
         section2.setSectionHeader(new HeaderViewCell("Section 222"));
 

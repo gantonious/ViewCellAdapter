@@ -15,6 +15,10 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
         this.viewCells = new ArrayList<>();
     }
 
+    public void add(ViewCell viewCell) {
+        this.viewCells.add(viewCell);
+    }
+
     public void addAll(Collection<? extends ViewCell> viewCells) {
         this.viewCells.addAll(viewCells);
     }
@@ -31,6 +35,10 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
 
         this.viewCells.clear();
         this.viewCells.addAll(newList);
+    }
+
+    public void clear() {
+        viewCells.clear();
     }
 
     @Override
