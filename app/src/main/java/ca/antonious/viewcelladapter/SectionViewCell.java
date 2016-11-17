@@ -60,15 +60,29 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
     }
 
     private int getViewCellIndex(int position) {
-        for (ViewCell viewCell: viewCells) {
-            if (position >= viewCell.getItemCount()) {
+        int viewCellIndex = 0;
+
+        for (ViewCell viewCell : viewCells) {
+            if (position > viewCell.getItemCount() - 1) {
+                viewCellIndex += 1;
                 position -= viewCell.getItemCount();
+            } else {
+                break;
             }
         }
-        return 0;
+
+        return viewCellIndex;
     }
 
     private int getInternalViewCellIndex(int position) {
-        return 0;
+        for (ViewCell viewCell: viewCells) {
+            if (position > viewCell.getItemCount() - 1) {
+                position -= viewCell.getItemCount();
+            } else {
+                break;
+            }
+        }
+
+        return position;
     }
 }
