@@ -12,7 +12,7 @@ import ca.antonious.viewcelladapter.GenericSingleViewCell;
  * Created by George on 2016-11-17.
  */
 
-public class TaskViewCell extends GenericSingleViewCell<Task, TaskViewCell.ViewHolder> {
+public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder, Task> {
 
     public TaskViewCell(Task model) {
         super(model);

@@ -6,7 +6,7 @@ import java.lang.reflect.ParameterizedType;
  * Created by George on 2016-11-17.
  */
 
-public abstract class GenericSingleViewCell<T, VH extends BaseViewHolder> extends SingleViewCell<VH> {
+public abstract class GenericSingleViewCell<VH extends BaseViewHolder, T> extends SingleViewCell<VH> {
     private T model;
 
     public GenericSingleViewCell(T model) {
@@ -25,6 +25,6 @@ public abstract class GenericSingleViewCell<T, VH extends BaseViewHolder> extend
     @SuppressWarnings("unchecked")
     public Class<? extends VH> getViewHolderClass(int position) {
         return (Class<? extends VH>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[1];
+                .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }
