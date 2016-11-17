@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class SectionViewCell extends ViewCell<BaseViewHolder> {
-    private List<ViewCell> viewCells;
+    protected List<ViewCell> viewCells;
 
     public SectionViewCell() {
         this.viewCells = new ArrayList<>();
