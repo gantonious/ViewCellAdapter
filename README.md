@@ -2,23 +2,9 @@
 
 A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adatper.
 
-## Setting up the Adapter
-
-### Using sections
-
-```java
-ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-
-SectionViewCell trendingItemsSection = new SectionViewCell();
-SectionViewCell oldItemsSection = new SectionViewCell();
-
-viewCellAdapter.add(trendingItemsSection);
-viewCellAdapter.add(oldItemsSection);
-```
-
 ## Creating a ViewCell
 
-When you want to bind an item to a ViewCellAdapter you need a, model to bind, a layout to bind to, and a ViewCell to handle the binding logic.
+When you want to bind an item to a ViewCellAdapter you need a model to bind, a layout to bind to, and a ViewCell to handle the binding logic.
 
 ### Define a Model
 
@@ -104,12 +90,46 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
 }
 ```
 
+## Using the Adapter
+
+The `ViewCellAdapter` just takes in a list of ViewCells and renders the data in the order of the view cells. You can interleave SectionViewCells and SingleViewCells.
+
+### Using sections
+
+Set up a ViewCellAdapter with the sections you need
+
+```java
+ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+
+SectionViewCell todaysTasksSection = new SectionViewCell();
+SectionViewCell allTasksSection = new SectionViewCell();
+
+viewCellAdapter.add(todaysTasksSection);
+viewCellAdapter.add(allTasksSection);
+```
+
+Then each section can be updated independently
+
+```java
+List<TaskViewCell> todaysTasks = ...;
+todaysTasksSection.addAll(todaysTasks)
+viewCellAdapter.notifyDataSetChanged();
+```
+
+If you want to have a header for a section do this
+
+```java
+SectionWithHeaderViewCell todaysTasksSection = new SectionWithHeaderViewCell();
+
+ViewCell headerViewCell = ...;
+todaysTasksSection.setSectionHeader(headerViewCell);
+```
+
 ## Download
 
-Note: This library is not available on maven yet, but the dependency will look something like this
 ```
 dependencies {
-    compile 'ca.antonious.viewcelladapter:1.0.0'
+    compile 'ca.antonious:viewcelladapter:1.0'
 }
 ```
 
