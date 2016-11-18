@@ -1,12 +1,19 @@
 # ViewCellAdapter
 
-## Download
+A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adatper.
 
-Note: This library is not available on maven yet, but the dependency will look something like this
-```
-dependencies {
-    compile 'ca.antonious.viewcelladapter:1.0.0'
-}
+## Setting up the Adapter
+
+### Using sections
+
+```java
+ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+
+SectionViewCell trendingItemsSection = new SectionViewCell();
+SectionViewCell oldItemsSection = new SectionViewCell();
+
+viewCellAdapter.add(trendingItemsSection);
+viewCellAdapter.add(oldItemsSection);
 ```
 
 ## Creating a ViewCell
@@ -95,4 +102,39 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
         }
     }
 }
+```
+
+## Download
+
+Note: This library is not available on maven yet, but the dependency will look something like this
+```
+dependencies {
+    compile 'ca.antonious.viewcelladapter:1.0.0'
+}
+```
+
+## License
+
+```
+MIT License
+
+Copyright (c) 2016 George Antonious
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
