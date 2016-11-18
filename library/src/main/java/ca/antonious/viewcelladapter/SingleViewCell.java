@@ -18,10 +18,16 @@ public abstract class SingleViewCell<VH extends BaseViewHolder> extends ViewCell
     }
 
     @Override
+    public int getItemId(int position) {
+        return getItemId();
+    }
+
+    @Override
     public void bindViewCell(VH viewHolder, int position) {
         bindViewCell(viewHolder);
     }
 
     public abstract int getLayoutId();
+    public abstract int getItemId();
     public abstract void bindViewCell(VH viewHolder);
 }

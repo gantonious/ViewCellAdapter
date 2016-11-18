@@ -22,6 +22,11 @@ public abstract class GenericSingleViewCell<VH extends BaseViewHolder, T> extend
     }
 
     @Override
+    public int getItemId() {
+        return model.hashCode();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public Class<? extends VH> getViewHolderClass(int position) {
         return (Class<? extends VH>) ((ParameterizedType) getClass()

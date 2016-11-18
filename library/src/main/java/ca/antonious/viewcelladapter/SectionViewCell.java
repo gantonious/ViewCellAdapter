@@ -50,6 +50,14 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
     }
 
     @Override
+    public int getItemId(int position) {
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+
+        return viewCells.get(viewCellIndex).getItemId(internalViewCellIndex);
+    }
+
+    @Override
     public int getItemCount() {
         int count = 0;
         for (ViewCell viewCell: viewCells) {

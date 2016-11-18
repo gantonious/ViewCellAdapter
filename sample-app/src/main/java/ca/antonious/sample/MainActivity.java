@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         viewCellAdapter = new ViewCellAdapter();
+        viewCellAdapter.setHasStableIds(true);
 
         section1 = new SectionWithHeaderViewCell();
         section1.setSectionHeader(new HeaderViewCell("Section 1"));
