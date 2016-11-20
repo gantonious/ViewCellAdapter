@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setUpRecyclerView();
 
         populateSection2();
-        populateSection1();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         viewCellAdapter.setHasStableIds(true);
 
         section1 = new SectionWithHeaderViewCell();
+        section1.setShowHeaderIfEmpty(false);
         section1.setSectionHeader(new HeaderViewCell("Section 1"));
 
         section2 = new SectionWithHeaderViewCell();
@@ -71,13 +71,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
         recyclerView.setAdapter(viewCellAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-    }
-
-    private void populateSection1() {
-        List<Task> tasks = Arrays.asList(new Task("Make lib", 0));
-
-        section1.addAll(getTaskViewCells(tasks));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void populateSection2() {

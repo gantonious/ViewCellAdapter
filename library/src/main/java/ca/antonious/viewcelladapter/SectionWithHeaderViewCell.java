@@ -10,6 +10,28 @@ import java.util.List;
 
 public class SectionWithHeaderViewCell extends SectionViewCell {
     private ViewCell headerViewCell;
+    private boolean showHeaderIfEmpty = true;
+
+    public boolean shouldShowHeaderIfEmpty() {
+        return showHeaderIfEmpty;
+    }
+
+    public void setShowHeaderIfEmpty(boolean showHeaderIfEmpty) {
+        this.showHeaderIfEmpty = showHeaderIfEmpty;
+    }
+
+    private boolean isSectionEmpty() {
+        int count = super.getItemCount();
+        return count == 0 || (count == 1 && headerViewCell != null && !showHeaderIfEmpty);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (isSectionEmpty()) {
+            return 0;
+        }
+        return super.getItemCount();
+    }
 
     public void setSectionHeader(ViewCell headerViewCell) {
         if (this.headerViewCell != null) {
