@@ -129,7 +129,7 @@ todaysTasksSection.setSectionHeader(headerViewCell);
 
 ```
 dependencies {
-    compile 'ca.antonious:viewcelladapter:1.0.1'
+    compile 'ca.antonious:viewcelladapter:1.1.0'
 }
 ```
 
