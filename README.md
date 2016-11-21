@@ -125,6 +125,44 @@ ViewCell headerViewCell = ...;
 todaysTasksSection.setSectionHeader(headerViewCell);
 ```
 
+## Handling ViewHolder Events
+
+Often times an event can occur in a viewholder that you may want to handle in the parent activity/fragment. This can be done by overriding the `bindListeners` method in a ViewCell.
+
+Let's say we want to handle when a task is clicked in the list. We can achieve this by adding the following code to the `TaskViewCell` defined above.
+
+```java
+public interface OnTaskClickListener {
+    void onTaskClicked(Task task);
+}
+
+@Override
+public void bindListeners(ViewHolder viewHolder, ListenerCollection listeners) {
+    bindOnClickListener(viewHolder, listeners.getListener(OnTaskClickListener.class));
+}
+
+private void bindOnClickListener(ViewHolder viewHolder, final OnTaskClickListener onTaskClickListener) {
+    if (onTaskClickListener != null) {
+        viewHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTaskClickListener.onTaskClicked(getModel());
+            }
+        });
+    }
+}
+```
+
+We can then handle the event in the class that owns the adapter by doing:
+
+```java
+viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
+    @Override
+    public void onTaskClicked(Task task) {
+        // handle event
+    }
+});
+```
 ## Download
 
 ```
