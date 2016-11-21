@@ -1,7 +1,5 @@
 package ca.antonious.viewcelladapter;
 
-import java.lang.reflect.ParameterizedType;
-
 /**
  * Created by George on 2016-11-17.
  */
@@ -27,7 +25,16 @@ public abstract class SingleViewCell<VH extends BaseViewHolder> extends ViewCell
         bindViewCell(viewHolder);
     }
 
+    @Override
+    public void bindListeners(VH viewHolder, ListenerCollection listeners, int position) {
+        bindListeners(viewHolder, listeners);
+    }
+
     public abstract int getLayoutId();
     public abstract int getItemId();
     public abstract void bindViewCell(VH viewHolder);
+
+    public void bindListeners(VH viewHolder, ListenerCollection listeners) {
+
+    }
 }

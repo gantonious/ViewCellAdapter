@@ -19,10 +19,12 @@ import java.util.Map;
 
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<ViewCell> viewCells;
+    private ListenerCollection listenerCollection;
     private Map<Integer, Class<? extends BaseViewHolder>> layoutTypes;
 
     public ViewCellAdapter() {
         this.viewCells = new ArrayList<>();
+        this.listenerCollection = new ListenerCollection();
         this.layoutTypes = new HashMap<>();
     }
 
@@ -48,6 +50,14 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.viewCells.addAll(newList);
     }
 
+    public void addListener(Object listener) {
+        listenerCollection.addListener(listener);
+    }
+
+    public void removeListener(Object listener) {
+        listenerCollection.removeListener(listener);
+    }
+
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         try {
@@ -68,6 +78,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
         int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
+        viewCells.get(viewCellIndex).bindListeners(holder, listenerCollection, internalViewCellIndex);
         viewCells.get(viewCellIndex).bindViewCell(holder, internalViewCellIndex);
     }
 
