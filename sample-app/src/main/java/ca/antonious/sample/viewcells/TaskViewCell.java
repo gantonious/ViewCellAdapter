@@ -7,6 +7,7 @@ import ca.antonious.sample.R;
 import ca.antonious.sample.models.Task;
 import ca.antonious.viewcelladapter.BaseViewHolder;
 import ca.antonious.viewcelladapter.GenericSingleViewCell;
+import ca.antonious.viewcelladapter.ListenerCollection;
 
 /**
  * Created by George on 2016-11-17.
@@ -31,6 +32,26 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
         viewHolder.setNumberOfCompletions(task.timesCompleted);
     }
 
+    @Override
+    public void bindListeners(ViewHolder viewHolder, ListenerCollection listeners) {
+        bindOnClickListener(viewHolder, listeners.getListener(OnTaskClickListener.class));
+    }
+
+    private void bindOnClickListener(ViewHolder viewHolder, final OnTaskClickListener onTaskClickListener) {
+        if (onTaskClickListener != null) {
+            viewHolder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onTaskClickListener.onTaskClicked(getModel());
+                }
+            });
+        }
+    }
+
+    public interface OnTaskClickListener {
+        void onTaskClicked(Task task);
+    }
+
     public static class ViewHolder extends BaseViewHolder {
         private TextView taskNameTextView;
         private TextView numberOfCompletionsTextView;
@@ -48,6 +69,10 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
 
         public void setNumberOfCompletions(int numCompletions) {
             numberOfCompletionsTextView.setText(String.valueOf(numCompletions));
+        }
+
+        public void setOnClickListener(View.OnClickListener onClickListener) {
+            itemView.setOnClickListener(onClickListener);
         }
     }
 }

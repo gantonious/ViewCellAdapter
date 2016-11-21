@@ -18,7 +18,6 @@ import java.util.List;
 import ca.antonious.sample.models.Task;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
-import ca.antonious.viewcelladapter.SectionViewCell;
 import ca.antonious.viewcelladapter.SectionWithHeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 
@@ -26,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ViewCellAdapter viewCellAdapter;
 
-    private SectionWithHeaderViewCell section1;
-    private SectionWithHeaderViewCell section2;
+    private SectionWithHeaderViewCell todaysTasks;
+    private SectionWithHeaderViewCell allTask;
 
     int new_item_id = 0;
 
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpRecyclerView();
-
         populateSection2();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Task task = new Task("New Task", new_item_id);
                 new_item_id++;
-                section1.add(new TaskViewCell(task));
+                todaysTasks.add(new TaskViewCell(task));
                 viewCellAdapter.notifyDataSetChanged();
             }
         });
@@ -58,15 +56,24 @@ public class MainActivity extends AppCompatActivity {
         viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
-        section1 = new SectionWithHeaderViewCell();
-        section1.setShowHeaderIfEmpty(false);
-        section1.setSectionHeader(new HeaderViewCell("Section 1"));
+        todaysTasks = new SectionWithHeaderViewCell();
+        todaysTasks.setShowHeaderIfEmpty(false);
+        todaysTasks.setSectionHeader(new HeaderViewCell("Today's Tasks"));
 
-        section2 = new SectionWithHeaderViewCell();
-        section2.setSectionHeader(new HeaderViewCell("Section 222"));
+        allTask = new SectionWithHeaderViewCell();
+        allTask.setSectionHeader(new HeaderViewCell("All Tasks"));
 
-        viewCellAdapter.add(section1);
-        viewCellAdapter.add(section2);
+        viewCellAdapter.add(todaysTasks);
+        viewCellAdapter.add(allTask);
+
+        viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
+            @Override
+            public void onTaskClicked(Task task) {
+                String message = String.format("%s, Completed %d time(s)", task.name, task.timesCompleted);
+                Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
         recyclerView.setAdapter(viewCellAdapter);
@@ -74,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateSection2() {
-        List<Task> tasks = Arrays.asList(new Task("Make lib better", 2),
+        List<Task> tasks = Arrays.asList(new Task("Write an app", 2),
                                          new Task("Buy a cat", 0));
 
-        section2.addAll(getTaskViewCells(tasks));
+        allTask.addAll(getTaskViewCells(tasks));
         viewCellAdapter.notifyDataSetChanged();
     }
 
