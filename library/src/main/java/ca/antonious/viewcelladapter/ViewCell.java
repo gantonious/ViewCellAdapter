@@ -5,6 +5,8 @@ package ca.antonious.viewcelladapter;
  */
 
 public abstract class ViewCell<VH extends BaseViewHolder> {
+    public abstract ViewCell get(int position);
+    public abstract void remove(int position);
     public abstract int getLayoutId(int position);
     public abstract int getItemId(int position);
     public abstract int getItemCount();

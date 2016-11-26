@@ -21,6 +21,17 @@ public abstract class SingleViewCell<VH extends BaseViewHolder> extends ViewCell
     }
 
     @Override
+    public void remove(int position) {
+
+    }
+
+    @Override
+    public ViewCell get(int position) {
+        return this;
+    }
+
+
+    @Override
     public void bindViewCell(VH viewHolder, int position) {
         bindViewCell(viewHolder);
     }

@@ -108,4 +108,15 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         return viewCells.get(viewCellIndex).getItemId(internalViewCellIndex);
     }
+
+    public ViewCell get(int position) {
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+
+        return viewCells.get(viewCellIndex).get(internalViewCellIndex);
+    }
+
+    public void remove(int position) {
+
+    }
 }
