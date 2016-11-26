@@ -51,7 +51,14 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
 
     @Override
     public void remove(int position) {
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
+        if (viewCells.get(viewCellIndex).getItemCount() == 1) {
+            viewCells.remove(viewCellIndex);
+        } else {
+            viewCells.get(viewCellIndex).remove(internalViewCellIndex);
+        }
     }
 
     @Override

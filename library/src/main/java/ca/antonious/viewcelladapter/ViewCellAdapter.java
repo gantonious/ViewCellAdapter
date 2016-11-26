@@ -117,6 +117,9 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void remove(int position) {
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
+        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
 
+        viewCells.get(viewCellIndex).remove(internalViewCellIndex);
     }
 }
