@@ -167,7 +167,7 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
 
 ```
 dependencies {
-    compile 'ca.antonious:viewcelladapter:1.1.0'
+    compile 'ca.antonious:viewcelladapter:1.1.1'
 }
 ```
 
