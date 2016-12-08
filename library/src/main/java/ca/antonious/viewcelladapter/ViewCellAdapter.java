@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,36 +17,36 @@ import java.util.Map;
  */
 
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<ViewCell> viewCells;
+    private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, Class<? extends BaseViewHolder>> layoutTypes;
 
     public ViewCellAdapter() {
-        this.viewCells = new ArrayList<>();
+        this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
         this.layoutTypes = new HashMap<>();
     }
 
-    public void add(ViewCell viewCell) {
-        this.viewCells.add(viewCell);
+    public void add(AbstractSection section) {
+        this.sections.add(section);
     }
 
-    public void addAll(Collection<? extends ViewCell> viewCells) {
-        this.viewCells.addAll(viewCells);
+    public void addAll(Collection<? extends AbstractSection> sections) {
+        this.sections.addAll(sections);
     }
 
-    public void setAll(Collection<? extends ViewCell> viewCells) {
-        this.viewCells.clear();
-        this.viewCells.addAll(viewCells);
+    public void setAll(Collection<? extends AbstractSection> sections) {
+        this.sections.clear();
+        this.sections.addAll(sections);
     }
 
-    public void prependAll(Collection<? extends ViewCell> viewCells) {
-        List<ViewCell> newList = new ArrayList<>();
-        newList.addAll(viewCells);
-        newList.addAll(this.viewCells);
+    public void prependAll(Collection<? extends AbstractSection> sections) {
+        List<AbstractSection> newList = new ArrayList<>();
+        newList.addAll(sections);
+        newList.addAll(this.sections);
 
-        this.viewCells.clear();
-        this.viewCells.addAll(newList);
+        this.sections.clear();
+        this.sections.addAll(newList);
     }
 
     public void addListener(Object listener) {
@@ -75,26 +74,26 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
-        viewCells.get(viewCellIndex).bindListeners(holder, listenerCollection, internalViewCellIndex);
-        viewCells.get(viewCellIndex).bindViewCell(holder, internalViewCellIndex);
+        sections.get(sectionIndex).bindListeners(holder, listenerCollection, viewCellIndex);
+        sections.get(sectionIndex).bindViewCell(holder, viewCellIndex);
     }
 
     @Override
     public int getItemCount() {
-        return ViewCellUtils.getTotalCount(viewCells);
+        return ViewCellUtils.getTotalCount(sections);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public int getItemViewType(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
-        int itemId = viewCells.get(viewCellIndex).getLayoutId(internalViewCellIndex);
-        Class<? extends BaseViewHolder> viewHolderClass = viewCells.get(viewCellIndex).getViewHolderClass(internalViewCellIndex);
+        int itemId = sections.get(sectionIndex).getLayoutId(viewCellIndex);
+        Class<? extends BaseViewHolder> viewHolderClass = sections.get(sectionIndex).getViewHolderClass(viewCellIndex);
 
         layoutTypes.put(itemId, viewHolderClass);
 
@@ -103,23 +102,23 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
-        return viewCells.get(viewCellIndex).getItemId(internalViewCellIndex);
+        return sections.get(sectionIndex).getItemId(viewCellIndex);
     }
 
-    public ViewCell get(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+    public AbstractViewCell get(int position) {
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
-        return viewCells.get(viewCellIndex).get(internalViewCellIndex);
+        return sections.get(sectionIndex).get(viewCellIndex);
     }
 
     public void remove(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
-        viewCells.get(viewCellIndex).remove(internalViewCellIndex);
+        sections.get(sectionIndex).remove(viewCellIndex);
     }
 }

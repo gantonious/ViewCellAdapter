@@ -8,8 +8,8 @@ import java.util.List;
  * Created by George on 2016-11-17.
  */
 
-public class SectionWithHeaderViewCell extends SectionViewCell {
-    private ViewCell headerViewCell;
+public class SectionWithHeaderViewCell extends Section {
+    private AbstractViewCell headerViewCell;
     private boolean showHeaderIfEmpty = true;
 
     public boolean shouldShowHeaderIfEmpty() {
@@ -33,7 +33,7 @@ public class SectionWithHeaderViewCell extends SectionViewCell {
         return super.getItemCount();
     }
 
-    public void setSectionHeader(ViewCell headerViewCell) {
+    public void setSectionHeader(AbstractViewCell headerViewCell) {
         if (this.headerViewCell != null) {
             viewCells.remove(0);
         }
@@ -42,7 +42,7 @@ public class SectionWithHeaderViewCell extends SectionViewCell {
     }
 
     @Override
-    public void setAll(Collection<? extends ViewCell> viewCells) {
+    public void setAll(Collection<? extends AbstractViewCell> viewCells) {
         this.viewCells.clear();
         if (headerViewCell != null) {
             this.viewCells.add(headerViewCell);
@@ -51,8 +51,8 @@ public class SectionWithHeaderViewCell extends SectionViewCell {
     }
 
     @Override
-    public void prependAll(Collection<? extends ViewCell> viewCells) {
-        List<ViewCell> tempList = new ArrayList<>();
+    public void prependAll(Collection<? extends AbstractViewCell> viewCells) {
+        List<AbstractViewCell> tempList = new ArrayList<>();
         if (headerViewCell != null) {
             tempList.add(headerViewCell);
         }
