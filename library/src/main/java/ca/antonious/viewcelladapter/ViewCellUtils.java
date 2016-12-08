@@ -7,20 +7,20 @@ import java.util.List;
  */
 
 public class ViewCellUtils {
-    public static int getTotalCount(List<? extends Section> sections) {
+    public static int getTotalCount(List<? extends AbstractSection> sections) {
         int count = 0;
 
-        for (Section section: sections) {
+        for (AbstractSection section: sections) {
             count += section.getItemCount();
         }
 
         return count;
     }
 
-    public static int getSectionIndex(List<? extends Section> sections, int listPosition) {
+    public static int getSectionIndex(List<? extends AbstractSection> sections, int listPosition) {
         int viewCellIndex = 0;
 
-        for (Section section: sections) {
+        for (AbstractSection section: sections) {
             if (listPosition > section.getItemCount() - 1) {
                 viewCellIndex += 1;
                 listPosition -= section.getItemCount();
@@ -32,8 +32,8 @@ public class ViewCellUtils {
         return viewCellIndex;
     }
 
-    public static int getViewCellIndex(List<? extends Section> sections, int listPosition) {
-        for (Section section: sections) {
+    public static int getViewCellIndex(List<? extends AbstractSection> sections, int listPosition) {
+        for (AbstractSection section: sections) {
             if (listPosition > section.getItemCount() - 1) {
                 listPosition -= section.getItemCount();
             } else {

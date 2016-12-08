@@ -17,7 +17,7 @@ import java.util.Map;
  */
 
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    private List<Section> sections;
+    private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, Class<? extends BaseViewHolder>> layoutTypes;
 
@@ -27,21 +27,21 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.layoutTypes = new HashMap<>();
     }
 
-    public void add(Section section) {
+    public void add(AbstractSection section) {
         this.sections.add(section);
     }
 
-    public void addAll(Collection<? extends Section> sections) {
+    public void addAll(Collection<? extends AbstractSection> sections) {
         this.sections.addAll(sections);
     }
 
-    public void setAll(Collection<? extends Section> sections) {
+    public void setAll(Collection<? extends AbstractSection> sections) {
         this.sections.clear();
         this.sections.addAll(sections);
     }
 
-    public void prependAll(Collection<? extends Section> sections) {
-        List<Section> newList = new ArrayList<>();
+    public void prependAll(Collection<? extends AbstractSection> sections) {
+        List<AbstractSection> newList = new ArrayList<>();
         newList.addAll(sections);
         newList.addAll(this.sections);
 
@@ -108,7 +108,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         return sections.get(sectionIndex).getItemId(viewCellIndex);
     }
 
-    public ViewCell get(int position) {
+    public AbstractViewCell get(int position) {
         int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
         int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
 
