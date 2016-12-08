@@ -6,10 +6,10 @@ import java.lang.reflect.ParameterizedType;
  * Created by George on 2016-11-17.
  */
 
-public abstract class GenericSingleViewCell<VH extends BaseViewHolder, T> extends SingleViewCell<VH> {
+public abstract class GenericViewCell<VH extends BaseViewHolder, T> extends BasicViewCell<VH> {
     private T model;
 
-    public GenericSingleViewCell(T model) {
+    public GenericViewCell(T model) {
         setModel(model);
     }
 

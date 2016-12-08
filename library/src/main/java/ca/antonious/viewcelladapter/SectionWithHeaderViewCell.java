@@ -8,7 +8,7 @@ import java.util.List;
  * Created by George on 2016-11-17.
  */
 
-public class SectionWithHeaderViewCell extends SectionViewCell {
+public class SectionWithHeaderViewCell extends BasicSection {
     private ViewCell headerViewCell;
     private boolean showHeaderIfEmpty = true;
 

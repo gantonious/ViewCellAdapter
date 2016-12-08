@@ -8,10 +8,10 @@ import java.util.List;
  * Created by George on 2016-11-17.
  */
 
-public class SectionViewCell implements Section<BaseViewHolder> {
+public class BasicSection implements Section<BaseViewHolder> {
     protected List<ViewCell> viewCells;
 
-    public SectionViewCell() {
+    public BasicSection() {
         this.viewCells = new ArrayList<>();
     }
 

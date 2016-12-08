@@ -6,14 +6,14 @@ import android.widget.TextView;
 import ca.antonious.sample.R;
 import ca.antonious.sample.models.Task;
 import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.GenericSingleViewCell;
+import ca.antonious.viewcelladapter.GenericViewCell;
 import ca.antonious.viewcelladapter.ListenerCollection;
 
 /**
  * Created by George on 2016-11-17.
  */
 
-public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder, Task> {
+public class TaskViewCell extends GenericViewCell<TaskViewCell.ViewHolder, Task> {
 
     public TaskViewCell(Task model) {
         super(model);
