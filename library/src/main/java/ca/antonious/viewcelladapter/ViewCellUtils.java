@@ -7,23 +7,23 @@ import java.util.List;
  */
 
 public class ViewCellUtils {
-    public static int getTotalCount(List<? extends ViewCell> viewCells) {
+    public static int getTotalCount(List<? extends Section> sections) {
         int count = 0;
 
-        for (ViewCell viewCell: viewCells) {
-            count += viewCell.getItemCount();
+        for (Section section: sections) {
+            count += section.getItemCount();
         }
 
         return count;
     }
 
-    public static int getViewCellIndex(List<? extends ViewCell> viewCells, int listPosition) {
+    public static int getSectionIndex(List<? extends Section> sections, int listPosition) {
         int viewCellIndex = 0;
 
-        for (ViewCell viewCell : viewCells) {
-            if (listPosition > viewCell.getItemCount() - 1) {
+        for (Section section: sections) {
+            if (listPosition > section.getItemCount() - 1) {
                 viewCellIndex += 1;
-                listPosition -= viewCell.getItemCount();
+                listPosition -= section.getItemCount();
             } else {
                 break;
             }
@@ -32,10 +32,10 @@ public class ViewCellUtils {
         return viewCellIndex;
     }
 
-    public static int getInternalViewCellIndex(List<? extends ViewCell> viewCells, int listPosition) {
-        for (ViewCell viewCell: viewCells) {
-            if (listPosition > viewCell.getItemCount() - 1) {
-                listPosition -= viewCell.getItemCount();
+    public static int getViewCellIndex(List<? extends Section> sections, int listPosition) {
+        for (Section section: sections) {
+            if (listPosition > section.getItemCount() - 1) {
+                listPosition -= section.getItemCount();
             } else {
                 break;
             }

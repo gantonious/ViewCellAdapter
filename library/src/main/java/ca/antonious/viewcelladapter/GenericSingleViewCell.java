@@ -28,7 +28,7 @@ public abstract class GenericSingleViewCell<VH extends BaseViewHolder, T> extend
 
     @Override
     @SuppressWarnings("unchecked")
-    public Class<? extends VH> getViewHolderClass(int position) {
+    public Class<? extends VH> getViewHolderClass() {
         return (Class<? extends VH>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }

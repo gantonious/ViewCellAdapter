@@ -8,7 +8,7 @@ import java.util.List;
  * Created by George on 2016-11-17.
  */
 
-public class SectionViewCell extends ViewCell<BaseViewHolder> {
+public class SectionViewCell implements Section<BaseViewHolder> {
     protected List<ViewCell> viewCells;
 
     public SectionViewCell() {
@@ -43,73 +43,44 @@ public class SectionViewCell extends ViewCell<BaseViewHolder> {
 
     @Override
     public ViewCell get(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        return viewCells.get(viewCellIndex).get(internalViewCellIndex);
+        return viewCells.get(position);
     }
 
     @Override
     public void remove(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        if (viewCells.get(viewCellIndex).getItemCount() == 1) {
-            viewCells.remove(viewCellIndex);
-        } else {
-            viewCells.get(viewCellIndex).remove(internalViewCellIndex);
-        }
+        viewCells.remove(position);
     }
 
     @Override
     public int getLayoutId(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        return viewCells.get(viewCellIndex).getLayoutId(internalViewCellIndex);
+        return get(position).getLayoutId();
     }
 
     @Override
     public int getItemId(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        return viewCells.get(viewCellIndex).getItemId(internalViewCellIndex);
+        return get(position).getLayoutId();
     }
 
     @Override
     public int getItemCount() {
-        int count = 0;
-        for (ViewCell viewCell: viewCells) {
-            count += viewCell.getItemCount();
-        }
-        return count;
+        return viewCells.size();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void bindListeners(BaseViewHolder viewHolder, ListenerCollection listeners, int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        viewCells.get(viewCellIndex).bindListeners(viewHolder, listeners, internalViewCellIndex);
+        get(position).bindListeners(viewHolder, listeners);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void bindViewCell(BaseViewHolder viewHolder, int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        viewCells.get(viewCellIndex).bindViewCell(viewHolder, internalViewCellIndex);
+        get(position).bindViewCell(viewHolder);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Class<? extends BaseViewHolder> getViewHolderClass(int position) {
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(viewCells, position);
-        int internalViewCellIndex = ViewCellUtils.getInternalViewCellIndex(viewCells, position);
-
-        return viewCells.get(viewCellIndex).getViewHolderClass(internalViewCellIndex);
+        return get(position).getViewHolderClass();
     }
 }
