@@ -58,7 +58,7 @@ public class Section extends AbstractSection<BaseViewHolder> {
 
     @Override
     public int getItemId(int position) {
-        return get(position).getLayoutId();
+        return get(position).getItemId();
     }
 
     @Override
