@@ -74,11 +74,10 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     @SuppressWarnings("unchecked")
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
+        AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        sections.get(sectionIndex).bindListeners(holder, listenerCollection, viewCellIndex);
-        sections.get(sectionIndex).bindViewCell(holder, viewCellIndex);
+        viewCell.bindListeners(holder, listenerCollection);
+        viewCell.bindViewCell(holder);
     }
 
     @Override
@@ -89,11 +88,10 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     @SuppressWarnings("unchecked")
     public int getItemViewType(int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
+        AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        int itemId = sections.get(sectionIndex).getLayoutId(viewCellIndex);
-        Class<? extends BaseViewHolder> viewHolderClass = sections.get(sectionIndex).getViewHolderClass(viewCellIndex);
+        int itemId = viewCell.getLayoutId();
+        Class<? extends BaseViewHolder> viewHolderClass = viewCell.getViewHolderClass();
 
         layoutTypes.put(itemId, viewHolderClass);
 
@@ -102,17 +100,11 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
-
-        return sections.get(sectionIndex).getItemId(viewCellIndex);
+        return ViewCellUtils.getViewCell(sections, position).getItemId();
     }
 
     public AbstractViewCell get(int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
-
-        return sections.get(sectionIndex).get(viewCellIndex);
+        return ViewCellUtils.getViewCell(sections, position);
     }
 
     public void remove(int position) {

@@ -43,4 +43,11 @@ public class ViewCellUtils {
 
         return listPosition;
     }
+
+    public static AbstractViewCell getViewCell(List<? extends AbstractSection> sections, int listPosition) {
+        int sectionIndex = ViewCellUtils.getSectionIndex(sections, listPosition);
+        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, listPosition);
+
+        return sections.get(sectionIndex).get(viewCellIndex);
+    }
 }
