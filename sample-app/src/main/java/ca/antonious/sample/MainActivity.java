@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.antonious.sample.models.Task;
+import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpRecyclerView();
-        populateSection2();
+        //populateSection2();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 .addSection(todayWithHeader)
                 .addSection(allWithHeader);
 
-        EmptySectionDecorator allWithEmpty = new EmptySectionDecorator(compositeSection, new HeaderViewCell("EMPTY"));
+        EmptySectionDecorator allWithEmpty = new EmptySectionDecorator(compositeSection, new EmptyViewCell("EMPTY"));
 
         viewCellAdapter.add(allWithEmpty);
 
