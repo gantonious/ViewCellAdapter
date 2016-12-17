@@ -1,6 +1,6 @@
 package ca.antonious.viewcelladapter.decorators;
 
-import ca.antonious.viewcelladapter.AbstractSection;
+import ca.antonious.viewcelladapter.sections.AbstractSection;
 
 /**
  * Created by George on 2016-12-17.

@@ -18,8 +18,12 @@ import java.util.List;
 import ca.antonious.sample.models.Task;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
-import ca.antonious.viewcelladapter.SectionWithHeaderViewCell;
+import ca.antonious.viewcelladapter.sections.CompositeSection;
+import ca.antonious.viewcelladapter.sections.Section;
+import ca.antonious.viewcelladapter.sections.SectionWithHeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
+import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -27,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private SectionWithHeaderViewCell todaysTasks;
     private SectionWithHeaderViewCell allTask;
+
+    private Section todaySection;
+    private Section allSection;
 
     int new_item_id = 0;
 
@@ -38,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         setUpRecyclerView();
-        populateSection2();
+        setUpRecyclerViewV2();
+        //populateSection2();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 Task task = new Task("New Task", new_item_id);
                 new_item_id++;
                 todaysTasks.add(new TaskViewCell(task));
+                todaySection.add(new TaskViewCell(task));
                 viewCellAdapter.notifyDataSetChanged();
             }
         });
@@ -80,11 +89,47 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
+    private void setUpRecyclerViewV2() {
+        viewCellAdapter = new ViewCellAdapter();
+        viewCellAdapter.setHasStableIds(true);
+
+        todaySection = new Section();
+        allSection = new Section();
+
+        HeaderSectionDecorator todayWithHeader = new HeaderSectionDecorator(todaySection, new HeaderViewCell("Today's Tasks"));
+        todayWithHeader.setShowHeaderIfEmpty(false);
+
+        HeaderSectionDecorator allWithHeader = new HeaderSectionDecorator(allSection, new HeaderViewCell("All tasks"));
+        allWithHeader.setShowHeaderIfEmpty(false);
+
+        CompositeSection compositeSection = new CompositeSection()
+                .addSection(todayWithHeader)
+                .addSection(allWithHeader);
+
+        EmptySectionDecorator allWithEmpty = new EmptySectionDecorator(compositeSection, new HeaderViewCell("EMPTY"));
+
+        viewCellAdapter.add(allWithEmpty);
+
+        viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
+            @Override
+            public void onTaskClicked(Task task) {
+                String message = String.format("%s, Completed %d time(s)", task.name, task.timesCompleted);
+                Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
+
+        recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+        recyclerView.setAdapter(viewCellAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
     private void populateSection2() {
         List<Task> tasks = Arrays.asList(new Task("Write an app", 2),
                                          new Task("Buy a cat", 0));
 
         allTask.addAll(getTaskViewCells(tasks));
+        allSection.addAll(getTaskViewCells(tasks));
         viewCellAdapter.notifyDataSetChanged();
     }
 

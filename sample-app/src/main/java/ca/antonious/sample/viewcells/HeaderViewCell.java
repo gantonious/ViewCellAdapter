@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import ca.antonious.sample.R;
 import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.GenericViewCell;
+import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
  * Created by George on 2016-11-17.

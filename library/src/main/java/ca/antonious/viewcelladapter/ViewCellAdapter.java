@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.viewcelladapter.sections.AbstractSection;
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+
 /**
  * Created by George on 2016-11-15.
  */

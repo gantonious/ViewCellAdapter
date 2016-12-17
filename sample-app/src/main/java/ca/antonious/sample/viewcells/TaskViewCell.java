@@ -6,7 +6,7 @@ import android.widget.TextView;
 import ca.antonious.sample.R;
 import ca.antonious.sample.models.Task;
 import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.GenericViewCell;
+import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 import ca.antonious.viewcelladapter.ListenerCollection;
 
 /**

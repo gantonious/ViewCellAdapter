@@ -2,6 +2,9 @@ package ca.antonious.viewcelladapter;
 
 import java.util.List;
 
+import ca.antonious.viewcelladapter.sections.AbstractSection;
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+
 /**
  * Created by George on 2016-11-17.
  */

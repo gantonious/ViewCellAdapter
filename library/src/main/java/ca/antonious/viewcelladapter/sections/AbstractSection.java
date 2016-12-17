@@ -1,4 +1,6 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.sections;
+
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 /**
  * Created by George on 2016-12-08.

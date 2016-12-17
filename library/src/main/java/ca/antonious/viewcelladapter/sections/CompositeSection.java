@@ -1,7 +1,10 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.sections;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.ViewCellUtils;
 
 /**
  * Created by George on 2016-12-17.

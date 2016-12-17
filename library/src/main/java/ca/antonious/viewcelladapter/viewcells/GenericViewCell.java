@@ -1,6 +1,9 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells;
 
 import java.lang.reflect.ParameterizedType;
+
+import ca.antonious.viewcelladapter.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.ViewCell;
 
 /**
  * Created by George on 2016-11-17.
