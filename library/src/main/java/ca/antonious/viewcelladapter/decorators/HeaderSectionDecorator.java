@@ -35,7 +35,7 @@ public class HeaderSectionDecorator extends SectionDecorator {
         if (isSectionEmpty()) {
             return 0;
         }
-        return getDecoratedSection().getItemCount();
+        return getDecoratedSection().getItemCount() + 1;
     }
 
     public boolean shouldShowHeaderIfEmpty() {
