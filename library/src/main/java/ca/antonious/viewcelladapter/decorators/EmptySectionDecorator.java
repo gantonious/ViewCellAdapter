@@ -1,0 +1,40 @@
+package ca.antonious.viewcelladapter.decorators;
+
+import ca.antonious.viewcelladapter.AbstractSection;
+import ca.antonious.viewcelladapter.AbstractViewCell;
+
+/**
+ * Created by George on 2016-12-17.
+ */
+
+public class EmptySectionDecorator extends SectionDecorator {
+    private AbstractViewCell emptyViewCell;
+
+    public EmptySectionDecorator(AbstractSection decoratedSection, AbstractViewCell emptyViewCell) {
+        super(decoratedSection);
+        this.emptyViewCell = emptyViewCell;
+    }
+
+    @Override
+    public AbstractViewCell get(int position) {
+        if (getDecoratedSection().isEmpty()) {
+            return emptyViewCell;
+        }
+        return getDecoratedSection().get(position);
+    }
+
+    @Override
+    public void remove(int position) {
+        if (!getDecoratedSection().isEmpty()) {
+            getDecoratedSection().remove(position);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        if (getDecoratedSection().isEmpty()) {
+            return 1;
+        }
+        return getDecoratedSection().getItemCount();
+    }
+}

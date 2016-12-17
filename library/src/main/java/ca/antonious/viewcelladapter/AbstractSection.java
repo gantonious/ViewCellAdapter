@@ -8,4 +8,8 @@ public abstract class AbstractSection {
     public abstract AbstractViewCell get(int position);
     public abstract void remove(int position);
     public abstract int getItemCount();
+
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
 }
