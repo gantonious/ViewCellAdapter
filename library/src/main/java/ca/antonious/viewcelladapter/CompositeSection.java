@@ -1,5 +1,6 @@
 package ca.antonious.viewcelladapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,6 +9,10 @@ import java.util.List;
 
 public class CompositeSection extends AbstractSection {
     private List<AbstractSection> sections;
+
+    public CompositeSection() {
+        this.sections = new ArrayList<>();
+    }
 
     @Override
     public AbstractViewCell get(int position) {
@@ -27,12 +32,12 @@ public class CompositeSection extends AbstractSection {
         return ViewCellUtils.getTotalCount(sections);
     }
 
-    private CompositeSection addSection(AbstractSection section) {
+    public CompositeSection addSection(AbstractSection section) {
         sections.add(section);
         return this;
     }
 
-    private CompositeSection removeSection(AbstractSection section) {
+    public CompositeSection removeSection(AbstractSection section) {
         sections.remove(section);
         return this;
     }
