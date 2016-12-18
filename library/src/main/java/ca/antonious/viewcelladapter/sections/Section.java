@@ -1,14 +1,16 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.sections;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+
 /**
  * Created by George on 2016-11-17.
  */
 
-public class Section extends AbstractSection<BaseViewHolder> {
+public class Section extends AbstractSection {
     protected List<AbstractViewCell> viewCells;
 
     public Section() {
@@ -52,35 +54,7 @@ public class Section extends AbstractSection<BaseViewHolder> {
     }
 
     @Override
-    public int getLayoutId(int position) {
-        return get(position).getLayoutId();
-    }
-
-    @Override
-    public int getItemId(int position) {
-        return get(position).getItemId();
-    }
-
-    @Override
     public int getItemCount() {
         return viewCells.size();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void bindListeners(BaseViewHolder viewHolder, ListenerCollection listeners, int position) {
-        get(position).bindListeners(viewHolder, listeners);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void bindViewCell(BaseViewHolder viewHolder, int position) {
-        get(position).bindViewCell(viewHolder);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Class<? extends BaseViewHolder> getViewHolderClass(int position) {
-        return get(position).getViewHolderClass();
     }
 }

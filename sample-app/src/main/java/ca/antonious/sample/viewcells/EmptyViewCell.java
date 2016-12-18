@@ -8,36 +8,36 @@ import ca.antonious.viewcelladapter.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
- * Created by George on 2016-11-17.
+ * Created by George on 2016-12-17.
  */
 
-public class HeaderViewCell extends GenericViewCell<HeaderViewCell.ViewHolder, String> {
+public class EmptyViewCell extends GenericViewCell<EmptyViewCell.ViewHolder, String> {
 
-    public HeaderViewCell(String model) {
+    public EmptyViewCell(String model) {
         super(model);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.header_list_item;
+        return R.layout.empty_view_cell;
     }
 
     @Override
-    public void bindViewCell(HeaderViewCell.ViewHolder viewHolder) {
+    public void bindViewCell(ViewHolder viewHolder) {
         viewHolder.setHeaderText(getModel());
     }
 
     public static class ViewHolder extends BaseViewHolder {
-        private TextView headerTextView;
+        private TextView emptyTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            headerTextView = (TextView) itemView.findViewById(R.id.header_text);
+            emptyTextView = (TextView) itemView.findViewById(R.id.empty_text);
         }
 
         public void setHeaderText(String text) {
-            headerTextView.setText(text);
+            emptyTextView.setText(text);
         }
     }
 }
