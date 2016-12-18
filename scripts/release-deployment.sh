@@ -1,3 +1,5 @@
+#!/bin/bash
+
 BASE_API_ENDPOINT=https://api.bintray.com
 
 # Generate release zip
