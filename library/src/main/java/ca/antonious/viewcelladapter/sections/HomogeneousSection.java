@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ca.antonious.viewcelladapter.Func;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
@@ -16,48 +17,59 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TModel>> extends AbstractSection {
     private GenericViewCellFactory<TModel, TViewCell> viewCellFactory;
+
+    private Func<? super TModel, ? extends Boolean> filterFunction;
     private Comparator<? super TModel> modelComparator;
-    private List<TViewCell> viewCells;
+
+    private List<TViewCell> allViewCells;
+    private List<TViewCell> filteredViewCells;
 
     public HomogeneousSection(GenericViewCellFactory<TModel, TViewCell> viewCellFactory) {
         this.viewCellFactory = viewCellFactory;
-        this.viewCells = new ArrayList<>();
+        this.allViewCells = new ArrayList<>();
+        this.filteredViewCells = new ArrayList<>();
     }
 
     public void add(TModel model) {
-        this.viewCells.add(viewCellFactory.createViewCell(model));
-        sortViewCells();
+        this.allViewCells.add(viewCellFactory.createViewCell(model));
+        prepareViewCellsToDisplay();
     }
 
     public void addAll(Collection<? extends TModel> models) {
-        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
-        sortViewCells();
+        this.allViewCells.addAll(viewCellFactory.createAllViewCells(models));
+        prepareViewCellsToDisplay();
     }
 
     public void setAll(Collection<? extends TModel> models) {
-        this.viewCells.clear();
-        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
-        sortViewCells();
+        this.allViewCells.clear();
+        this.allViewCells.addAll(viewCellFactory.createAllViewCells(models));
+        prepareViewCellsToDisplay();
     }
 
     public void prependAll(Collection<? extends TModel> models) {
         List<TViewCell> newList = new ArrayList<>();
         newList.addAll(viewCellFactory.createAllViewCells(models));
-        newList.addAll(this.viewCells);
+        newList.addAll(this.allViewCells);
 
-        this.viewCells.clear();
-        this.viewCells.addAll(newList);
+        this.allViewCells.clear();
+        this.allViewCells.addAll(newList);
 
-        sortViewCells();
+        prepareViewCellsToDisplay();
     }
 
     public void clear() {
-        viewCells.clear();
+        allViewCells.clear();
+        prepareViewCellsToDisplay();
+    }
+
+    public void prepareViewCellsToDisplay() {
+        sortViewCells();
+        filterViewCells();
     }
 
     public void setModelComparator(Comparator<? super TModel> modelComparator) {
         this.modelComparator = modelComparator;
-        sortViewCells();
+        prepareViewCellsToDisplay();
     }
 
     public boolean isSortingEnabled() {
@@ -66,7 +78,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     private void sortViewCells() {
         if (isSortingEnabled()) {
-            Collections.sort(viewCells, new Comparator<TViewCell>() {
+            Collections.sort(allViewCells, new Comparator<TViewCell>() {
                 @Override
                 public int compare(TViewCell viewCell1, TViewCell viewCell2) {
                     return modelComparator.compare(viewCell1.getModel(), viewCell2.getModel());
@@ -75,18 +87,43 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         }
     }
 
+    public void setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
+        this.filterFunction = filterFunction;
+        prepareViewCellsToDisplay();
+    }
+
+    public boolean isFilteringEnabled() {
+        return filterFunction != null;
+    }
+
+    public boolean shouldDisplayViewCell(TViewCell viewCell) {
+        return !isFilteringEnabled() ||
+                filterFunction.call(viewCell.getModel());
+    }
+
+    private void filterViewCells() {
+        filteredViewCells.clear();
+
+        for (TViewCell viewCell: allViewCells) {
+            if (shouldDisplayViewCell(viewCell)) {
+                filteredViewCells.add(viewCell);
+            }
+        }
+    }
+
     @Override
     public AbstractViewCell get(int position) {
-        return viewCells.get(position);
+        return filteredViewCells.get(position);
     }
 
     @Override
     public void remove(int position) {
-        viewCells.remove(position);
+        allViewCells.remove(position);
+        prepareViewCellsToDisplay();
     }
 
     @Override
     public int getItemCount() {
-        return viewCells.size();
+        return filteredViewCells.size();
     }
 }
