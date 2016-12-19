@@ -17,6 +17,10 @@ public class Section extends AbstractSection {
         this.viewCells = new ArrayList<>();
     }
 
+    public List<AbstractViewCell> getAll() {
+        return new ArrayList<>(viewCells);
+    }
+
     public void add(AbstractViewCell viewCell) {
         this.viewCells.add(viewCell);
     }
