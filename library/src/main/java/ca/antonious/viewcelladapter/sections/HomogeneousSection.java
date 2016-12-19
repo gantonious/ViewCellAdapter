@@ -49,12 +49,12 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     @Override
     public AbstractViewCell get(int position) {
-        return viewCells.get(0);
+        return viewCells.get(position);
     }
 
     @Override
     public void remove(int position) {
-        viewCells.remove(0);
+        viewCells.remove(position);
     }
 
     @Override
