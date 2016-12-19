@@ -67,9 +67,11 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         filterViewCells();
     }
 
-    public void setModelComparator(Comparator<? super TModel> modelComparator) {
+    public HomogeneousSection<TModel, TViewCell> setModelComparator(Comparator<? super TModel> modelComparator) {
         this.modelComparator = modelComparator;
         prepareViewCellsToDisplay();
+
+        return this;
     }
 
     public boolean isSortingEnabled() {
@@ -87,9 +89,11 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         }
     }
 
-    public void setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
+    public HomogeneousSection<TModel, TViewCell>  setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
         this.filterFunction = filterFunction;
         prepareViewCellsToDisplay();
+
+        return this;
     }
 
     public boolean isFilteringEnabled() {
