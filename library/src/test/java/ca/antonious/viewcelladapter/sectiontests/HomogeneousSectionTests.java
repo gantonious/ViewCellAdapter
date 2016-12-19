@@ -130,4 +130,26 @@ public class HomogeneousSectionTests {
 
         assertEquals(expectedViewCells, actualViewCells);
     }
+
+    @Test
+    public void test_filter_remove_shouldRemoveFilteredItem() {
+        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
+        section.add("ITEM-1");
+        section.add("ITEM-2");
+        section.add("ITEM-3");
+
+        section.setFilterFunction(new Func<String, Boolean>() {
+            @Override
+            public Boolean call(String input) {
+                return input.equals("ITEM-2") || input.equals("ITEM-3");
+            }
+        });
+
+        section.remove(0);
+
+        AbstractViewCell expectedViewCell = new TestViewCell("ITEM-3");
+        AbstractViewCell actualViewCell = section.get(0);
+
+        assertEquals(expectedViewCell, actualViewCell);
+    }
 }
