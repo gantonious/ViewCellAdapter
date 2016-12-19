@@ -136,7 +136,9 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     @Override
     public void remove(int position) {
-        allViewCells.remove(position);
+        TViewCell viewCellToRemove = filteredViewCells.get(position);
+        allViewCells.remove(viewCellToRemove);
+
         prepareViewCellsToDisplay();
     }
 
