@@ -38,7 +38,7 @@ public class HeaderSectionDecoratorTests {
 
         HeaderSectionDecorator headerSectionDecorator = new HeaderSectionDecorator(section, headerViewCell);
 
-        AbstractViewCell expectedViewCell = headerViewCell;
+        AbstractViewCell expectedViewCell = sectionItem1;
         AbstractViewCell actualViewCell = headerSectionDecorator.get(1);
 
         assertEquals(expectedViewCell, actualViewCell);
