@@ -30,6 +30,20 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         this.filteredViewCells = new ArrayList<>();
     }
 
+    public List<TViewCell> getAllViewCells() {
+        return new ArrayList<>(filteredViewCells);
+    }
+
+    public List<TModel> getAllModels() {
+        List<TModel> models = new ArrayList<>();
+
+        for (TViewCell viewCell: filteredViewCells) {
+            models.add(viewCell.getModel());
+        }
+
+        return models;
+    }
+
     public void add(TModel model) {
         this.allViewCells.add(viewCellFactory.createViewCell(model));
         prepareViewCellsToDisplay();
