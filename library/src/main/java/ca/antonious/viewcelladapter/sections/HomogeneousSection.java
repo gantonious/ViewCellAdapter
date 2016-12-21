@@ -21,23 +21,23 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     private Func<? super TModel, ? extends Boolean> filterFunction;
     private Comparator<? super TModel> modelComparator;
 
-    private List<TViewCell> allViewCells;
-    private List<TViewCell> filteredViewCells;
+    private List<TViewCell> viewCells;
+    private List<TViewCell> viewCellsToRender;
 
     public HomogeneousSection(GenericViewCellFactory<TModel, TViewCell> viewCellFactory) {
         this.viewCellFactory = viewCellFactory;
-        this.allViewCells = new ArrayList<>();
-        this.filteredViewCells = new ArrayList<>();
+        this.viewCells = new ArrayList<>();
+        this.viewCellsToRender = new ArrayList<>();
     }
 
     public List<TViewCell> getAllViewCells() {
-        return new ArrayList<>(filteredViewCells);
+        return new ArrayList<>(viewCellsToRender);
     }
 
     public List<TModel> getAllModels() {
         List<TModel> models = new ArrayList<>();
 
-        for (TViewCell viewCell: filteredViewCells) {
+        for (TViewCell viewCell: viewCellsToRender) {
             models.add(viewCell.getModel());
         }
 
@@ -45,40 +45,40 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public void add(TModel model) {
-        this.allViewCells.add(viewCellFactory.createViewCell(model));
-        prepareViewCellsToDisplay();
+        this.viewCells.add(viewCellFactory.createViewCell(model));
+        prepareViewCellsToRender();
     }
 
     public void addAll(Collection<? extends TModel> models) {
-        this.allViewCells.addAll(viewCellFactory.createAllViewCells(models));
-        prepareViewCellsToDisplay();
+        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
+        prepareViewCellsToRender();
     }
 
     public void setAll(Collection<? extends TModel> models) {
-        this.allViewCells.clear();
-        this.allViewCells.addAll(viewCellFactory.createAllViewCells(models));
-        prepareViewCellsToDisplay();
+        this.viewCells.clear();
+        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
+        prepareViewCellsToRender();
     }
 
     public void prependAll(Collection<? extends TModel> models) {
         List<TViewCell> newList = new ArrayList<>();
         newList.addAll(viewCellFactory.createAllViewCells(models));
-        newList.addAll(this.allViewCells);
+        newList.addAll(this.viewCells);
 
-        this.allViewCells.clear();
-        this.allViewCells.addAll(newList);
+        this.viewCells.clear();
+        this.viewCells.addAll(newList);
 
-        prepareViewCellsToDisplay();
+        prepareViewCellsToRender();
     }
 
     public void clear() {
-        allViewCells.clear();
-        prepareViewCellsToDisplay();
+        viewCells.clear();
+        prepareViewCellsToRender();
     }
 
-    private void prepareViewCellsToDisplay() {
-        filteredViewCells.clear();
-        filteredViewCells.addAll(allViewCells);
+    private void prepareViewCellsToRender() {
+        viewCellsToRender.clear();
+        viewCellsToRender.addAll(viewCells);
 
         if (isFilteringEnabled()) {
             filterViewCells();
@@ -91,7 +91,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     public HomogeneousSection<TModel, TViewCell> setModelComparator(Comparator<? super TModel> modelComparator) {
         this.modelComparator = modelComparator;
-        prepareViewCellsToDisplay();
+        prepareViewCellsToRender();
 
         return this;
     }
@@ -101,7 +101,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     private void sortViewCells() {
-        Collections.sort(filteredViewCells, new Comparator<TViewCell>() {
+        Collections.sort(viewCellsToRender, new Comparator<TViewCell>() {
             @Override
             public int compare(TViewCell viewCell1, TViewCell viewCell2) {
                 return modelComparator.compare(viewCell1.getModel(), viewCell2.getModel());
@@ -111,7 +111,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     public HomogeneousSection<TModel, TViewCell>  setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
         this.filterFunction = filterFunction;
-        prepareViewCellsToDisplay();
+        prepareViewCellsToRender();
 
         return this;
     }
@@ -125,30 +125,30 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     private void filterViewCells() {
-        filteredViewCells.clear();
+        viewCellsToRender.clear();
 
-        for (TViewCell viewCell: allViewCells) {
+        for (TViewCell viewCell: viewCells) {
             if (shouldDisplayViewCell(viewCell)) {
-                filteredViewCells.add(viewCell);
+                viewCellsToRender.add(viewCell);
             }
         }
     }
 
     @Override
     public AbstractViewCell get(int position) {
-        return filteredViewCells.get(position);
+        return viewCellsToRender.get(position);
     }
 
     @Override
     public void remove(int position) {
-        TViewCell viewCellToRemove = filteredViewCells.get(position);
-        allViewCells.remove(viewCellToRemove);
+        TViewCell viewCellToRemove = viewCellsToRender.get(position);
+        viewCells.remove(viewCellToRemove);
 
-        prepareViewCellsToDisplay();
+        prepareViewCellsToRender();
     }
 
     @Override
     public int getItemCount() {
-        return filteredViewCells.size();
+        return viewCellsToRender.size();
     }
 }
