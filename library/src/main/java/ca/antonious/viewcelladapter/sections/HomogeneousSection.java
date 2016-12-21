@@ -77,11 +77,11 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     private void prepareViewCellsToRender() {
-        viewCellsToRender.clear();
-        viewCellsToRender.addAll(viewCells);
-
         if (isFilteringEnabled()) {
             filterViewCells();
+        } else {
+            viewCellsToRender.clear();
+            viewCellsToRender.addAll(viewCells);
         }
 
         if (isSortingEnabled()) {
