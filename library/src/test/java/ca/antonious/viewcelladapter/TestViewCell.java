@@ -3,26 +3,25 @@ package ca.antonious.viewcelladapter;
 import android.view.View;
 
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
  * Created by George on 2016-12-18.
  */
 
-public class TestViewCell extends AbstractViewCell<TestViewCell.ViewHolder> {
-    private String identifier;
-
+public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, String> {
     public TestViewCell(String identifier) {
-        this.identifier = identifier;
+        super(identifier);
     }
 
     @Override
     public int getLayoutId() {
-        return identifier.length();
+        return getModel().length();
     }
 
     @Override
     public int getItemId() {
-        return identifier.length();
+        return getModel().length();
     }
 
     @Override
@@ -48,7 +47,7 @@ public class TestViewCell extends AbstractViewCell<TestViewCell.ViewHolder> {
 
     @Override
     public String toString() {
-        return String.format("[ViewCell: %s]", identifier);
+        return String.format("[ViewCell: %s]", getModel());
     }
 
     @Override
@@ -58,11 +57,11 @@ public class TestViewCell extends AbstractViewCell<TestViewCell.ViewHolder> {
 
         TestViewCell that = (TestViewCell) o;
 
-        return identifier != null ? identifier.equals(that.identifier) : that.identifier == null;
+        return getModel() != null ? getModel().equals(that.getModel()) : that.getModel() == null;
     }
 
     @Override
     public int hashCode() {
-        return identifier != null ? identifier.hashCode() : 0;
+        return getModel() != null ? getModel().hashCode() : 0;
     }
 }
