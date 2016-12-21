@@ -113,25 +113,6 @@ public class HomogeneousSectionTests {
     }
 
     @Test
-    public void test_sort_ifComparatorIsSet_thenReturnsViewCellsInExpectedSortedOrder() {
-        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
-        section.add("ITEM-1");
-        section.add("ITEM-2");
-
-        section.setModelComparator(new Comparator<String>() {
-            @Override
-            public int compare(String s1, String s2) {
-                return s2.compareTo(s1);
-            }
-        });
-
-        List<TestViewCell> expectedViewCells = Arrays.asList(new TestViewCell("ITEM-2"), new TestViewCell("ITEM-1"));
-        List<TestViewCell> actualViewCells = section.getAllViewCells();
-
-        assertEquals(expectedViewCells, actualViewCells);
-    }
-
-    @Test
     public void test_filter_remove_shouldRemoveFilteredItem() {
         HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
         section.add("ITEM-1");
@@ -151,5 +132,51 @@ public class HomogeneousSectionTests {
         AbstractViewCell actualViewCell = section.get(0);
 
         assertEquals(expectedViewCell, actualViewCell);
+    }
+
+    @Test
+    public void test_sort_ifComparatorIsSet_thenReturnsViewCellsInExpectedSortedOrder() {
+        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
+        section.add("ITEM-1");
+        section.add("ITEM-2");
+
+        section.setModelComparator(new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s2.compareTo(s1);
+            }
+        });
+
+        List<TestViewCell> expectedViewCells = Arrays.asList(new TestViewCell("ITEM-2"), new TestViewCell("ITEM-1"));
+        List<TestViewCell> actualViewCells = section.getAllViewCells();
+
+        assertEquals(expectedViewCells, actualViewCells);
+    }
+
+    @Test
+    public void test_filter_and_sort_returnsExpectedViewCells() {
+        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
+        section.add("ITEM-1");
+        section.add("ITEM-2");
+        section.add("ITEM-3");
+
+        section.setModelComparator(new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s2.compareTo(s1);
+            }
+        });
+
+        section.setFilterFunction(new Func<String, Boolean>() {
+            @Override
+            public Boolean call(String input) {
+                return !input.equals("ITEM-2");
+            }
+        });
+
+        List<TestViewCell> expectedViewCells = Arrays.asList(new TestViewCell("ITEM-3"), new TestViewCell("ITEM-1"));
+        List<TestViewCell> actualViewCells = section.getAllViewCells();
+
+        assertEquals(expectedViewCells, actualViewCells);
     }
 }

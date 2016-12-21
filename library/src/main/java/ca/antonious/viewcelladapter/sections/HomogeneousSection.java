@@ -76,9 +76,17 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         prepareViewCellsToDisplay();
     }
 
-    public void prepareViewCellsToDisplay() {
-        sortViewCells();
-        filterViewCells();
+    private void prepareViewCellsToDisplay() {
+        filteredViewCells.clear();
+        filteredViewCells.addAll(allViewCells);
+
+        if (isFilteringEnabled()) {
+            filterViewCells();
+        }
+
+        if (isSortingEnabled()) {
+            sortViewCells();
+        }
     }
 
     public HomogeneousSection<TModel, TViewCell> setModelComparator(Comparator<? super TModel> modelComparator) {
@@ -93,14 +101,12 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     private void sortViewCells() {
-        if (isSortingEnabled()) {
-            Collections.sort(allViewCells, new Comparator<TViewCell>() {
-                @Override
-                public int compare(TViewCell viewCell1, TViewCell viewCell2) {
-                    return modelComparator.compare(viewCell1.getModel(), viewCell2.getModel());
-                }
-            });
-        }
+        Collections.sort(filteredViewCells, new Comparator<TViewCell>() {
+            @Override
+            public int compare(TViewCell viewCell1, TViewCell viewCell2) {
+                return modelComparator.compare(viewCell1.getModel(), viewCell2.getModel());
+            }
+        });
     }
 
     public HomogeneousSection<TModel, TViewCell>  setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
@@ -115,8 +121,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public boolean shouldDisplayViewCell(TViewCell viewCell) {
-        return !isFilteringEnabled() ||
-                filterFunction.call(viewCell.getModel());
+        return filterFunction.call(viewCell.getModel());
     }
 
     private void filterViewCells() {
