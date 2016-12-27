@@ -10,7 +10,9 @@ import ca.antonious.viewcelladapter.ListenerCollection;
 public abstract class AbstractViewCell<VH extends BaseViewHolder> {
     public abstract int getLayoutId();
     public abstract int getItemId();
-    public abstract void bindListeners(VH viewHolder, ListenerCollection listeners);
     public abstract void bindViewCell(VH viewHolder);
     public abstract Class<? extends VH> getViewHolderClass();
+
+    @Deprecated
+    public abstract void bindListeners(VH viewHolder, ListenerCollection listeners);
 }
