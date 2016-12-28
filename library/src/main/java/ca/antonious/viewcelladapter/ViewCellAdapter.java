@@ -81,8 +81,8 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        viewCell.bindListeners(holder, listenerCollection);
-        bindListeners(holder, viewCell);
+        //viewCell.bindListeners(holder, listenerCollection);
+        BindListenersHelper.bindListenersTo(viewCell, holder, listenerCollection);
         viewCell.bindViewCell(holder);
     }
 
