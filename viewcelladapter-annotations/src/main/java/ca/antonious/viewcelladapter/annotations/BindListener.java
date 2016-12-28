@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

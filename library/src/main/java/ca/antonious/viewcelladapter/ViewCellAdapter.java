@@ -1,6 +1,5 @@
 package ca.antonious.viewcelladapter;
 
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
