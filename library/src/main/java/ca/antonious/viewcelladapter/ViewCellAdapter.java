@@ -87,21 +87,13 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     private void bindListeners(BaseViewHolder holder, AbstractViewCell viewCell) {
-        Class<?> viewCellClass = viewCell.getClass();
-
         try {
+            Class<?> viewCellClass = viewCell.getClass();
             Method[] methods = viewCellClass.getDeclaredMethods();
 
             for (Method method: methods) {
                 if (method.isAnnotationPresent(BindListener.class)) {
                     BindListener bindListener = method.getAnnotation(BindListener.class);
-
-                    Class[] paramTypes = method.getParameterTypes();
-                    Class<?> viewHolderParam = paramTypes[0];
-                    Class<?> listenerParam = paramTypes[1];
-
-                    // check params here
-
                     Object listenerInstance = listenerCollection.getListener(bindListener.value());
 
                     if (listenerInstance != null) {
@@ -109,7 +101,6 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     }
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return;
