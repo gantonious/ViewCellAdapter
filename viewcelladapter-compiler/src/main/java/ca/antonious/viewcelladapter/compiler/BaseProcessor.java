@@ -1,5 +1,8 @@
 package ca.antonious.viewcelladapter.compiler;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -26,11 +29,31 @@ public abstract class BaseProcessor extends AbstractProcessor {
         messager = processingEnv.getMessager();
     }
 
+    public boolean isTypeEqualTo(TypeMirror type1, TypeMirror type2) {
+        return type1.toString().equals(type2.toString());
+    }
+
+    public boolean isTypeSubtypeOf(TypeMirror type, TypeMirror parentType) {
+        Queue<TypeMirror> typesToCheck = new PriorityQueue<>();
+        typesToCheck.add(type);
+
+        while (!typesToCheck.isEmpty()) {
+            TypeMirror currentType = typesToCheck.remove();
+            if (isTypeEqualTo(currentType, parentType)) {
+                return true;
+            }
+
+            typesToCheck.addAll(typeUtils.directSupertypes(currentType));
+        }
+
+        return false;
+    }
+
     public boolean hasSupertype(DeclaredType declaredType) {
         return !typeUtils.directSupertypes(declaredType).isEmpty();
     }
 
-    public DeclaredType getSupertypeOf(DeclaredType declaredType) {
+    public DeclaredType getSuperclassTypeOf(DeclaredType declaredType) {
         TypeMirror superClass = typeUtils.directSupertypes(declaredType).get(0);
         return (DeclaredType) superClass;
     }

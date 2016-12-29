@@ -144,11 +144,12 @@ public class BindListenerProcessor extends BaseProcessor {
 
     private void guardAgainstIllegalViewHolderType(ExecutableElement methodElement, BindListenersSpec.Builder specBuilder) {
         TypeMirror viewHolderType = methodElement.getParameters().get(0).asType();
+        TypeMirror viewHolderConstraintType = specBuilder.getViewHolderElement().asType();
 
-        if (!typeUtils.isSameType(viewHolderType, specBuilder.getViewHolderElement().asType())) {
+        if (!isTypeSubtypeOf(viewHolderConstraintType, viewHolderType)) {
             String actualViewHolderName = ((TypeElement) typeUtils.asElement(viewHolderType)).getQualifiedName().toString();
             String expectedViewHolderName = specBuilder.getViewHolderElement().getQualifiedName().toString();
-            String errorTemplate = "Expected first argument for method annotated with @BindListener to be of type %s, but found %s.";
+            String errorTemplate = "Expected first argument for method annotated with @BindListener to have a lower bound of type %s, but found %s.";
             String errorMessage = String.format(Locale.getDefault(), errorTemplate, expectedViewHolderName, actualViewHolderName);
 
             throw new IllegalStateException(errorMessage);
@@ -166,9 +167,9 @@ public class BindListenerProcessor extends BaseProcessor {
                 return null;
             }
 
-            declaredViewCell = getSupertypeOf(declaredViewCell);
+            declaredViewCell = getSuperclassTypeOf(declaredViewCell);
 
-            if (typeUtils.isSameType(abstractViewCellTypeElement.asType(), declaredViewCell.asElement().asType())) {
+            if (isTypeEqualTo(abstractViewCellTypeElement.asType(), declaredViewCell.asElement().asType())) {
                 return declaredViewCell;
             }
         }
