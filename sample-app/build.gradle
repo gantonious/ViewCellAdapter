@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    compile project(':library')
+    compile project(':viewcelladapter')
     compile project(':viewcelladapter-annotations')
     annotationProcessor project(':viewcelladapter-compiler')
 

@@ -1,1 +1,1 @@
-include ':library', ':sample-app', ':viewcelladapter-annotations', ':viewcelladapter-compiler'
+include ':viewcelladapter', ':sample-app', ':viewcelladapter-annotations', ':viewcelladapter-compiler'
