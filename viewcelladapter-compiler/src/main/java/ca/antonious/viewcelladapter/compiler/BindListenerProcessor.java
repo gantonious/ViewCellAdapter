@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -28,8 +29,9 @@ import ca.antonious.viewcelladapter.annotations.BindListener;
 
 @AutoService(Processor.class)
 public class BindListenerProcessor extends BaseProcessor {
-    private Types typesUtil;
-    private Elements elementsUtils;
+    private Types typeUtils;
+    private Elements elementUtils;
+    private Messager messager;
 
     private TypeElement abstractViewCellTypeElement;
     private Map<TypeElement, BindListenersSpec.Builder> bindListenersSpecs;
@@ -38,10 +40,11 @@ public class BindListenerProcessor extends BaseProcessor {
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
 
-        typesUtil = processingEnv.getTypeUtils();
-        elementsUtils = processingEnv.getElementUtils();
+        typeUtils = processingEnv.getTypeUtils();
+        elementUtils = processingEnv.getElementUtils();
+        messager = processingEnv.getMessager();
 
-        abstractViewCellTypeElement = elementsUtils.getTypeElement("ca.antonious.viewcelladapter.viewcells.AbstractViewCell");
+        abstractViewCellTypeElement = elementUtils.getTypeElement("ca.antonious.viewcelladapter.viewcells.AbstractViewCell");
         bindListenersSpecs = new HashMap<>();
     }
 
@@ -75,28 +78,35 @@ public class BindListenerProcessor extends BaseProcessor {
 
     private void findAndParseBindListeners(RoundEnvironment roundEnvironment) {
         for (Element element: roundEnvironment.getElementsAnnotatedWith(BindListener.class)) {
-            TypeElement classType = (TypeElement) element.getEnclosingElement();
-            BindListenersSpec.Builder bindListenersSpec = getOrCreateBindListenersSpecBuilder(classType);
+            TypeElement viewCellType = (TypeElement) element.getEnclosingElement();
+            BindListenersSpec.Builder bindListenersSpecBuilder = getOrCreateBindListenersSpecBuilder(viewCellType);
 
             try {
-                visitMethod((ExecutableElement) element, bindListenersSpec);
+                ExecutableElement methodElement = (ExecutableElement) element;
+                visitMethod(methodElement, bindListenersSpecBuilder);
             } catch (Exception e) {
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, e.getMessage(), element);
+                messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage(), element);
             }
         }
     }
 
-    private BindListenersSpec.Builder getOrCreateBindListenersSpecBuilder(TypeElement typeElement) {
-        if (!bindListenersSpecs.containsKey(typeElement)) {
-            DeclaredType declaredAbstractViewCell = getAbstractViewHolderDeclaration((DeclaredType) typeElement.asType());
-            guardAgainstUsageInNonViewCellClasses(typeElement, declaredAbstractViewCell);
-
-            TypeElement getViewHolderTypeMirror = getViewHolderTypeMirror(declaredAbstractViewCell);
-
-            BindListenersSpec.Builder specBuilder = new BindListenersSpec.Builder(typeElement, getViewHolderTypeMirror);
-            bindListenersSpecs.put(typeElement, specBuilder);
+    private BindListenersSpec.Builder getOrCreateBindListenersSpecBuilder(TypeElement viewCellType) {
+        if (!bindListenersSpecs.containsKey(viewCellType)) {
+            BindListenersSpec.Builder specBuilder = createBindListenersSpecBuilder(viewCellType);
+            bindListenersSpecs.put(viewCellType, specBuilder);
         }
-        return bindListenersSpecs.get(typeElement);
+        return bindListenersSpecs.get(viewCellType);
+    }
+
+    private BindListenersSpec.Builder createBindListenersSpecBuilder(TypeElement viewCellType) {
+        DeclaredType declaredViewCell = (DeclaredType) viewCellType.asType();
+        DeclaredType declaredAbstractViewCell = getAbstractViewHolderDeclaration(declaredViewCell);
+
+        guardAgainstUsageInNonViewCellClasses(viewCellType, declaredAbstractViewCell);
+
+        TypeElement viewHolderType = getGenericViewHolderType(declaredAbstractViewCell);
+
+        return new BindListenersSpec.Builder(viewCellType, viewHolderType);
     }
 
     private void guardAgainstUsageInNonViewCellClasses(TypeElement typeElement, DeclaredType declaredAbstractViewCell) {
@@ -110,17 +120,17 @@ public class BindListenerProcessor extends BaseProcessor {
         }
     }
 
-    private void visitMethod(ExecutableElement methodElement, BindListenersSpec.Builder builder) {
+    private void visitMethod(ExecutableElement methodElement, BindListenersSpec.Builder specBuilder) {
         guardAgainstPrivateMethod(methodElement);
-        guardAgainstIncorrectParameterSize(methodElement, builder);
-        guardAgainstIllegalViewHolderType(methodElement, builder);
+        guardAgainstIncorrectParameterSize(methodElement, specBuilder);
+        guardAgainstIllegalViewHolderType(methodElement, specBuilder);
 
         String methodName = methodElement.getSimpleName().toString();
 
-        VariableElement listenerVar = methodElement.getParameters().get(1);
-        TypeMirror listenerTypeMirror = listenerVar.asType();
+        VariableElement listenerVariable = methodElement.getParameters().get(1);
+        TypeMirror listenerType = listenerVariable.asType();
 
-        builder.addListener(new BindListenerSpec(methodName, listenerTypeMirror));
+        specBuilder.addListener(new BindListenerSpec(methodName, listenerType));
     }
 
     private void guardAgainstPrivateMethod(ExecutableElement methodElement) {
@@ -131,11 +141,11 @@ public class BindListenerProcessor extends BaseProcessor {
         }
     }
 
-    private void guardAgainstIncorrectParameterSize(ExecutableElement methodElement, BindListenersSpec.Builder builder) {
+    private void guardAgainstIncorrectParameterSize(ExecutableElement methodElement, BindListenersSpec.Builder specBuilder) {
         int parametersSize = methodElement.getParameters().size();
 
         if (parametersSize != 2) {
-            String viewHolderName = builder.getViewHolderElement().getQualifiedName().toString();
+            String viewHolderName = specBuilder.getViewHolderElement().getQualifiedName().toString();
             String errorTemplate = "Expected two arguments of type %s, java.lang.Object for method annotated with @BindListener, but found %d argument(s).";
             String errorMessage = String.format(Locale.getDefault(), errorTemplate, viewHolderName, parametersSize);
 
@@ -143,12 +153,12 @@ public class BindListenerProcessor extends BaseProcessor {
         }
     }
 
-    private void guardAgainstIllegalViewHolderType(ExecutableElement methodElement, BindListenersSpec.Builder builder) {
+    private void guardAgainstIllegalViewHolderType(ExecutableElement methodElement, BindListenersSpec.Builder specBuilder) {
         TypeMirror viewHolderType = methodElement.getParameters().get(0).asType();
 
-        if (!typesUtil.isSameType(viewHolderType, builder.getViewHolderElement().asType())) {
-            String actualViewHolderName = ((TypeElement) typesUtil.asElement(viewHolderType)).getQualifiedName().toString();
-            String expectedViewHolderName = builder.getViewHolderElement().getQualifiedName().toString();
+        if (!typeUtils.isSameType(viewHolderType, specBuilder.getViewHolderElement().asType())) {
+            String actualViewHolderName = ((TypeElement) typeUtils.asElement(viewHolderType)).getQualifiedName().toString();
+            String expectedViewHolderName = specBuilder.getViewHolderElement().getQualifiedName().toString();
             String errorTemplate = "Expected first argument for method annotated with @BindListener to be of type %s, but found %s.";
             String errorMessage = String.format(Locale.getDefault(), errorTemplate, expectedViewHolderName, actualViewHolderName);
 
@@ -156,23 +166,22 @@ public class BindListenerProcessor extends BaseProcessor {
         }
     }
 
-    private TypeElement getViewHolderTypeMirror(DeclaredType declaredAbstractViewCell) {
+    private TypeElement getGenericViewHolderType(DeclaredType declaredAbstractViewCell) {
         List<? extends TypeMirror> typeParameters = declaredAbstractViewCell.getTypeArguments();
-        System.out.println(typeParameters.get(0));
-        return (TypeElement) typesUtil.asElement(typeParameters.get(0));
+        return (TypeElement) typeUtils.asElement(typeParameters.get(0));
     }
 
-    private DeclaredType getAbstractViewHolderDeclaration(DeclaredType baseType) {
+    private DeclaredType getAbstractViewHolderDeclaration(DeclaredType declaredViewCell) {
         while (true) {
-            if (typesUtil.directSupertypes(baseType).size() == 0) {
+            if (typeUtils.directSupertypes(declaredViewCell).size() == 0) {
                 return null;
             }
 
-            TypeMirror superClass = typesUtil.directSupertypes(baseType).get(0);
-            baseType = (DeclaredType) superClass;
+            TypeMirror superClass = typeUtils.directSupertypes(declaredViewCell).get(0);
+            declaredViewCell = (DeclaredType) superClass;
 
-            if (typesUtil.isSameType(abstractViewCellTypeElement.asType(), baseType.asElement().asType())) {
-                return baseType;
+            if (typeUtils.isSameType(abstractViewCellTypeElement.asType(), declaredViewCell.asElement().asType())) {
+                return declaredViewCell;
             }
         }
     }
