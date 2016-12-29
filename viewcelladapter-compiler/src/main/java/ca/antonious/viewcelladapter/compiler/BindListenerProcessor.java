@@ -15,6 +15,7 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
@@ -110,6 +111,7 @@ public class BindListenerProcessor extends BaseProcessor {
     }
 
     private void visitMethod(ExecutableElement methodElement, BindListenersSpec.Builder builder) {
+        guardAgainstPrivateMethod(methodElement);
         guardAgainstIncorrectParameterSize(methodElement, builder);
         guardAgainstIllegalViewHolderType(methodElement, builder);
 
@@ -119,6 +121,14 @@ public class BindListenerProcessor extends BaseProcessor {
         TypeMirror listenerTypeMirror = listenerVar.asType();
 
         builder.addListener(new BindListenerSpec(methodName, listenerTypeMirror));
+    }
+
+    private void guardAgainstPrivateMethod(ExecutableElement methodElement) {
+        if (methodElement.getModifiers().contains(Modifier.PRIVATE)) {
+            String errorMessage = "Methods with @BindListener should not be private.";
+
+            throw new IllegalStateException(errorMessage);
+        }
     }
 
     private void guardAgainstIncorrectParameterSize(ExecutableElement methodElement, BindListenersSpec.Builder builder) {
