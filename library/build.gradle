@@ -34,14 +34,6 @@ publish {
     userOrg = 'gantonious'
     groupId = 'ca.antonious'
     artifactId = 'viewcelladapter'
-    publishVersion = '9.9.9'
+    publishVersion = '1.1.1'
     website = "https://github.com/gantonious/ViewCellAdapter"
 }
-
-//ext {
-//    PUBLISH_GROUP_ID = 'ca.antonious'
-//    PUBLISH_ARTIFACT_ID = 'viewcelladapter'
-//    PUBLISH_VERSION = '1.1.1'
-//}
-//
-//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
