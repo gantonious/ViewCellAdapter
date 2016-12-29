@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -21,28 +20,18 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 import ca.antonious.viewcelladapter.annotations.BindListener;
 
 @AutoService(Processor.class)
 public class BindListenerProcessor extends BaseProcessor {
-    private Types typeUtils;
-    private Elements elementUtils;
-    private Messager messager;
-
     private TypeElement abstractViewCellTypeElement;
     private Map<TypeElement, BindListenersSpec.Builder> bindListenersSpecs;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
-
-        typeUtils = processingEnv.getTypeUtils();
-        elementUtils = processingEnv.getElementUtils();
-        messager = processingEnv.getMessager();
 
         abstractViewCellTypeElement = elementUtils.getTypeElement("ca.antonious.viewcelladapter.viewcells.AbstractViewCell");
         bindListenersSpecs = new HashMap<>();
@@ -173,12 +162,11 @@ public class BindListenerProcessor extends BaseProcessor {
 
     private DeclaredType getAbstractViewHolderDeclaration(DeclaredType declaredViewCell) {
         while (true) {
-            if (typeUtils.directSupertypes(declaredViewCell).size() == 0) {
+            if (!hasSupertype(declaredViewCell)) {
                 return null;
             }
 
-            TypeMirror superClass = typeUtils.directSupertypes(declaredViewCell).get(0);
-            declaredViewCell = (DeclaredType) superClass;
+            declaredViewCell = getSupertypeOf(declaredViewCell);
 
             if (typeUtils.isSameType(abstractViewCellTypeElement.asType(), declaredViewCell.asElement().asType())) {
                 return declaredViewCell;
