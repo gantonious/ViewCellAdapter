@@ -1,6 +1,5 @@
 package ca.antonious.viewcelladapter;
 
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
@@ -81,30 +81,8 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        viewCell.bindListeners(holder, listenerCollection);
-        bindListeners(holder, viewCell);
+        BindListenersHelper.bindListenersTo(viewCell, holder, listenerCollection);
         viewCell.bindViewCell(holder);
-    }
-
-    private void bindListeners(BaseViewHolder holder, AbstractViewCell viewCell) {
-        try {
-            Class<?> viewCellClass = viewCell.getClass();
-            Method[] methods = viewCellClass.getDeclaredMethods();
-
-            for (Method method: methods) {
-                if (method.isAnnotationPresent(BindListener.class)) {
-                    BindListener bindListener = method.getAnnotation(BindListener.class);
-                    Object listenerInstance = listenerCollection.getListener(bindListener.value());
-
-                    if (listenerInstance != null) {
-                        method.invoke(viewCell, holder, listenerInstance);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
     }
 
     @Override

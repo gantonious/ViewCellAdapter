@@ -1,19 +1,20 @@
 package ca.antonious.sample.viewcells;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
 import ca.antonious.sample.models.Task;
 import ca.antonious.viewcelladapter.BaseViewHolder;
+import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
-import ca.antonious.viewcelladapter.ListenerCollection;
 
 /**
  * Created by George on 2016-11-17.
  */
 
-public class TaskViewCell extends GenericViewCell<TaskViewCell.ViewHolder, Task> {
+public class TaskViewCell extends GenericViewCell<TaskViewCell.TaskViewHolder, Task> {
 
     public TaskViewCell(Task model) {
         super(model);
@@ -25,42 +26,53 @@ public class TaskViewCell extends GenericViewCell<TaskViewCell.ViewHolder, Task>
     }
 
     @Override
-    public void bindViewCell(ViewHolder viewHolder) {
+    public void bindViewCell(TaskViewHolder taskViewHolder) {
         Task task = getModel();
 
-        viewHolder.setTaskName(task.name);
-        viewHolder.setNumberOfCompletions(task.timesCompleted);
+        taskViewHolder.setTaskName(task.name);
+        taskViewHolder.setNumberOfCompletions(task.timesCompleted);
     }
 
-    @Override
-    public void bindListeners(ViewHolder viewHolder, ListenerCollection listeners) {
-        bindOnClickListener(viewHolder, listeners.getListener(OnTaskClickListener.class));
+    @BindListener
+    public void bindOnClickListener(TaskViewHolder taskViewHolder, final OnTaskClickListener onTaskClickListener) {
+        taskViewHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTaskClickListener.onTaskClicked(getModel());
+            }
+        });
     }
 
-    private void bindOnClickListener(ViewHolder viewHolder, final OnTaskClickListener onTaskClickListener) {
-        if (onTaskClickListener != null) {
-            viewHolder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onTaskClickListener.onTaskClicked(getModel());
-                }
-            });
-        }
+    @BindListener
+    public void bindOnCompleteListener(TaskViewHolder taskViewHolder, final OnTaskCompletedListener onTaskCompletedListener) {
+        taskViewHolder.setOnButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTaskCompletedListener.onTaskCompleted(getModel());
+            }
+        });
     }
 
     public interface OnTaskClickListener {
         void onTaskClicked(Task task);
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+    public interface OnTaskCompletedListener {
+        void onTaskCompleted(Task task);
+    }
+    
+
+    public static class TaskViewHolder extends BaseViewHolder {
         private TextView taskNameTextView;
         private TextView numberOfCompletionsTextView;
+        private Button completeButton;
 
-        public ViewHolder(View itemView) {
+        public TaskViewHolder(View itemView) {
             super(itemView);
 
             taskNameTextView = (TextView) itemView.findViewById(R.id.task_title);
             numberOfCompletionsTextView = (TextView) itemView.findViewById(R.id.task_num_compeltions);
+            completeButton = (Button) itemView.findViewById(R.id.task_complete_button);
         }
 
         public void setTaskName(String taskName) {
@@ -73,6 +85,10 @@ public class TaskViewCell extends GenericViewCell<TaskViewCell.ViewHolder, Task>
 
         public void setOnClickListener(View.OnClickListener onClickListener) {
             itemView.setOnClickListener(onClickListener);
+        }
+
+        public void setOnButtonClickListener(View.OnClickListener onButtonClickListener) {
+            completeButton.setOnClickListener(onButtonClickListener);
         }
     }
 }

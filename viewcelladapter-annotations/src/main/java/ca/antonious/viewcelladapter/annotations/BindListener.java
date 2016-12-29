@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface BindListener {
-    Class value();
+
 }

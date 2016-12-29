@@ -7,7 +7,7 @@ deployment:
   production:
     branch: release
     commands:
-      - ./scripts/release-deployment.sh
+      - ./scripts/release-deploy-all.sh
 
 test:
   override:

@@ -8,7 +8,5 @@ import ca.antonious.viewcelladapter.ListenerCollection;
  */
 
 public abstract class ViewCell<VH extends BaseViewHolder> extends AbstractViewCell<VH> {
-    public void bindListeners(VH viewHolder, ListenerCollection listeners) {
 
-    }
 }
