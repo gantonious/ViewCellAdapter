@@ -10,11 +10,9 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
 /**
@@ -104,32 +102,26 @@ public class BindListenersSpec {
 
     public static class Builder {
         private TypeElement classElement;
-        private TypeMirror viewHolderTypeMirror;
+        private TypeElement viewHolderElement;
+
         private List<BindListenerSpec> bindListenerSpecs;
 
-        public Builder(TypeElement classElement) {
+        public Builder(TypeElement classElement, TypeElement viewCellElement) {
             this.classElement = classElement;
+            this.viewHolderElement = viewCellElement;
             bindListenerSpecs = new ArrayList<>();
         }
 
-        public BindListenersSpec build() {
-            return new BindListenersSpec(classElement, viewHolderTypeMirror, bindListenerSpecs);
+        public TypeElement getViewHolderElement() {
+            return viewHolderElement;
         }
 
-        public Builder visitMethod(ExecutableElement methodElement) {
-            if (methodElement.getParameters().size() != 2) {
-                throw new IllegalArgumentException("Expected two arguements for method annotated with @BindListener");
-            }
+        public BindListenersSpec build() {
+            return new BindListenersSpec(classElement, viewHolderElement.asType(), bindListenerSpecs);
+        }
 
-            String methodName = methodElement.getSimpleName().toString();
-
-            VariableElement viewHolderVar = methodElement.getParameters().get(0);
-            viewHolderTypeMirror = viewHolderVar.asType();
-
-            VariableElement listenerVar = methodElement.getParameters().get(1);
-            TypeMirror listenerTypeMirror = listenerVar.asType();
-
-            bindListenerSpecs.add(new BindListenerSpec(methodName, listenerTypeMirror));
+        public Builder addListener(BindListenerSpec bindListenerSpec) {
+            bindListenerSpecs.add(bindListenerSpec);
             return this;
         }
     }
