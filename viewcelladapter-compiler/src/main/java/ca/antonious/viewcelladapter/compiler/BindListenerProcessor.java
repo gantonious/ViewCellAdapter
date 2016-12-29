@@ -87,7 +87,7 @@ public class BindListenerProcessor extends BaseProcessor {
 
     private BindListenersSpec.Builder getOrCreateBindListenersSpecBuilder(TypeElement typeElement) {
         if (!bindListenersSpecs.containsKey(typeElement)) {
-            DeclaredType declaredAbstractViewCell = getAbstractViewHolderDeclearation((DeclaredType) typeElement.asType());
+            DeclaredType declaredAbstractViewCell = getAbstractViewHolderDeclaration((DeclaredType) typeElement.asType());
             guardAgainstUsageInNonViewCellClasses(typeElement, declaredAbstractViewCell);
 
             TypeElement getViewHolderTypeMirror = getViewHolderTypeMirror(declaredAbstractViewCell);
@@ -152,15 +152,13 @@ public class BindListenerProcessor extends BaseProcessor {
         return (TypeElement) typesUtil.asElement(typeParameters.get(0));
     }
 
-    private DeclaredType getAbstractViewHolderDeclearation(DeclaredType baseType) {
+    private DeclaredType getAbstractViewHolderDeclaration(DeclaredType baseType) {
         while (true) {
             if (typesUtil.directSupertypes(baseType).size() == 0) {
                 return null;
             }
 
-            System.out.println(typesUtil.directSupertypes(baseType));
             TypeMirror superClass = typesUtil.directSupertypes(baseType).get(0);
-
             baseType = (DeclaredType) superClass;
 
             if (typesUtil.isSameType(abstractViewCellTypeElement.asType(), baseType.asElement().asType())) {
