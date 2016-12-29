@@ -10,15 +10,12 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Types;
 
 /**
  * Created by George on 2016-12-27.
@@ -26,71 +23,74 @@ import javax.lang.model.util.Types;
 
 public class BindListenersSpec {
     private String simpleClassName;
-    private TypeMirror viewCellTypeMirror;
-    private TypeMirror viewHolderTypeMirror;
     private PackageElement packageElement;
-    private List<BindListenerSpec> bindListenerSpecs = new ArrayList<>();
 
-    public BindListenersSpec(TypeElement classElement) {
+    private TypeName viewCellType;
+    private TypeName viewHolderType;
+    private TypeName listenerCollectionType;
+    private TypeName bindListenersInterface;
+
+    private List<BindListenerSpec> bindListenerSpecs;
+
+    private BindListenersSpec(TypeElement classElement,
+                             TypeMirror viewHolderTypeMirror,
+                             List<? extends BindListenerSpec> bindListenerSpecs) {
+
+        this.bindListenerSpecs = new ArrayList<>();
+        this.bindListenerSpecs.addAll(bindListenerSpecs);
+
         simpleClassName = classElement.getSimpleName().toString();
         packageElement = (PackageElement) classElement.getEnclosingElement();
-        viewCellTypeMirror = classElement.asType();
+
+        viewCellType = ClassName.get(classElement.asType());
+        viewHolderType = ClassName.get(viewHolderTypeMirror);
+        listenerCollectionType = ClassName.get("ca.antonious.viewcelladapter", "ListenerCollection");
+
+        ClassName listenerBinderClassName = ClassName.get("ca.antonious.viewcelladapter", "ListenerBinder");
+        bindListenersInterface = ParameterizedTypeName.get(listenerBinderClassName, viewCellType, viewHolderType);
     }
 
-    public JavaFile generateCode() {
-        TypeName viewHolder = ClassName.get(viewHolderTypeMirror);
-        TypeName viewCell = ClassName.get(viewCellTypeMirror);
+    public JavaFile buildJavaFile() {
+        return JavaFile.builder(getPackageName(), buildType())
+                       .addFileComment("Generated code by ViewCellAdapter. Do not modify!")
+                       .build();
+    }
 
-        ClassName superClassName = ClassName.get("ca.antonious.viewcelladapter", "ListenerBinder");
-        TypeName superClass = ParameterizedTypeName.get(superClassName, viewCell, viewHolder);
+    private TypeSpec buildType() {
+        return TypeSpec.classBuilder(simpleClassName + "_ListenerBinder")
+                       .addModifiers(Modifier.PUBLIC)
+                       .addSuperinterface(bindListenersInterface)
+                       .addMethod(buildBindListenersMethod())
+                       .build();
+    }
 
-        ClassName listenerCollection = ClassName.get("ca.antonious.viewcelladapter", "ListenerCollection");
+    private MethodSpec buildBindListenersMethod() {
+        MethodSpec.Builder methodSignatureBuilder = buildBindListenersMethodSignature();
+        return buildBindListenersMethodBody(methodSignatureBuilder).build();
+    }
 
-        MethodSpec.Builder bindListenersMethodSpec = MethodSpec.methodBuilder("bindListeners")
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(viewCell, "viewCell")
-                .addParameter(viewHolder, "viewHolder")
-                .addParameter(listenerCollection, "listenerCollection");
+    private MethodSpec.Builder buildBindListenersMethodSignature() {
+        return MethodSpec.methodBuilder("bindListeners")
+                         .addAnnotation(Override.class)
+                         .addModifiers(Modifier.PUBLIC)
+                         .addParameter(viewCellType, "viewCell")
+                         .addParameter(viewHolderType, "viewHolder")
+                         .addParameter(listenerCollectionType, "listenerCollection");
+    }
 
+    private MethodSpec.Builder buildBindListenersMethodBody(MethodSpec.Builder methodBuilder) {
         for (int i = 0; i < bindListenerSpecs.size(); i++) {
             BindListenerSpec bindListenerSpec = bindListenerSpecs.get(i);
             TypeName listener = ClassName.get(bindListenerSpec.getListenerType());
 
-            bindListenersMethodSpec
+            methodBuilder = methodBuilder
                     .addStatement("$T listener$L = listenerCollection.getListener($T.class)", listener, i, listener)
                     .beginControlFlow("if (listener$L != null)", i)
                     .addStatement(String.format("viewCell.%s(%s, %s)", bindListenerSpec.getBindListenerMethodName(), "viewHolder", "listener" + i))
-                    .endControlFlow()
-                    .build();
+                    .endControlFlow();
         }
 
-        MethodSpec methodSpec = bindListenersMethodSpec.build();
-
-        TypeSpec typeSpec = TypeSpec.classBuilder(simpleClassName + "_ListenerBinder")
-                .addModifiers(Modifier.PUBLIC)
-                .addSuperinterface(superClass)
-                .addMethod(methodSpec)
-                .build();
-
-        return JavaFile.builder(getPackageName(), typeSpec).build();
-    }
-
-    public void visitMethod(ExecutableElement methodElement) {
-        String methodName = methodElement.getSimpleName().toString();
-
-        VariableElement viewHolderVar = methodElement.getParameters().get(0);
-        viewHolderTypeMirror = viewHolderVar.asType();
-
-        VariableElement listenerVar = methodElement.getParameters().get(1);
-        TypeMirror listenerTypeMirror = listenerVar.asType();
-
-        addBindListenerSpec(new BindListenerSpec(methodName, listenerTypeMirror));
-    }
-
-    public BindListenersSpec addBindListenerSpec(BindListenerSpec bindListenerSpec) {
-        this.bindListenerSpecs.add(bindListenerSpec);
-        return this;
+        return methodBuilder;
     }
 
     public String getPackageName() {
@@ -99,6 +99,38 @@ public class BindListenersSpec {
 
     @Override
     public String toString() {
-        return generateCode().toString();
+        return buildJavaFile().toString();
+    }
+
+    public static class Builder {
+        private TypeElement classElement;
+        private TypeMirror viewHolderTypeMirror;
+        private List<BindListenerSpec> bindListenerSpecs;
+
+        public Builder(TypeElement classElement) {
+            this.classElement = classElement;
+            bindListenerSpecs = new ArrayList<>();
+        }
+
+        public BindListenersSpec build() {
+            return new BindListenersSpec(classElement, viewHolderTypeMirror, bindListenerSpecs);
+        }
+
+        public Builder visitMethod(ExecutableElement methodElement) {
+            if (methodElement.getParameters().size() != 2) {
+                throw new IllegalArgumentException("Expected two arguements for method annotated with @BindListener");
+            }
+
+            String methodName = methodElement.getSimpleName().toString();
+
+            VariableElement viewHolderVar = methodElement.getParameters().get(0);
+            viewHolderTypeMirror = viewHolderVar.asType();
+
+            VariableElement listenerVar = methodElement.getParameters().get(1);
+            TypeMirror listenerTypeMirror = listenerVar.asType();
+
+            bindListenerSpecs.add(new BindListenerSpec(methodName, listenerTypeMirror));
+            return this;
+        }
     }
 }

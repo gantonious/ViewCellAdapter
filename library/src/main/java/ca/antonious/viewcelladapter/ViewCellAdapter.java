@@ -86,27 +86,6 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         viewCell.bindViewCell(holder);
     }
 
-    private void bindListeners(BaseViewHolder holder, AbstractViewCell viewCell) {
-        try {
-            Class<?> viewCellClass = viewCell.getClass();
-            Method[] methods = viewCellClass.getDeclaredMethods();
-
-            for (Method method: methods) {
-                if (method.isAnnotationPresent(BindListener.class)) {
-                    BindListener bindListener = method.getAnnotation(BindListener.class);
-                    Object listenerInstance = listenerCollection.getListener(bindListener.value());
-
-                    if (listenerInstance != null) {
-                        method.invoke(viewCell, holder, listenerInstance);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-    }
-
     @Override
     public int getItemCount() {
         return ViewCellUtils.getTotalCount(sections);
