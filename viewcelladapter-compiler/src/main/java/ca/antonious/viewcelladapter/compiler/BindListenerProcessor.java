@@ -169,6 +169,8 @@ public class BindListenerProcessor extends BaseProcessor {
 
             declaredViewCell = getSuperclassTypeOf(declaredViewCell);
 
+            // Convert declaredViewCell to element to lose generic information so
+            // only the type information is compared
             if (isTypeEqualTo(abstractViewCellTypeElement.asType(), declaredViewCell.asElement().asType())) {
                 return declaredViewCell;
             }
