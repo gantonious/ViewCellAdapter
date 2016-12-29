@@ -12,4 +12,4 @@ deployment:
 test:
   override:
     - ./gradlew test
-    - cp -r ./library/build/test-results/debug/* $CIRCLE_TEST_REPORTS
+    - cp -r ./viewcelladapter/build/test-results/debug/* $CIRCLE_TEST_REPORTS
