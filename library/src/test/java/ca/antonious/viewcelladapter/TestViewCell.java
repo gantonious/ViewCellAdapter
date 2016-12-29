@@ -25,11 +25,6 @@ public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, Strin
     }
 
     @Override
-    public void bindListeners(ViewHolder viewHolder, ListenerCollection listeners) {
-
-    }
-
-    @Override
     public void bindViewCell(ViewHolder viewHolder) {
 
     }
