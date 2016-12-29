@@ -51,6 +51,7 @@ public class BindListenerProcessor extends BaseProcessor {
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         findAndParseBindListeners(roundEnvironment);
         generateSourceFiles(bindListenersSpecs);
+        clearFoundListeners();
 
         return true;
     }
@@ -60,7 +61,7 @@ public class BindListenerProcessor extends BaseProcessor {
             try {
                 entry.getValue().build().buildJavaFile().writeTo(processingEnv.getFiler());
             } catch (Exception e) {
-                e.printStackTrace();
+                messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage(), entry.getKey());
             }
         }
     }
@@ -77,6 +78,10 @@ public class BindListenerProcessor extends BaseProcessor {
                 messager.printMessage(Diagnostic.Kind.ERROR, e.getMessage(), element);
             }
         }
+    }
+
+    private void clearFoundListeners() {
+        bindListenersSpecs.clear();
     }
 
     private BindListenersSpec.Builder getOrCreateBindListenersSpecBuilder(TypeElement viewCellType) {
