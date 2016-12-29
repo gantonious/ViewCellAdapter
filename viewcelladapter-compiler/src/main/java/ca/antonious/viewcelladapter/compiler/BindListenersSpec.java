@@ -3,18 +3,19 @@ package ca.antonious.viewcelladapter.compiler;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
@@ -24,49 +25,22 @@ import javax.lang.model.util.Types;
  */
 
 public class BindListenersSpec {
-    private String classImport;
     private String simpleClassName;
-
     private TypeMirror viewCellTypeMirror;
     private TypeMirror viewHolderTypeMirror;
-    private TypeMirror listenerTypeMirror;
+    private PackageElement packageElement;
+    private List<BindListenerSpec> bindListenerSpecs = new ArrayList<>();
 
-    private String methodName;
-
-    private String viewHolderImport;
-    private String viewHolderSimpleClassName;
-
-    private String listenerImport;
-    private String listenerSimpleClassName;
-
-    public BindListenersSpec(Types typeUtils, Element methodElement) {
-        TypeElement enclosingClass = (TypeElement) methodElement.getEnclosingElement();
-        classImport = enclosingClass.getQualifiedName().toString();
-        simpleClassName = enclosingClass.getSimpleName().toString();
-        viewCellTypeMirror = enclosingClass.asType();
-
-        ExecutableElement methodType = (ExecutableElement) methodElement;
-        methodName = methodType.getSimpleName().toString();
-
-        VariableElement viewHolderVar = methodType.getParameters().get(0);
-        viewHolderTypeMirror = viewHolderVar.asType();
-
-        TypeElement viewHolderType = (TypeElement) typeUtils.asElement(viewHolderTypeMirror);
-        viewHolderImport = viewHolderType.getQualifiedName().toString();
-        viewHolderSimpleClassName = viewHolderType.getSimpleName().toString();
-
-        VariableElement listenerVar = methodType.getParameters().get(1);
-        listenerTypeMirror = listenerVar.asType();
-
-        TypeElement listenerType = (TypeElement) typeUtils.asElement(listenerTypeMirror);
-        listenerImport = listenerType.getQualifiedName().toString();
-        listenerSimpleClassName = listenerType.getSimpleName().toString();
+    public BindListenersSpec(TypeElement classElement) {
+        simpleClassName = classElement.getSimpleName().toString();
+        packageElement = (PackageElement) classElement.getEnclosingElement();
+        viewCellTypeMirror = classElement.asType();
     }
 
     public JavaFile generateCode() {
         TypeName viewHolder = ClassName.get(viewHolderTypeMirror);
         TypeName viewCell = ClassName.get(viewCellTypeMirror);
-        TypeName listener = ClassName.get(listenerTypeMirror);
+
         ClassName superClassName = ClassName.get("ca.antonious.viewcelladapter", "ListenerBinder");
         TypeName superClass = ParameterizedTypeName.get(superClassName, viewCell, viewHolder);
 
@@ -79,12 +53,19 @@ public class BindListenersSpec {
                 .addParameter(viewHolder, "viewHolder")
                 .addParameter(listenerCollection, "listenerCollection");
 
-        MethodSpec methodSpec = bindListenersMethodSpec
-                .addStatement("$T listener1 = listenerCollection.getListener($T.class)", listener, listener)
-                .beginControlFlow("if (listener1 != null)")
-                .addStatement(String.format("viewCell.%s(%s, %s)", methodName, "viewHolder", "listener1"))
-                .endControlFlow()
-                .build();
+        for (int i = 0; i < bindListenerSpecs.size(); i++) {
+            BindListenerSpec bindListenerSpec = bindListenerSpecs.get(i);
+            TypeName listener = ClassName.get(bindListenerSpec.getListenerType());
+
+            bindListenersMethodSpec
+                    .addStatement("$T listener$L = listenerCollection.getListener($T.class)", listener, i, listener)
+                    .beginControlFlow("if (listener$L != null)", i)
+                    .addStatement(String.format("viewCell.%s(%s, %s)", bindListenerSpec.getBindListenerMethodName(), "viewHolder", "listener" + i))
+                    .endControlFlow()
+                    .build();
+        }
+
+        MethodSpec methodSpec = bindListenersMethodSpec.build();
 
         TypeSpec typeSpec = TypeSpec.classBuilder(simpleClassName + "_ListenerBinder")
                 .addModifiers(Modifier.PUBLIC)
@@ -92,11 +73,28 @@ public class BindListenersSpec {
                 .addMethod(methodSpec)
                 .build();
 
-        return JavaFile.builder("ca.antonious.sample.viewcells", typeSpec).build();
+        return JavaFile.builder(getPackageName(), typeSpec).build();
     }
 
-    private MethodSpec generateBindListenersMethod() {
-        return null;
+    public void visitMethod(ExecutableElement methodElement) {
+        String methodName = methodElement.getSimpleName().toString();
+
+        VariableElement viewHolderVar = methodElement.getParameters().get(0);
+        viewHolderTypeMirror = viewHolderVar.asType();
+
+        VariableElement listenerVar = methodElement.getParameters().get(1);
+        TypeMirror listenerTypeMirror = listenerVar.asType();
+
+        addBindListenerSpec(new BindListenerSpec(methodName, listenerTypeMirror));
+    }
+
+    public BindListenersSpec addBindListenerSpec(BindListenerSpec bindListenerSpec) {
+        this.bindListenerSpecs.add(bindListenerSpec);
+        return this;
+    }
+
+    public String getPackageName() {
+        return packageElement.getQualifiedName().toString();
     }
 
     @Override

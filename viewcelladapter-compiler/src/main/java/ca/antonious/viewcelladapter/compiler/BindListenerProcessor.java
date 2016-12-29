@@ -3,20 +3,30 @@ package ca.antonious.viewcelladapter.compiler;
 import com.google.auto.service.AutoService;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.ExecutableType;
-import javax.lang.model.util.Types;
 
 import ca.antonious.viewcelladapter.annotations.BindListener;
 
 @AutoService(Processor.class)
 public class BindListenerProcessor extends BaseProcessor {
+    private Map<TypeElement, BindListenersSpec> bindListenersSpecs;
+
+    @Override
+    public synchronized void init(ProcessingEnvironment processingEnvironment) {
+        super.init(processingEnvironment);
+        bindListenersSpecs = new HashMap<>();
+    }
+
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return Collections.singleton(BindListener.class.getCanonicalName());
@@ -46,16 +56,28 @@ public class BindListenerProcessor extends BaseProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         for (Element element: roundEnvironment.getElementsAnnotatedWith(BindListener.class)) {
-            BindListenersSpec bindListenersSpec = new BindListenersSpec(processingEnv.getTypeUtils(), element);
-            System.out.println(bindListenersSpec);
+            TypeElement classType = (TypeElement) element.getEnclosingElement();
+            BindListenersSpec bindListenersSpec = getOrCreateBindListenersSpec(classType);
+            bindListenersSpec.visitMethod((ExecutableElement) element);
+        }
+
+        for (Map.Entry<TypeElement, BindListenersSpec> entry: bindListenersSpecs.entrySet()) {
             try {
-                bindListenersSpec.generateCode().writeTo(processingEnv.getFiler());
+                entry.getValue().generateCode().writeTo(processingEnv.getFiler());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         return true;
+    }
+
+    private BindListenersSpec getOrCreateBindListenersSpec(TypeElement typeElement) {
+        if (!bindListenersSpecs.containsKey(typeElement)) {
+            BindListenersSpec spec = new BindListenersSpec(typeElement);
+            bindListenersSpecs.put(typeElement, spec);
+        }
+        return bindListenersSpecs.get(typeElement);
     }
 
     private void checkAnnotation() {
