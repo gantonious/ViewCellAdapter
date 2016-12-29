@@ -27,14 +27,14 @@ import ca.antonious.viewcelladapter.annotations.BindListener;
 @AutoService(Processor.class)
 public class BindListenerProcessor extends BaseProcessor {
     private TypeElement abstractViewCellTypeElement;
-    private Map<TypeElement, BindListenersSpec.Builder> bindListenersSpecs;
+    private Map<TypeElement, BindListenersSpec.Builder> bindListenersSpecBuilders;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
 
         abstractViewCellTypeElement = elementUtils.getTypeElement("ca.antonious.viewcelladapter.viewcells.AbstractViewCell");
-        bindListenersSpecs = new HashMap<>();
+        bindListenersSpecBuilders = new HashMap<>();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class BindListenerProcessor extends BaseProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         findAndParseBindListeners(roundEnvironment);
-        generateSourceFiles(bindListenersSpecs);
+        generateSourceFiles(bindListenersSpecBuilders);
         clearFoundListeners();
 
         return true;
@@ -81,15 +81,15 @@ public class BindListenerProcessor extends BaseProcessor {
     }
 
     private void clearFoundListeners() {
-        bindListenersSpecs.clear();
+        bindListenersSpecBuilders.clear();
     }
 
     private BindListenersSpec.Builder getOrCreateBindListenersSpecBuilder(TypeElement viewCellType) {
-        if (!bindListenersSpecs.containsKey(viewCellType)) {
+        if (!bindListenersSpecBuilders.containsKey(viewCellType)) {
             BindListenersSpec.Builder specBuilder = createBindListenersSpecBuilder(viewCellType);
-            bindListenersSpecs.put(viewCellType, specBuilder);
+            bindListenersSpecBuilders.put(viewCellType, specBuilder);
         }
-        return bindListenersSpecs.get(viewCellType);
+        return bindListenersSpecBuilders.get(viewCellType);
     }
 
     private BindListenersSpec.Builder createBindListenersSpecBuilder(TypeElement viewCellType) {
