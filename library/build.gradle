@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
@@ -29,10 +30,18 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
 }
 
-ext {
-    PUBLISH_GROUP_ID = 'ca.antonious'
-    PUBLISH_ARTIFACT_ID = 'viewcelladapter'
-    PUBLISH_VERSION = '1.1.1'
+publish {
+    userOrg = 'gantonious'
+    groupId = 'ca.antonious'
+    artifactId = 'viewcelladapter'
+    publishVersion = '9.9.9'
+    website = "https://github.com/gantonious/ViewCellAdapter"
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+//ext {
+//    PUBLISH_GROUP_ID = 'ca.antonious'
+//    PUBLISH_ARTIFACT_ID = 'viewcelladapter'
+//    PUBLISH_VERSION = '1.1.1'
+//}
+//
+//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
