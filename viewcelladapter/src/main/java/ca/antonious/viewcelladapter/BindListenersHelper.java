@@ -1,7 +1,9 @@
 package ca.antonious.viewcelladapter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
@@ -11,31 +13,54 @@ import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 public class BindListenersHelper {
     private static Map<Class<?>, ListenerBinder> cachedListenerBinders = new HashMap<>();
+    private static Map<Class<?>, Set<ListenerBinder>> listenerBinderMappings = new HashMap<>();
 
     @SuppressWarnings("unchecked")
     public static void bindListenersTo(AbstractViewCell viewCell, BaseViewHolder viewHolder, ListenerCollection listeners) {
-        ListenerBinder listenerBinder = getListenerBinderFor(viewCell);
-
-        if (listenerBinder != null) {
+        for (ListenerBinder listenerBinder: getListenerBindersFor(viewCell.getClass())) {
             listenerBinder.bindListeners(viewCell, viewHolder, listeners);
         }
     }
 
-    private static ListenerBinder getListenerBinderFor(AbstractViewCell viewCell) {
-        if (cachedListenerBinders.containsKey(viewCell.getClass())) {
-            return cachedListenerBinders.get(viewCell.getClass());
+    private static Set<ListenerBinder> getListenerBindersFor(Class<? extends AbstractViewCell> viewCellClass) {
+        if (!listenerBinderMappings.containsKey(viewCellClass)) {
+            createListenerBinderMappingsFor(viewCellClass);
+        }
+        return listenerBinderMappings.get(viewCellClass);
+    }
+
+    private static void createListenerBinderMappingsFor(Class<? extends AbstractViewCell> viewCellClass) {
+        Class<?> currentClass = viewCellClass;
+        Set<ListenerBinder> listenerBinders = new HashSet<>();
+
+        while (currentClass != null) {
+            ListenerBinder listenerBinder = getListenerBinderFor(currentClass);
+
+            if (listenerBinder != null) {
+                listenerBinders.add(listenerBinder);
+            }
+
+            currentClass = currentClass.getSuperclass();
         }
 
+        listenerBinderMappings.put(viewCellClass, listenerBinders);
+    }
+
+    private static ListenerBinder getListenerBinderFor(Class<?> clazz) {
+        if (!cachedListenerBinders.containsKey(clazz)) {
+            loadListenerBinderFor(clazz);
+        }
+        return cachedListenerBinders.get(clazz);
+    }
+
+    private static void loadListenerBinderFor(Class<?> clazz) {
         try {
-            String listenerBinderName = viewCell.getClass().getCanonicalName() + "_ListenerBinder";
+            String listenerBinderName = clazz.getCanonicalName() + "_ListenerBinder";
             Class<?> listenerBinderClass = Class.forName(listenerBinderName);
             ListenerBinder listenerBinder = (ListenerBinder) listenerBinderClass.newInstance();
-            cachedListenerBinders.put(viewCell.getClass(), listenerBinder);
+            cachedListenerBinders.put(clazz, listenerBinder);
         } catch (Exception e) {
-            e.printStackTrace();
-            cachedListenerBinders.put(viewCell.getClass(), null);
+            cachedListenerBinders.put(clazz, null);
         }
-
-        return cachedListenerBinders.get(viewCell.getClass());
     }
 }
