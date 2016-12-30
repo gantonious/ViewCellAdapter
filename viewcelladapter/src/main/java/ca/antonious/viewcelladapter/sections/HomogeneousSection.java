@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import ca.antonious.viewcelladapter.Func;
@@ -42,6 +43,15 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         }
 
         return models;
+    }
+
+    public Iterable<TModel> modelIterator() {
+        return new Iterable<TModel>() {
+            @Override
+            public Iterator<TModel> iterator() {
+                return getAllModels().iterator();
+            }
+        };
     }
 
     public void add(TModel model) {
