@@ -26,7 +26,7 @@ public class BindListenersHelper {
         if (!listenerBinderMappings.containsKey(viewCellClass)) {
             createListenerBinderMappingsFor(viewCellClass);
         }
-        return listenerBinderMappings.get(viewCellClass.getClass());
+        return listenerBinderMappings.get(viewCellClass);
     }
 
     private static void createListenerBinderMappingsFor(Class<? extends AbstractViewCell> viewCellClass) {
@@ -39,7 +39,7 @@ public class BindListenersHelper {
             if (listenerBinder != null) {
                 listenerBinders.add(listenerBinder);
             }
-            
+
             currentClass = currentClass.getSuperclass();
         }
 
