@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -15,6 +15,9 @@ import java.util.Map;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
 /**
  * Created by George on 2016-11-15.
@@ -80,7 +83,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        BindListenersHelper.bindListenersTo(viewCell, holder, listenerCollection);
+        ListenerBinderHelper.bindListenersTo(viewCell, holder, listenerCollection);
         viewCell.bindViewCell(holder);
     }
 

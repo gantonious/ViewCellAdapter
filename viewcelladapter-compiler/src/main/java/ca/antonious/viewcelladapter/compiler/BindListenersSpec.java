@@ -48,9 +48,9 @@ public class BindListenersSpec {
 
         this.viewCellTypeName = ClassName.get(viewCellElement.asType());
         this.viewHolderTypeName = ClassName.get(viewHolderType);
-        this.listenerCollectionTypeName = ClassName.get("ca.antonious.viewcelladapter", "ListenerCollection");
+        this.listenerCollectionTypeName = ClassName.get("ca.antonious.viewcelladapter.viewcells.eventhandling", "ListenerCollection");
 
-        ClassName listenerBinderClassName = ClassName.get("ca.antonious.viewcelladapter", "ListenerBinder");
+        ClassName listenerBinderClassName = ClassName.get("ca.antonious.viewcelladapter.viewcells.eventhandling", "ListenerBinder");
         this.bindListenersInterfaceName = ParameterizedTypeName.get(listenerBinderClassName, viewCellTypeName, this.viewHolderTypeName);
     }
 

@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells;
 
 /**
  * Created by George on 2016-12-30.

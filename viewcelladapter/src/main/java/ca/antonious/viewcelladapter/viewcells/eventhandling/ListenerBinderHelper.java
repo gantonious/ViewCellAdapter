@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells.eventhandling;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,12 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2016-12-28.
  */
 
-public class BindListenersHelper {
+public class ListenerBinderHelper {
     private static Map<Class<?>, ListenerBinder> cachedListenerBinders = new HashMap<>();
     private static Map<Class<?>, Set<ListenerBinder>> listenerBinderMappings = new HashMap<>();
 

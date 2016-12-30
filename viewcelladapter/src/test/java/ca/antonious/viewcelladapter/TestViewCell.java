@@ -2,7 +2,7 @@ package ca.antonious.viewcelladapter;
 
 import android.view.View;
 
-import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
