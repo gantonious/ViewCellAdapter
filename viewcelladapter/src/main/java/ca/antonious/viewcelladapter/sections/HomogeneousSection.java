@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
@@ -77,19 +78,12 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public void setAll(Collection<? extends TModel> models) {
-        this.viewCells.clear();
-        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
+        CollectionUtils.setAll(this.viewCells, viewCellFactory.createAllViewCells(models));
         prepareViewCellsToRender();
     }
 
     public void prependAll(Collection<? extends TModel> models) {
-        List<TViewCell> newList = new ArrayList<>();
-        newList.addAll(viewCellFactory.createAllViewCells(models));
-        newList.addAll(this.viewCells);
-
-        this.viewCells.clear();
-        this.viewCells.addAll(newList);
-
+        CollectionUtils.prependAll(this.viewCells, viewCellFactory.createAllViewCells(models));
         prepareViewCellsToRender();
     }
 
