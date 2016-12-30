@@ -3,6 +3,7 @@ package ca.antonious.viewcelladapter.sectiontests;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -176,6 +177,50 @@ public class HomogeneousSectionTests {
 
         List<TestViewCell> expectedViewCells = Arrays.asList(new TestViewCell("ITEM-3"), new TestViewCell("ITEM-1"));
         List<TestViewCell> actualViewCells = section.getAllViewCells();
+
+        assertEquals(expectedViewCells, actualViewCells);
+    }
+
+    @Test
+    public void test_getAllSelectedModels_ifSelectedModelShouldNotBeRendered_thenItIsNotReturnedAsSelected() {
+        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
+        section.add("ITEM-1");
+        section.add("ITEM-2");
+        section.add("ITEM-3");
+
+        section.get(0).select();
+
+        section.setFilterFunction(new Func<String, Boolean>() {
+            @Override
+            public Boolean call(String input) {
+                return input.equals("ITEM-2") || input.equals("ITEM-3");
+            }
+        });
+
+        List<String> expectedViewCells = new ArrayList<>();
+        List<String> actualViewCells = section.getAllSelectedModels();
+
+        assertEquals(expectedViewCells, actualViewCells);
+    }
+
+    @Test
+    public void test_getAllSelectedModels_ifSelectedModelShouldBeRendered_thenItIsReturnedAsSelected() {
+        HomogeneousSection<String, TestViewCell> section = new HomogeneousSection<>(testViewCellFactory);
+        section.add("ITEM-1");
+        section.add("ITEM-2");
+        section.add("ITEM-3");
+
+        section.get(0).select();
+
+        section.setFilterFunction(new Func<String, Boolean>() {
+            @Override
+            public Boolean call(String input) {
+                return input.equals("ITEM-1") || input.equals("ITEM-3");
+            }
+        });
+
+        List<String> expectedViewCells = Arrays.asList("ITEM-1");
+        List<String> actualViewCells = section.getAllSelectedModels();
 
         assertEquals(expectedViewCells, actualViewCells);
     }

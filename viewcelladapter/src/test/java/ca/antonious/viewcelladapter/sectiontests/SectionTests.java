@@ -17,6 +17,24 @@ import static org.junit.Assert.*;
 
 public class SectionTests {
     @Test
+    public void test_getAllSelected_returnsOnlySelectedViewCells() {
+        AbstractViewCell viewCell1 = new TestViewCell("ITEM-1");
+        AbstractViewCell viewCell2 = new TestViewCell("ITEM-2");
+        AbstractViewCell viewCell3 = new TestViewCell("ITEM-3");
+
+        viewCell1.select();
+        viewCell3.select();
+
+        Section section = new Section();
+        section.setAll(Arrays.asList(viewCell1, viewCell2, viewCell3));
+
+        List<AbstractViewCell> expectedViewCells = Arrays.asList(viewCell1, viewCell3);
+        List<AbstractViewCell> actualViewCells = section.getAllSelected();
+
+        assertEquals(expectedViewCells, actualViewCells);
+    }
+
+    @Test
     public void test_add_addsViewCellToSection() {
         AbstractViewCell viewCell = new TestViewCell("ITEM-1");
 
