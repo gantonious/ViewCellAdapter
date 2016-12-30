@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.antonious.viewcelladapter.sections.AbstractSection;
+import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
@@ -43,17 +44,11 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void setAll(Collection<? extends AbstractSection> sections) {
-        this.sections.clear();
-        this.sections.addAll(sections);
+        CollectionUtils.setAll(this.sections, sections);
     }
 
     public void prependAll(Collection<? extends AbstractSection> sections) {
-        List<AbstractSection> newList = new ArrayList<>();
-        newList.addAll(sections);
-        newList.addAll(this.sections);
-
-        this.sections.clear();
-        this.sections.addAll(newList);
+        CollectionUtils.prependAll(this.sections, sections);
     }
 
     public void addListener(Object listener) {
