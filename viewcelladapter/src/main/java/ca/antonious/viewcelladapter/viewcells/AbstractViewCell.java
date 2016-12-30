@@ -29,5 +29,5 @@ public abstract class AbstractViewCell<VH extends BaseViewHolder> implements Sel
     public abstract int getLayoutId();
     public abstract int getItemId();
     public abstract void bindViewCell(VH viewHolder);
-    public abstract Class<? extends VH> getViewHolderClass();
+    public abstract ViewHolderFactory getViewHolderFactory();
 }
