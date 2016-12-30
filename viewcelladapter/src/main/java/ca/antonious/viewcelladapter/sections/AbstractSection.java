@@ -8,7 +8,7 @@ import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
  * Created by George on 2016-12-08.
  */
 
-public abstract class AbstractSection implements Iterable<AbstractViewCell> {
+public abstract class AbstractSection {
     public abstract AbstractViewCell get(int position);
     public abstract void remove(int position);
     public abstract int getItemCount();
@@ -17,9 +17,13 @@ public abstract class AbstractSection implements Iterable<AbstractViewCell> {
         return getItemCount() == 0;
     }
 
-    @Override
-    public Iterator<AbstractViewCell> iterator() {
-        return new AbstractSectionIterator(this);
+    public Iterable<AbstractViewCell> viewCellIterator() {
+        return new Iterable<AbstractViewCell>() {
+            @Override
+            public Iterator<AbstractViewCell> iterator() {
+                return new AbstractSectionIterator(AbstractSection.this);
+            }
+        };
     }
 
     public static class AbstractSectionIterator implements Iterator<AbstractViewCell> {

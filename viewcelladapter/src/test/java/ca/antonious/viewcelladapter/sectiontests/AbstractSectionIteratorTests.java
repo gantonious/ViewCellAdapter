@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import ca.antonious.viewcelladapter.TestViewCell;
+import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.sections.Section;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
@@ -18,7 +19,9 @@ public class AbstractSectionIteratorTests {
     @Test
     public void test_iteration_ifSectionIsEmpty_hasNextStartsAsFalse() {
         Section section = new Section();
-        assertFalse(section.iterator().hasNext());
+        Iterator<AbstractViewCell> iterator = new AbstractSection.AbstractSectionIterator(section);
+
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -30,11 +33,11 @@ public class AbstractSectionIteratorTests {
         section.add(testViewCell1);
         section.add(testViewCell2);
 
-        Iterator<AbstractViewCell> sectionIterator = section.iterator();
+        Iterator<AbstractViewCell> iterator = new AbstractSection.AbstractSectionIterator(section);
 
-        AbstractViewCell viewCell1 = sectionIterator.next();
-        AbstractViewCell viewCell2 = sectionIterator.next();
-        boolean hasNextAfterCompletingIteration = sectionIterator.hasNext();
+        AbstractViewCell viewCell1 = iterator.next();
+        AbstractViewCell viewCell2 = iterator.next();
+        boolean hasNextAfterCompletingIteration = iterator.hasNext();
 
         assertEquals(viewCell1, testViewCell1);
         assertEquals(viewCell2, testViewCell2);
