@@ -45,6 +45,18 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         return models;
     }
 
+    public List<TModel> getAllSelectedModels() {
+        List<TModel> selectedModels = new ArrayList<>();
+
+        for (TViewCell viewCell: viewCellsToRender) {
+            if (viewCell.isSelected()) {
+                selectedModels.add(viewCell.getModel());
+            }
+        }
+
+        return selectedModels;
+    }
+
     public Iterable<TModel> modelIterator() {
         return new Iterable<TModel>() {
             @Override
@@ -119,7 +131,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         });
     }
 
-    public HomogeneousSection<TModel, TViewCell>  setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
+    public HomogeneousSection<TModel, TViewCell> setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
         this.filterFunction = filterFunction;
         prepareViewCellsToRender();
 
