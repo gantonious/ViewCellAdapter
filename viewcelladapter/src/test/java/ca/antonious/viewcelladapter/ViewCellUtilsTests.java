@@ -8,6 +8,7 @@ import java.util.List;
 
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.sections.Section;
+import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 import static org.junit.Assert.*;

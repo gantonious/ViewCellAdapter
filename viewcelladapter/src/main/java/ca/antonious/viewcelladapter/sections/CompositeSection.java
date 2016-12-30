@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.ViewCellUtils;
+import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 
 /**
  * Created by George on 2016-12-17.
