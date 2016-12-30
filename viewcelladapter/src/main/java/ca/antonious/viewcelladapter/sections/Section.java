@@ -21,6 +21,18 @@ public class Section extends AbstractSection {
         return new ArrayList<>(viewCells);
     }
 
+    public List<AbstractViewCell> getAllSelected() {
+        List<AbstractViewCell> selectedViewCells = new ArrayList<>();
+
+        for (AbstractViewCell viewCell: viewCellIterator()) {
+            if (viewCell.isSelected()) {
+                selectedViewCells.add(viewCell);
+            }
+        }
+
+        return selectedViewCells;
+    }
+
     public void add(AbstractViewCell viewCell) {
         this.viewCells.add(viewCell);
     }
