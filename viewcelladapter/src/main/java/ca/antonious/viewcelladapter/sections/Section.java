@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 /**
@@ -42,17 +43,11 @@ public class Section extends AbstractSection {
     }
 
     public void setAll(Collection<? extends AbstractViewCell> viewCells) {
-        this.viewCells.clear();
-        this.viewCells.addAll(viewCells);
+        CollectionUtils.setAll(this.viewCells, viewCells);
     }
 
     public void prependAll(Collection<? extends AbstractViewCell> viewCells) {
-        List<AbstractViewCell> newList = new ArrayList<>();
-        newList.addAll(viewCells);
-        newList.addAll(this.viewCells);
-
-        this.viewCells.clear();
-        this.viewCells.addAll(newList);
+        CollectionUtils.prependAll(this.viewCells, viewCells);
     }
 
     public void clear() {

@@ -1,9 +1,5 @@
 package ca.antonious.viewcelladapter.viewcells;
 
-import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.ListenerCollection;
-import ca.antonious.viewcelladapter.Selectable;
-
 /**
  * Created by George on 2016-11-17.
  */

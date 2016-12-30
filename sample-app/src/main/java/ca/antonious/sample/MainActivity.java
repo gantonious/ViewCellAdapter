@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -21,10 +20,8 @@ import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
 import ca.antonious.viewcelladapter.Func;
-import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
-import ca.antonious.viewcelladapter.sections.Section;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
@@ -113,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        viewCellAdapter.addListener(new TaskViewCell.OnTaskCompletedListener() {
-//            @Override
-//            public void onTaskCompleted(Task task) {
-//                String message = String.format("You completed %s!", task.name);
-//                Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT)
-//                        .show();
-//            }
-//        });
+        viewCellAdapter.addListener(new TaskViewCell.OnTaskCompletedListener() {
+            @Override
+            public void onTaskCompleted(Task task) {
+                String message = String.format("You completed %s!", task.name);
+                Snackbar.make(recyclerView, message, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
         recyclerView.setAdapter(viewCellAdapter);

@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.utils;
 
 import java.util.List;
 

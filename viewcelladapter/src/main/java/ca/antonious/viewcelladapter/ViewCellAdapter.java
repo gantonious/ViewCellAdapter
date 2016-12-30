@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
+import ca.antonious.viewcelladapter.utils.CollectionUtils;
+import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
 /**
  * Created by George on 2016-11-15.
@@ -41,17 +44,11 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void setAll(Collection<? extends AbstractSection> sections) {
-        this.sections.clear();
-        this.sections.addAll(sections);
+        CollectionUtils.setAll(this.sections, sections);
     }
 
     public void prependAll(Collection<? extends AbstractSection> sections) {
-        List<AbstractSection> newList = new ArrayList<>();
-        newList.addAll(sections);
-        newList.addAll(this.sections);
-
-        this.sections.clear();
-        this.sections.addAll(newList);
+        CollectionUtils.prependAll(this.sections, sections);
     }
 
     public void addListener(Object listener) {
@@ -81,7 +78,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        BindListenersHelper.bindListenersTo(viewCell, holder, listenerCollection);
+        ListenerBinderHelper.bindListenersTo(viewCell, holder, listenerCollection);
         viewCell.bindViewCell(holder);
     }
 

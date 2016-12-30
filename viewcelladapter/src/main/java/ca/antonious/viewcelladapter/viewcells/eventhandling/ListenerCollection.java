@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells.eventhandling;
 
 import java.util.ArrayList;
 import java.util.List;

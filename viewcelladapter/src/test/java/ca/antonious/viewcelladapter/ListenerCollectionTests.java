@@ -3,6 +3,8 @@ package ca.antonious.viewcelladapter;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
+
 import static org.junit.Assert.*;
 
 /**

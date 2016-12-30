@@ -1,4 +1,4 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.utilstests;
 
 import org.junit.Test;
 
@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ca.antonious.viewcelladapter.TestViewCell;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.sections.Section;
+import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 import static org.junit.Assert.*;

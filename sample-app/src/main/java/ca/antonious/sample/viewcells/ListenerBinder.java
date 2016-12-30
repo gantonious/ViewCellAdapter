@@ -1,7 +1,7 @@
 package ca.antonious.sample.viewcells;
 
-import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.ListenerCollection;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 import ca.antonious.viewcelladapter.viewcells.ViewCell;
 
 /**

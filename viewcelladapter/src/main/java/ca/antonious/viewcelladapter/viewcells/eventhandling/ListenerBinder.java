@@ -1,7 +1,7 @@
-package ca.antonious.viewcelladapter;
+package ca.antonious.viewcelladapter.viewcells.eventhandling;
 
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.ViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2016-12-28.
