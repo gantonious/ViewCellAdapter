@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,6 +16,7 @@ import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.ViewHolderFactory;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
@@ -27,12 +27,12 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
-    private Map<Integer, Class<? extends BaseViewHolder>> layoutTypes;
+    private Map<Integer, ViewHolderFactory> viewHolderFactories;
 
     public ViewCellAdapter() {
         this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
-        this.layoutTypes = new HashMap<>();
+        this.viewHolderFactories = new HashMap<>();
     }
 
     public void add(AbstractSection section) {
@@ -61,16 +61,8 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        try {
-            View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-
-            Class<? extends BaseViewHolder> layoutViewHolder = layoutTypes.get(viewType);
-            Constructor<? extends BaseViewHolder> viewHolderConstructor = layoutViewHolder.getConstructor(View.class);
-
-            return viewHolderConstructor.newInstance(view);
-        } catch (Exception e) {
-            return null;
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        return viewHolderFactories.get(viewType).createViewHolder(view);
     }
 
     @Override
@@ -93,9 +85,9 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
         int itemId = viewCell.getLayoutId();
-        Class<? extends BaseViewHolder> viewHolderClass = viewCell.getViewHolderClass();
+        ViewHolderFactory viewHolderFactory = viewCell.getViewHolderFactory();
 
-        layoutTypes.put(itemId, viewHolderClass);
+        viewHolderFactories.put(itemId, viewHolderFactory);
 
         return itemId;
     }

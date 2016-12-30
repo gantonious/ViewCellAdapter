@@ -25,11 +25,4 @@ public abstract class GenericViewCell<VH extends BaseViewHolder, T> extends View
     public int getItemId() {
         return model.hashCode();
     }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Class<? extends VH> getViewHolderClass() {
-        return (Class<? extends VH>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
-    }
 }
