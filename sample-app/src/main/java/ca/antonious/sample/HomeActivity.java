@@ -18,23 +18,14 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ViewCellAdapter viewCellAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        setUpRecyclerView();
+        configureRecyclerView();
     }
 
-    private List<Sample> getSamples() {
-        List<Sample> samples = new ArrayList<>();
-        samples.add(new Sample("Homogeneous Section Sample", HomogeneousSectionSample.class));
-
-        return samples;
-    }
-
-    private void setUpRecyclerView() {
+    private void configureRecyclerView() {
         viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
@@ -55,5 +46,20 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
         recyclerView.setAdapter(viewCellAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private List<Sample> getSamples() {
+        List<Sample> samples = new ArrayList<>();
+        samples.add(getBasicHomogeneousExample());
+
+        return samples;
+    }
+
+    private Sample getBasicHomogeneousExample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.basic_homogeneous_example_title))
+                .setDescription(getString(R.string.basic_homogeneous_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
     }
 }
