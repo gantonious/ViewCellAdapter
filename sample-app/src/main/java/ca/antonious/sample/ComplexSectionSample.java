@@ -3,7 +3,7 @@ package ca.antonious.sample;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomogeneousSectionSample extends BaseActivity {
+public class ComplexSectionSample extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

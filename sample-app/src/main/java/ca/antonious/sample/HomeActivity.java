@@ -58,7 +58,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.basic_homogeneous_example_title))
                 .setDescription(getString(R.string.basic_homogeneous_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 
@@ -66,7 +66,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.sorted_homogeneous_example_title))
                 .setDescription(getString(R.string.sorted_homogeneous_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 
@@ -74,7 +74,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.filtered_homogeneous_example_title))
                 .setDescription(getString(R.string.filtered_homogeneous_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 
@@ -82,7 +82,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.header_example_title))
                 .setDescription(getString(R.string.header_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 
@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.empty_example_title))
                 .setDescription(getString(R.string.empty_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 
@@ -98,7 +98,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.complex_example_title))
                 .setDescription(getString(R.string.complex_example_description))
-                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .setShowcaseActivityClass(ComplexSectionSample.class)
                 .build();
     }
 }
