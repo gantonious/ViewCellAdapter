@@ -1,10 +1,11 @@
 package ca.antonious.viewcelladapter.viewcells;
 
-import android.view.LayoutInflater;
 import android.view.View;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
+
+import ca.antonious.viewcelladapter.Func;
 
 /**
  * Created by George on 2016-11-17.
@@ -12,7 +13,7 @@ import java.lang.reflect.ParameterizedType;
 
 public abstract class ViewCell<VH extends BaseViewHolder> extends AbstractViewCell<VH> {
     @Override
-    public ViewHolderFactory getViewHolderFactory() {
+    public Func<View, BaseViewHolder> getViewHolderFactory() {
         return new ReflectionBasedViewHolderFactory(getViewHolderClass());
     }
 
@@ -22,7 +23,7 @@ public abstract class ViewCell<VH extends BaseViewHolder> extends AbstractViewCe
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public static class ReflectionBasedViewHolderFactory implements ViewHolderFactory {
+    public static class ReflectionBasedViewHolderFactory implements Func<View, BaseViewHolder> {
         private Class<? extends BaseViewHolder> viewHolderClass;
 
         public ReflectionBasedViewHolderFactory(Class<? extends BaseViewHolder> viewHolderClass) {
@@ -30,7 +31,7 @@ public abstract class ViewCell<VH extends BaseViewHolder> extends AbstractViewCe
         }
 
         @Override
-        public BaseViewHolder createViewHolder(View view) {
+        public BaseViewHolder call(View view) {
             try {
                 Constructor<? extends BaseViewHolder> viewHolderConstructor = viewHolderClass.getConstructor(View.class);
                 return viewHolderConstructor.newInstance(view);

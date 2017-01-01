@@ -16,7 +16,6 @@ import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
-import ca.antonious.viewcelladapter.viewcells.ViewHolderFactory;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
@@ -27,7 +26,7 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
-    private Map<Integer, ViewHolderFactory> viewHolderFactories;
+    private Map<Integer, Func<View, BaseViewHolder>> viewHolderFactories;
 
     public ViewCellAdapter() {
         this.sections = new ArrayList<>();
@@ -62,7 +61,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return viewHolderFactories.get(viewType).createViewHolder(view);
+        return viewHolderFactories.get(viewType).call(view);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
         int itemId = viewCell.getLayoutId();
-        ViewHolderFactory viewHolderFactory = viewCell.getViewHolderFactory();
+        Func<View, BaseViewHolder> viewHolderFactory = viewCell.getViewHolderFactory();
 
         viewHolderFactories.put(itemId, viewHolderFactory);
 
