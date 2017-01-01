@@ -19,13 +19,12 @@ import ca.antonious.sample.models.Task;
 import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
-import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.Function;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
-import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -65,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
         viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
-        GenericViewCellFactory<Task, TaskViewCell> taskViewCellFactory = new GenericViewCellFactory<Task, TaskViewCell>() {
+        Function<Task, TaskViewCell> taskViewCellFactory = new Function<Task, TaskViewCell>() {
             @Override
-            public TaskViewCell createViewCell(Task task) {
-                return new TaskViewCell(task);
+            public TaskViewCell apply(Task input) {
+                return new TaskViewCell(input);
             }
         };
 
         todaySection = new HomogeneousSection<>(taskViewCellFactory)
-                .setFilterFunction(new Func<Task, Boolean>() {
+                .setFilterFunction(new Function<Task, Boolean>() {
                     @Override
-                    public Boolean call(Task input) {
+                    public Boolean apply(Task input) {
                         return input.timesCompleted > 5;
                     }
                 })
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         EmptySectionDecorator allWithEmpty = new EmptySectionDecorator(compositeSection, new EmptyViewCell("EMPTY"));
 
-        viewCellAdapter.add(todaySection);
+        viewCellAdapter.add(allWithEmpty);
         viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
             @Override
             public void onTaskClicked(Task task) {

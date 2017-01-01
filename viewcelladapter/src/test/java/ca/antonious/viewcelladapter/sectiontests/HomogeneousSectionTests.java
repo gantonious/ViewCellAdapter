@@ -8,11 +8,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.Function;
 import ca.antonious.viewcelladapter.TestViewCell;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,13 +20,13 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class HomogeneousSectionTests {
-    private GenericViewCellFactory<String, TestViewCell> testViewCellFactory;
+    private Function<String, TestViewCell> testViewCellFactory;
 
     @Before
     public void set_up() {
-        testViewCellFactory = new GenericViewCellFactory<String, TestViewCell>() {
+        testViewCellFactory = new Function<String, TestViewCell>() {
             @Override
-            public TestViewCell createViewCell(String s) {
+            public TestViewCell apply(String s) {
                 return new TestViewCell(s);
             }
         };
@@ -62,9 +61,9 @@ public class HomogeneousSectionTests {
         section.add("ITEM-1");
         section.add("ITEM-2");
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
                     @Override
-                    public Boolean call(String input) {
+                    public Boolean apply(String input) {
                 return input.equals("ITEM-2");
             }
         });
@@ -81,9 +80,9 @@ public class HomogeneousSectionTests {
         section.add("ITEM-1");
         section.add("ITEM-2");
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return input.equals("ITEM-2");
             }
         });
@@ -100,9 +99,9 @@ public class HomogeneousSectionTests {
         section.add("ITEM-1");
         section.add("ITEM-2");
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return input.equals("ITEM-2");
             }
         });
@@ -120,9 +119,9 @@ public class HomogeneousSectionTests {
         section.add("ITEM-2");
         section.add("ITEM-3");
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return input.equals("ITEM-2") || input.equals("ITEM-3");
             }
         });
@@ -168,9 +167,9 @@ public class HomogeneousSectionTests {
             }
         });
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return !input.equals("ITEM-2");
             }
         });
@@ -190,9 +189,9 @@ public class HomogeneousSectionTests {
 
         section.get(0).select();
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return input.equals("ITEM-2") || input.equals("ITEM-3");
             }
         });
@@ -212,9 +211,9 @@ public class HomogeneousSectionTests {
 
         section.get(0).select();
 
-        section.setFilterFunction(new Func<String, Boolean>() {
+        section.setFilterFunction(new Function<String, Boolean>() {
             @Override
-            public Boolean call(String input) {
+            public Boolean apply(String input) {
                 return input.equals("ITEM-1") || input.equals("ITEM-3");
             }
         });
