@@ -12,7 +12,6 @@ import ca.antonious.viewcelladapter.Func;
 import ca.antonious.viewcelladapter.TestViewCell;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,13 +20,13 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class HomogeneousSectionTests {
-    private GenericViewCellFactory<String, TestViewCell> testViewCellFactory;
+    private Func<String, TestViewCell> testViewCellFactory;
 
     @Before
     public void set_up() {
-        testViewCellFactory = new GenericViewCellFactory<String, TestViewCell>() {
+        testViewCellFactory = new Func<String, TestViewCell>() {
             @Override
-            public TestViewCell createViewCell(String s) {
+            public TestViewCell call(String s) {
                 return new TestViewCell(s);
             }
         };

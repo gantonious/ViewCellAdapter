@@ -1,5 +1,6 @@
 package ca.antonious.viewcelladapter.sections;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,14 +12,13 @@ import ca.antonious.viewcelladapter.Func;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
-import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 /**
  * Created by George on 2016-12-19.
  */
 
 public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TModel>> extends AbstractSection {
-    private GenericViewCellFactory<TModel, TViewCell> viewCellFactory;
+    private Func<TModel, TViewCell> viewCellFactory;
 
     private Func<? super TModel, ? extends Boolean> filterFunction;
     private Comparator<? super TModel> modelComparator;
@@ -26,7 +26,11 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     private List<TViewCell> viewCells;
     private List<TViewCell> viewCellsToRender;
 
-    public HomogeneousSection(GenericViewCellFactory<TModel, TViewCell> viewCellFactory) {
+    public HomogeneousSection(Class<? extends TModel> modelClass, Class<? extends TViewCell> viewCellClass) {
+        this(new ReflectionBasedViewCellFactory<>(modelClass, viewCellClass));
+    }
+
+    public HomogeneousSection(Func<TModel, TViewCell> viewCellFactory) {
         this.viewCellFactory = viewCellFactory;
         this.viewCells = new ArrayList<>();
         this.viewCellsToRender = new ArrayList<>();
@@ -68,28 +72,38 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public void add(TModel model) {
-        this.viewCells.add(viewCellFactory.createViewCell(model));
+        this.viewCells.add(viewCellFactory.call(model));
         prepareViewCellsToRender();
     }
 
     public void addAll(Collection<? extends TModel> models) {
-        this.viewCells.addAll(viewCellFactory.createAllViewCells(models));
+        this.viewCells.addAll(convertToViewCells(models));
         prepareViewCellsToRender();
     }
 
     public void setAll(Collection<? extends TModel> models) {
-        CollectionUtils.setAll(this.viewCells, viewCellFactory.createAllViewCells(models));
+        CollectionUtils.setAll(this.viewCells, convertToViewCells(models));
         prepareViewCellsToRender();
     }
 
     public void prependAll(Collection<? extends TModel> models) {
-        CollectionUtils.prependAll(this.viewCells, viewCellFactory.createAllViewCells(models));
+        CollectionUtils.prependAll(this.viewCells, convertToViewCells(models));
         prepareViewCellsToRender();
     }
 
     public void clear() {
         viewCells.clear();
         prepareViewCellsToRender();
+    }
+
+    private List<TViewCell> convertToViewCells(Collection<? extends TModel> models) {
+        List<TViewCell> output = new ArrayList<>();
+
+        for (TModel model: models) {
+            output.add(viewCellFactory.call(model));
+        }
+
+        return output;
     }
 
     private void prepareViewCellsToRender() {
@@ -166,5 +180,25 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     @Override
     public int getItemCount() {
         return viewCellsToRender.size();
+    }
+
+    public static class ReflectionBasedViewCellFactory<TModel, TViewCell> implements Func<TModel, TViewCell> {
+        private Class<? extends TModel> modelClass;
+        private Class<? extends TViewCell> viewCellClass;
+
+        public ReflectionBasedViewCellFactory(Class<? extends TModel> modelClass, Class<? extends TViewCell> viewCellClass) {
+            this.modelClass = modelClass;
+            this.viewCellClass = viewCellClass;
+        }
+
+        @Override
+        public TViewCell call(TModel model) {
+            try {
+                Constructor<? extends TViewCell> viewCellConstructor = viewCellClass.getConstructor(modelClass);
+                return viewCellConstructor.newInstance(model);
+            } catch (Exception e) {
+                return null;
+            }
+        }
     }
 }

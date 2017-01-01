@@ -25,7 +25,6 @@ import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
-import ca.antonious.viewcelladapter.viewcells.GenericViewCellFactory;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -65,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
         viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
-        GenericViewCellFactory<Task, TaskViewCell> taskViewCellFactory = new GenericViewCellFactory<Task, TaskViewCell>() {
+        Func<Task, TaskViewCell> taskViewCellFactory = new Func<Task, TaskViewCell>() {
             @Override
-            public TaskViewCell createViewCell(Task task) {
-                return new TaskViewCell(task);
+            public TaskViewCell call(Task input) {
+                return new TaskViewCell(input);
             }
         };
 
