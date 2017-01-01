@@ -26,7 +26,7 @@ import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ViewCellAdapter viewCellAdapter;
 
