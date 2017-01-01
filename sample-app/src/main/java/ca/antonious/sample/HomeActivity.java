@@ -2,9 +2,7 @@ package ca.antonious.sample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,19 +12,17 @@ import ca.antonious.sample.viewcells.SampleViewCell;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 
-public class HomeActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private ViewCellAdapter viewCellAdapter;
-
+public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        configureRecyclerView();
+
+        recyclerView.setAdapter(buildAdapter());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void configureRecyclerView() {
-        viewCellAdapter = new ViewCellAdapter();
+    private ViewCellAdapter buildAdapter() {
+        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
         HomogeneousSection<Sample, SampleViewCell> samplesSection =
@@ -43,22 +39,65 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
-        recyclerView.setAdapter(viewCellAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        return viewCellAdapter;
     }
 
     private List<Sample> getSamples() {
         List<Sample> samples = new ArrayList<>();
-        samples.add(getBasicHomogeneousExample());
+        samples.add(getBasicHomogeneousSample());
+        samples.add(getSortingHomogeneousSample());
+        samples.add(getFilteredHomogeneousSample());
+        samples.add(getHeaderDecoratorSample());
+        samples.add(getEmptyDecorateSample());
+        samples.add(getComplexSample());
 
         return samples;
     }
 
-    private Sample getBasicHomogeneousExample() {
+    private Sample getBasicHomogeneousSample() {
         return new Sample.Builder()
                 .setTitle(getString(R.string.basic_homogeneous_example_title))
                 .setDescription(getString(R.string.basic_homogeneous_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
+    }
+
+    private Sample getSortingHomogeneousSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.sorted_homogeneous_example_title))
+                .setDescription(getString(R.string.sorted_homogeneous_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
+    }
+
+    private Sample getFilteredHomogeneousSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.filtered_homogeneous_example_title))
+                .setDescription(getString(R.string.filtered_homogeneous_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
+    }
+
+    private Sample getHeaderDecoratorSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.header_example_title))
+                .setDescription(getString(R.string.header_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
+    }
+
+    private Sample getEmptyDecorateSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.empty_example_title))
+                .setDescription(getString(R.string.empty_example_description))
+                .setShowcaseActivityClass(HomogeneousSectionSample.class)
+                .build();
+    }
+
+    private Sample getComplexSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.complex_example_title))
+                .setDescription(getString(R.string.complex_example_description))
                 .setShowcaseActivityClass(HomogeneousSectionSample.class)
                 .build();
     }

@@ -1,8 +1,38 @@
 <resources>
-    <string name="basic_homogeneous_example_title">Homogeneous Section</string>
+    <string name="basic_homogeneous_example_title">Basic Homogeneous Section</string>
     <string name="basic_homogeneous_example_description">
-        Simple usage of the homogeneous section showing how you can render a list of objects.
+        Simple usage of the homogeneous section showing how you can render a list of models.
     </string>
+
+    <string name="sorted_homogeneous_example_title">Sorted Homogeneous Section</string>
+    <string name="sorted_homogeneous_example_description">
+        Showcasing usage of the sorting feature.
+    </string>
+
+    <string name="filtered_homogeneous_example_title">Filtered Homogeneous Section</string>
+    <string name="filtered_homogeneous_example_description">
+        Showcasing usage of the filter feature.
+    </string>
+
+    <string name="header_example_title">Header Section Decorator</string>
+    <string name="header_example_description">
+        Showcasing how to apply the header section decorator, and its features.
+    </string>
+
+    <string name="empty_example_title">Empty Section Decorator</string>
+    <string name="empty_example_description">
+        Showcasing how to apply the empty section decorator.
+    </string>
+
+    <string name="complex_example_title">Complex Decorator Composition</string>
+    <string name="complex_example_description">
+        Showcasing how complex list structures can be achieved by correctly
+        composing section decorators.
+    </string>
+
+
+
+
 
     <string name="app_name">ViewCellAdapter </string>
     <string name="action_settings">Settings</string>

@@ -1,30 +1,14 @@
 package ca.antonious.sample;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import java.util.Comparator;
-
-import ca.antonious.sample.models.Task;
-import ca.antonious.sample.viewcells.EmptyViewCell;
-import ca.antonious.sample.viewcells.HeaderViewCell;
-import ca.antonious.sample.viewcells.TaskViewCell;
-import ca.antonious.viewcelladapter.Function;
-import ca.antonious.viewcelladapter.ViewCellAdapter;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
-import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
-import ca.antonious.viewcelladapter.sections.CompositeSection;
-import ca.antonious.viewcelladapter.sections.HomogeneousSection;
-
-public class HomogeneousSectionSample extends AppCompatActivity {
+public class HomogeneousSectionSample extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homogeneous_section_sample);
+        setContentView(R.layout.activity_base);
     }
 
     private void setUpRecyclerView() {
