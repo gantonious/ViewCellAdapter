@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
-import ca.antonious.sample.models.Feature;
+import ca.antonious.sample.models.Sample;
 import ca.antonious.viewcelladapter.annotations.BindListener;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
@@ -13,9 +13,9 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
  * Created by George on 2017-01-01.
  */
 
-public class FeatureViewCell extends GenericViewCell<FeatureViewCell.FeatureViewHolder, Feature> {
-    public FeatureViewCell(Feature feature) {
-        super(feature);
+public class SampleViewCell extends GenericViewCell<SampleViewCell.FeatureViewHolder, Sample> {
+    public SampleViewCell(Sample sample) {
+        super(sample);
     }
 
     @Override
@@ -25,13 +25,13 @@ public class FeatureViewCell extends GenericViewCell<FeatureViewCell.FeatureView
 
     @Override
     public void bindViewCell(FeatureViewHolder viewHolder) {
-        Feature feature = getModel();
+        Sample sample = getModel();
 
-        viewHolder.setTitle(feature.getTitle());
+        viewHolder.setTitle(sample.getTitle());
     }
 
     public interface OnFeatureClickListener {
-        void onFeatureClicked(Feature feature);
+        void onFeatureClicked(Sample sample);
     }
 
     @BindListener
