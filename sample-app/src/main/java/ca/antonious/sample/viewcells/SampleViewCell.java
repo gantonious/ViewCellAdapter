@@ -13,41 +13,41 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
  * Created by George on 2017-01-01.
  */
 
-public class SampleViewCell extends GenericViewCell<SampleViewCell.FeatureViewHolder, Sample> {
+public class SampleViewCell extends GenericViewCell<SampleViewCell.SampleViewHolder, Sample> {
     public SampleViewCell(Sample sample) {
         super(sample);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.feature_list_item;
+        return R.layout.sample_list_item;
     }
 
     @Override
-    public void bindViewCell(FeatureViewHolder viewHolder) {
+    public void bindViewCell(SampleViewHolder viewHolder) {
         Sample sample = getModel();
 
         viewHolder.setTitle(sample.getTitle());
     }
 
-    public interface OnFeatureClickListener {
-        void onFeatureClicked(Sample sample);
+    public interface OnSampleClickListener {
+        void onSampleClicked(Sample sample);
     }
 
     @BindListener
-    public void bindOnFeatureClick(FeatureViewHolder featureViewHolder, final OnFeatureClickListener onFeatureClickListener) {
-        featureViewHolder.setOnClickListener(new View.OnClickListener() {
+    public void bindOnFeatureClick(SampleViewHolder sampleViewHolder, final OnSampleClickListener onSampleClickListener) {
+        sampleViewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onFeatureClickListener.onFeatureClicked(getModel());
+                onSampleClickListener.onSampleClicked(getModel());
             }
         });
     }
 
-    public static class FeatureViewHolder extends BaseViewHolder {
+    public static class SampleViewHolder extends BaseViewHolder {
         private TextView titleTextView;
 
-        public FeatureViewHolder(View itemView) {
+        public SampleViewHolder(View itemView) {
             super(itemView);
 
             titleTextView = (TextView) itemView.findViewById(R.id.feature_title);
