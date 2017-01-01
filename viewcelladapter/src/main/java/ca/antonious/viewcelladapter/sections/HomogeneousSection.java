@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.Function;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
@@ -18,9 +18,9 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
  */
 
 public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TModel>> extends AbstractSection {
-    private Func<TModel, TViewCell> viewCellFactory;
+    private Function<TModel, TViewCell> viewCellFactory;
 
-    private Func<? super TModel, ? extends Boolean> filterFunction;
+    private Function<? super TModel, ? extends Boolean> filterFunction;
     private Comparator<? super TModel> modelComparator;
 
     private List<TViewCell> viewCells;
@@ -30,7 +30,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         this(new ReflectionBasedViewCellFactory<>(modelClass, viewCellClass));
     }
 
-    public HomogeneousSection(Func<TModel, TViewCell> viewCellFactory) {
+    public HomogeneousSection(Function<TModel, TViewCell> viewCellFactory) {
         this.viewCellFactory = viewCellFactory;
         this.viewCells = new ArrayList<>();
         this.viewCellsToRender = new ArrayList<>();
@@ -72,7 +72,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public void add(TModel model) {
-        this.viewCells.add(viewCellFactory.call(model));
+        this.viewCells.add(viewCellFactory.apply(model));
         prepareViewCellsToRender();
     }
 
@@ -100,7 +100,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         List<TViewCell> output = new ArrayList<>();
 
         for (TModel model: models) {
-            output.add(viewCellFactory.call(model));
+            output.add(viewCellFactory.apply(model));
         }
 
         return output;
@@ -139,7 +139,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         });
     }
 
-    public HomogeneousSection<TModel, TViewCell> setFilterFunction(Func<? super TModel, ? extends Boolean> filterFunction) {
+    public HomogeneousSection<TModel, TViewCell> setFilterFunction(Function<? super TModel, ? extends Boolean> filterFunction) {
         this.filterFunction = filterFunction;
         prepareViewCellsToRender();
 
@@ -151,7 +151,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public boolean shouldDisplayViewCell(TViewCell viewCell) {
-        return filterFunction.call(viewCell.getModel());
+        return filterFunction.apply(viewCell.getModel());
     }
 
     private void filterViewCells() {
@@ -182,7 +182,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         return viewCellsToRender.size();
     }
 
-    public static class ReflectionBasedViewCellFactory<TModel, TViewCell> implements Func<TModel, TViewCell> {
+    public static class ReflectionBasedViewCellFactory<TModel, TViewCell> implements Function<TModel, TViewCell> {
         private Class<? extends TModel> modelClass;
         private Class<? extends TViewCell> viewCellClass;
 
@@ -192,7 +192,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         }
 
         @Override
-        public TViewCell call(TModel model) {
+        public TViewCell apply(TModel model) {
             try {
                 Constructor<? extends TViewCell> viewCellConstructor = viewCellClass.getConstructor(modelClass);
                 return viewCellConstructor.newInstance(model);

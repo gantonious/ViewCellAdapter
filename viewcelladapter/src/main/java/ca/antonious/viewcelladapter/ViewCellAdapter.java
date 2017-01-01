@@ -26,7 +26,7 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
-    private Map<Integer, Func<View, BaseViewHolder>> viewHolderFactories;
+    private Map<Integer, Function<View, BaseViewHolder>> viewHolderFactories;
 
     public ViewCellAdapter() {
         this.sections = new ArrayList<>();
@@ -61,7 +61,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return viewHolderFactories.get(viewType).call(view);
+        return viewHolderFactories.get(viewType).apply(view);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
         int itemId = viewCell.getLayoutId();
-        Func<View, BaseViewHolder> viewHolderFactory = viewCell.getViewHolderFactory();
+        Function<View, BaseViewHolder> viewHolderFactory = viewCell.getViewHolderFactory();
 
         viewHolderFactories.put(itemId, viewHolderFactory);
 

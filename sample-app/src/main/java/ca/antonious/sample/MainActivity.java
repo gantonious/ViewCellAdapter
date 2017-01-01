@@ -19,7 +19,7 @@ import ca.antonious.sample.models.Task;
 import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.TaskViewCell;
-import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.Function;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
@@ -64,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
         viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
-        Func<Task, TaskViewCell> taskViewCellFactory = new Func<Task, TaskViewCell>() {
+        Function<Task, TaskViewCell> taskViewCellFactory = new Function<Task, TaskViewCell>() {
             @Override
-            public TaskViewCell call(Task input) {
+            public TaskViewCell apply(Task input) {
                 return new TaskViewCell(input);
             }
         };
 
         todaySection = new HomogeneousSection<>(taskViewCellFactory)
-                .setFilterFunction(new Func<Task, Boolean>() {
+                .setFilterFunction(new Function<Task, Boolean>() {
                     @Override
-                    public Boolean call(Task input) {
+                    public Boolean apply(Task input) {
                         return input.timesCompleted > 5;
                     }
                 })

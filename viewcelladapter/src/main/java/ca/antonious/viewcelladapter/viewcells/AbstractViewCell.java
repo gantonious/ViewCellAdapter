@@ -2,7 +2,7 @@ package ca.antonious.viewcelladapter.viewcells;
 
 import android.view.View;
 
-import ca.antonious.viewcelladapter.Func;
+import ca.antonious.viewcelladapter.Function;
 
 /**
  * Created by George on 2016-11-17.
@@ -33,5 +33,5 @@ public abstract class AbstractViewCell<VH extends BaseViewHolder> implements Sel
     public abstract int getLayoutId();
     public abstract int getItemId();
     public abstract void bindViewCell(VH viewHolder);
-    public abstract Func<View, BaseViewHolder> getViewHolderFactory();
+    public abstract Function<View, BaseViewHolder> getViewHolderFactory();
 }
