@@ -21,7 +21,7 @@ public class FooterSectionDecorator extends SectionDecorator {
         if (position == getDecoratedSection().getItemCount()) {
             return footerViewCell;
         }
-        return getDecoratedSection().get(0);
+        return getDecoratedSection().get(position);
     }
 
     @Override

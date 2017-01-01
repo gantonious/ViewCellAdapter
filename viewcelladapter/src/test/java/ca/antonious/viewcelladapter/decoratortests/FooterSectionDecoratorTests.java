@@ -28,17 +28,19 @@ public class FooterSectionDecoratorTests {
     }
 
     @Test
-    public void test_getZero_ifDecoratedSectionIsNotEmpty_thenReturnsFirstItemInSection() {
+    public void test_getOne_ifDecoratedSectionIsNotEmpty_thenReturnsSecondItemInSection() {
         AbstractViewCell sectionItem1 = new TestViewCell("ITEM1");
+        AbstractViewCell sectionItem2 = new TestViewCell("ITEM2");
         AbstractViewCell footerViewCell = new TestViewCell("FOOTER");
 
         Section section = new Section();
         section.add(sectionItem1);
+        section.add(sectionItem2);
 
         FooterSectionDecorator footerSectionDecorator = new FooterSectionDecorator(section, footerViewCell);
 
-        AbstractViewCell expectedViewCell = sectionItem1;
-        AbstractViewCell actualViewCell = footerSectionDecorator.get(0);
+        AbstractViewCell expectedViewCell = sectionItem2;
+        AbstractViewCell actualViewCell = footerSectionDecorator.get(1);
 
         assertEquals(expectedViewCell, actualViewCell);
     }
