@@ -28,6 +28,7 @@ public class SampleViewCell extends GenericViewCell<SampleViewCell.SampleViewHol
         Sample sample = getModel();
 
         viewHolder.setTitle(sample.getTitle());
+        viewHolder.setDescription(sample.getDescription());
     }
 
     public interface OnSampleClickListener {
@@ -46,15 +47,21 @@ public class SampleViewCell extends GenericViewCell<SampleViewCell.SampleViewHol
 
     public static class SampleViewHolder extends BaseViewHolder {
         private TextView titleTextView;
+        private TextView descriptionTextView;
 
         public SampleViewHolder(View itemView) {
             super(itemView);
 
-            titleTextView = (TextView) itemView.findViewById(R.id.feature_title);
+            titleTextView = (TextView) itemView.findViewById(R.id.sample_title);
+            descriptionTextView = (TextView) itemView.findViewById(R.id.sample_description);
         }
 
         public void setTitle(String title) {
             titleTextView.setText(title);
+        }
+
+        public void setDescription(String description) {
+            descriptionTextView.setText(description);
         }
 
         public void setOnClickListener(View.OnClickListener onClickListener) {

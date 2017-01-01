@@ -6,17 +6,32 @@
               android:background="?attr/selectableItemBackground">
 
     <TextView
-        android:id="@+id/feature_title"
+        android:id="@+id/sample_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Feature"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Sample"
         android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="sans-serif-light"/>
+
+    <TextView
+        android:id="@+id/sample_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Description"
+        android:textSize="16sp"
         android:fontFamily="sans-serif-light"/>
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
+        android:layout_marginTop="16dp"
         android:background="@color/grey"/>
 
 </LinearLayout>
