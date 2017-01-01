@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         EmptySectionDecorator allWithEmpty = new EmptySectionDecorator(compositeSection, new EmptyViewCell("EMPTY"));
 
-        viewCellAdapter.add(todaySection);
+        viewCellAdapter.add(allWithEmpty);
         viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
             @Override
             public void onTaskClicked(Task task) {

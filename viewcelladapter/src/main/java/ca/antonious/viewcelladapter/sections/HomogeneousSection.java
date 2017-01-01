@@ -18,19 +18,18 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
  */
 
 public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TModel>> extends AbstractSection {
-    private Function<TModel, TViewCell> viewCellFactory;
-
-    private Function<? super TModel, ? extends Boolean> filterFunction;
-    private Comparator<? super TModel> modelComparator;
-
     private List<TViewCell> viewCells;
     private List<TViewCell> viewCellsToRender;
+    
+    private Comparator<? super TModel> modelComparator;
+    private Function<? super TModel, ? extends Boolean> filterFunction;
+    private Function<? super TModel, ? extends TViewCell> viewCellFactory;
 
     public HomogeneousSection(Class<? extends TModel> modelClass, Class<? extends TViewCell> viewCellClass) {
         this(new ReflectionBasedViewCellFactory<>(modelClass, viewCellClass));
     }
 
-    public HomogeneousSection(Function<TModel, TViewCell> viewCellFactory) {
+    public HomogeneousSection(Function<? super TModel, ? extends TViewCell> viewCellFactory) {
         this.viewCellFactory = viewCellFactory;
         this.viewCells = new ArrayList<>();
         this.viewCellsToRender = new ArrayList<>();
