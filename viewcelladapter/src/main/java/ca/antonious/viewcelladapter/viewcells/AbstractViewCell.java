@@ -8,7 +8,7 @@ import ca.antonious.viewcelladapter.Function;
  * Created by George on 2016-11-17.
  */
 
-public abstract class AbstractViewCell<VH extends BaseViewHolder> implements Selectable {
+public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> implements Selectable {
     private boolean isSelected;
 
     public AbstractViewCell() {
@@ -32,6 +32,6 @@ public abstract class AbstractViewCell<VH extends BaseViewHolder> implements Sel
 
     public abstract int getLayoutId();
     public abstract int getItemId();
-    public abstract void bindViewCell(VH viewHolder);
+    public abstract void bindViewCell(TViewHolder viewHolder);
     public abstract Function<View, BaseViewHolder> getViewHolderFactory();
 }

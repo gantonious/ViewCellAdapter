@@ -11,15 +11,15 @@ import ca.antonious.viewcelladapter.Function;
  * Created by George on 2016-11-17.
  */
 
-public abstract class ViewCell<VH extends BaseViewHolder> extends AbstractViewCell<VH> {
+public abstract class ViewCell<TViewHolder extends BaseViewHolder> extends AbstractViewCell<TViewHolder> {
     @Override
     public Function<View, BaseViewHolder> getViewHolderFactory() {
         return new ReflectionBasedViewHolderFactory(getViewHolderClass());
     }
 
     @SuppressWarnings("unchecked")
-    public Class<? extends VH> getViewHolderClass() {
-        return (Class<? extends VH>) ((ParameterizedType) getClass()
+    public Class<? extends TViewHolder> getViewHolderClass() {
+        return (Class<? extends TViewHolder>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
