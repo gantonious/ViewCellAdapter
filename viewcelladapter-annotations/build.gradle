@@ -7,3 +7,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
+publish {
+    userOrg = 'gantonious'
+    groupId = 'ca.antonious'
+    artifactId = 'viewcelladapter-annotations'
+    publishVersion = '2.0.0a'
+    website = "https://github.com/gantonious/ViewCellAdapter"
+}
