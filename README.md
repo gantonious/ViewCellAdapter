@@ -1,4 +1,4 @@
-# ViewCellAdapter
+# ViewCellAdapter [![CircleCI](https://circleci.com/gh/gantonious/ViewCellAdapter.svg?style=svg)](https://circleci.com/gh/gantonious/ViewCellAdapter)
 
 A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adatper.
 

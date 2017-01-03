@@ -1,18 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.0"
-
     defaultConfig {
-        applicationId "ca.antonious.sample"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -23,15 +20,20 @@ android {
 }
 
 dependencies {
-    compile project(':viewcelladapter')
-    compile project(':viewcelladapter-annotations')
-    annotationProcessor project(':viewcelladapter-compiler')
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':viewcelladapter-annotations')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+}
+
+publish {
+    userOrg = 'gantonious'
+    groupId = 'ca.antonious'
+    artifactId = 'viewcelladapter'
+    publishVersion = '2.0.0a'
+    website = "https://github.com/gantonious/ViewCellAdapter"
 }
