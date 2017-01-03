@@ -34,6 +34,6 @@ publish {
     userOrg = 'gantonious'
     groupId = 'ca.antonious'
     artifactId = 'viewcelladapter'
-    publishVersion = '1.1.1'
+    publishVersion = '2.0.0a'
     website = "https://github.com/gantonious/ViewCellAdapter"
 }
