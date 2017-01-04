@@ -144,7 +144,7 @@ public interface OnTaskClickListener {
 }
 ```
 
-### Step 2: Bind the interface to the view holder
+### Step 2: Bind the interface to the view holder inside the ViewCell
 
 ```java
 @BindListener
