@@ -20,7 +20,7 @@ public class Task {
 }
 ```
 
-### Define a Layout
+### Define a Layout 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -37,7 +37,7 @@ public class Task {
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/task_num_compeltions"
+        android:id="@+id/task_num_completions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"/>
@@ -48,7 +48,7 @@ public class Task {
 ### Define a ViewCell
 
 ```java
-public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder, Task> {
+public class TaskViewCell extends GenericViewCell<TaskViewCell.TaskViewHolder, Task> {
 
     public TaskViewCell(Task model) {
         super(model);
@@ -60,14 +60,14 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
     }
 
     @Override
-    public void bindViewCell(ViewHolder viewHolder) {
+    public void bindViewCell(TaskViewHolder viewHolder) {
         Task task = getModel();
 
         viewHolder.setTaskName(task.name);
         viewHolder.setNumberOfCompletions(task.timesCompleted);
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+    public static class TaskViewHolder extends BaseViewHolder {
         private TextView taskNameTextView;
         private TextView numberOfCompletionsTextView;
 
@@ -75,7 +75,7 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
             super(itemView);
 
             taskNameTextView = (TextView) itemView.findViewById(R.id.task_title);
-            numberOfCompletionsTextView = (TextView) itemView.findViewById(R.id.task_num_compeltions);
+            numberOfCompletionsTextView = (TextView) itemView.findViewById(R.id.task_num_completions);
         }
 
         public void setTaskName(String taskName) {
@@ -92,68 +92,73 @@ public class TaskViewCell extends GenericSingleViewCell<TaskViewCell.ViewHolder,
 
 ## Using the Adapter
 
-The `ViewCellAdapter` just takes in a list of ViewCells and renders the data in the order of the view cells. You can interleave SectionViewCells and SingleViewCells.
+The `ViewCellAdapter` takes in a list of sections. You can then provide each section with a set of view cells.
 
 ### Using sections
 
-Set up a ViewCellAdapter with the sections you need
+The simplest way to get started is to use a `HomogeneousSection`. A `HomogeneousSection` assumes all view cells in the section are binding the same data type.
 
 ```java
 ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
 
-SectionViewCell todaysTasksSection = new SectionViewCell();
-SectionViewCell allTasksSection = new SectionViewCell();
+HomogeneousSection todaysTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
+HomogeneousSection olderTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
 
 viewCellAdapter.add(todaysTasksSection);
-viewCellAdapter.add(allTasksSection);
+viewCellAdapter.add(olderTasksSection);
 ```
 
 Then each section can be updated independently
 
 ```java
-List<TaskViewCell> todaysTasks = ...;
+List<Task> todaysTasks = getTodaysTasks();
+List<Task> olderTasks = getOlderTasks();
+
 todaysTasksSection.addAll(todaysTasks)
+olderTasksSection.addAll(olderTasks);
+
 viewCellAdapter.notifyDataSetChanged();
 ```
 
-If you want to have a header for a section do this
+Sections can be decorated to add extra functionality. Here is an example of adding a header to a section.
 
 ```java
-SectionWithHeaderViewCell todaysTasksSection = new SectionWithHeaderViewCell();
+AbstractViewCell headerViewCell = getHeaderViewCell();
 
-ViewCell headerViewCell = ...;
-todaysTasksSection.setSectionHeader(headerViewCell);
+HeaderSectionDecorator todaysTasksWithHeader = new HeaderSectionDecorator(todaysTasksSection, headerViewCell);
+todaysTasksWithHeader.setShowHeaderIfEmpty(false);
+
+viewCellAdapter.add(todaysTasksWithHeader);
 ```
+
 
 ## Handling ViewHolder Events
 
-Often times an event can occur in a viewholder that you may want to handle in the parent activity/fragment. This can be done by overriding the `bindListeners` method in a ViewCell.
+Often times an event can occur in a view holder that you may want to handle in the parent activity/fragment. This can be done by using the `@BindListener` annotation in the viewcell.
 
-Let's say we want to handle when a task is clicked in the list. We can achieve this by adding the following code to the `TaskViewCell` defined above.
+### Step 1: Define an event handler interface
 
 ```java
 public interface OnTaskClickListener {
     void onTaskClicked(Task task);
 }
+```
 
-@Override
-public void bindListeners(ViewHolder viewHolder, ListenerCollection listeners) {
-    bindOnClickListener(viewHolder, listeners.getListener(OnTaskClickListener.class));
-}
+### Step 2: Bind the interface to the view holder
 
-private void bindOnClickListener(ViewHolder viewHolder, final OnTaskClickListener onTaskClickListener) {
-    if (onTaskClickListener != null) {
-        viewHolder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onTaskClickListener.onTaskClicked(getModel());
-            }
-        });
-    }
+```java
+@BindListener
+public void bindOnTaskClick(TaskViewHolder viewHolder, OnTaskClickListener onTaskClickListener) {
+    viewHolder.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            onTaskClickListener.onTaskClicked(getModel());
+        }
+    });  
 }
 ```
 
-We can then handle the event in the class that owns the adapter by doing:
+### Step 3: Handle event in activity/fragment
 
 ```java
 viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
@@ -163,11 +168,13 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
     }
 });
 ```
+
 ## Download
 
 ```
 dependencies {
-    compile 'ca.antonious:viewcelladapter:1.1.1'
+    compile 'ca.antonious:viewcelladapter:2.0.0'
+    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.0.0'
 }
 ```
 
