@@ -2,6 +2,8 @@ package ca.antonious.sample;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +36,7 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
         recyclerView.setAdapter(viewCellAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        sampleModelSection.addAll(generateSampleModels());
-        viewCellAdapter.notifyDataSetChanged();
+        populateSectionWithBaseData();
     }
 
     private ViewCellAdapter buildAdapter() {
@@ -57,14 +58,10 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
         return viewCellAdapter;
     }
 
-    private List<SampleModel> generateSampleModels() {
-        List<SampleModel> sampleModels = new ArrayList<>();
-
+    private void populateSectionWithBaseData() {
         for (int i = 0; i < ITEM_COUNT; i++) {
-            sampleModels.add(generateRandomSampleModel());
+            addSampleModel();
         }
-
-        return sampleModels;
     }
 
     private SampleModel generateRandomSampleModel() {
@@ -81,6 +78,26 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
         if (!sampleModelSection.isEmpty()) {
             sampleModelSection.remove(0);
             viewCellAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.basic_homogeneous_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                addSampleModel();
+                return true;
+            case R.id.action_remove:
+                removeSampleModel();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
