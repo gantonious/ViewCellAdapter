@@ -17,8 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ComplexSectionSample">
-        </activity>
+        <activity android:name=".ComplexSectionSample"/>
+        <activity android:name=".BasicHomogeneousSectionSample"
+                  android:label="@string/basic_homogeneous_example_title"/>
     </application>
 
 </manifest>
