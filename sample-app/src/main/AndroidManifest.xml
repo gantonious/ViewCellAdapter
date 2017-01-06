@@ -10,16 +10,25 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity android:name=".ComplexSectionSample"/>
+
         <activity android:name=".BasicHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/basic_homogeneous_example_title"/>
+
+        <activity android:name=".FilteredHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/filtered_homogeneous_example_title"/>
+
     </application>
 
 </manifest>
