@@ -3,6 +3,8 @@ package ca.antonious.sample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,5 +111,21 @@ public class HomeActivity extends BaseActivity {
                 .setDescription(getString(R.string.heterogeneous_example_description))
                 .setShowcaseActivityClass(HeterogeneousSample.class)
                 .build();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_info:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
