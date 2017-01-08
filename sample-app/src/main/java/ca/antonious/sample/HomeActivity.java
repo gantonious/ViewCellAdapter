@@ -107,7 +107,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.heterogeneous_example_title))
                 .setDescription(getString(R.string.heterogeneous_example_description))
-                .setShowcaseActivityClass(HeterogeneousExample.class)
+                .setShowcaseActivityClass(HeterogeneousSample.class)
                 .build();
     }
 }

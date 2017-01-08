@@ -12,15 +12,17 @@ import java.util.Locale;
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.models.SelectableModel;
 import ca.antonious.sample.models.SelectableModelViewCell;
+import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.sections.Section;
 
 /**
  * Created by George on 2017-01-08.
  */
 
-public class HeterogeneousExample extends BaseActivity {
+public class HeterogeneousSample extends BaseActivity {
     private ViewCellAdapter viewCellAdapter;
     private Section mainSection;
 
@@ -41,8 +43,12 @@ public class HeterogeneousExample extends BaseActivity {
         // create section
         mainSection = new Section();
 
-        // add section to the adapter
-        viewCellAdapter.add(mainSection);
+        // decorate the section with an empty view
+        EmptyViewCell emptyViewCell = new EmptyViewCell("Add items at the top");
+        EmptySectionDecorator mainSectionWithEmptyView = new EmptySectionDecorator(mainSection, emptyViewCell);
+
+        // add the decorated section to the adapter
+        viewCellAdapter.add(mainSectionWithEmptyView);
 
         // register on sample model clicked listener
         viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
