@@ -38,6 +38,10 @@
         <activity android:name=".ComplexDecoratorCompositionSample"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/complex_example_title"/>
+        
+        <activity android:name=".SelectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/selection_example_title"/>
 
     </application>
 

@@ -31,9 +31,10 @@
         composing section decorators.
     </string>
 
-
-
-
+    <string name="selection_example_title">Selection</string>
+    <string name="selection_example_description">
+        Showcasing viewcell selection.
+    </string>
 
     <string name="app_name">ViewCellAdapter </string>
     <string name="action_settings">Settings</string>
