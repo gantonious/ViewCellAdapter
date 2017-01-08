@@ -6,7 +6,7 @@
 
     <string name="sorted_homogeneous_example_title">Sorted Homogeneous Section</string>
     <string name="sorted_homogeneous_example_description">
-        Showcasing usage of the sorting feature.
+        Showcasing usage of the sorting feature. Displays a list of items in alphabetical order.
     </string>
 
     <string name="filtered_homogeneous_example_title">Filtered Homogeneous Section</string>
