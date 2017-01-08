@@ -1,5 +1,6 @@
 package ca.antonious.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,7 @@ public class BaseActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setHint("Search...");
-        searchView.setHintTextColor(0xC0C0C0);
+        searchView.setHintTextColor(Color.parseColor("#ACACAC"));
     }
 
     protected void showSnackbar(String message) {
