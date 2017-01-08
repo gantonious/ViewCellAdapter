@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -38,7 +37,10 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
         ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
+        // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
+
+        // set comparator for the section to sort the data with
         sampleModelSection.setModelComparator(new Comparator<SampleModel>() {
             @Override
             public int compare(SampleModel model1, SampleModel model2) {
@@ -46,11 +48,14 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
             }
         });
 
+        // decorate the section with an empty view
         EmptyViewCell emptyViewCell = new EmptyViewCell("Press the add button to add items!");
         EmptySectionDecorator sampleModelSectionWithEmptyView = new EmptySectionDecorator(sampleModelSection, emptyViewCell);
 
+        // add decorated section to the adapter
         viewCellAdapter.add(sampleModelSectionWithEmptyView);
 
+        // register on sample model clicked listener
         viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
             @Override
             public void onSampleModelClick(SampleModel sampleModel) {

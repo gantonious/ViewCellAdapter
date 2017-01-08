@@ -43,10 +43,13 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
         ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
+        // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
+        // add section to the adapter
         viewCellAdapter.add(sampleModelSection);
 
+        // register on sample model clicked listener
         viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
             @Override
             public void onSampleModelClick(SampleModel sampleModel) {
@@ -100,5 +103,4 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

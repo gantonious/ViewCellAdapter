@@ -43,10 +43,13 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
         ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
         viewCellAdapter.setHasStableIds(true);
 
+        // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
+        // add section to the adapter
         viewCellAdapter.add(sampleModelSection);
 
+        // register on sample model clicked listener
         viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
             @Override
             public void onSampleModelClick(SampleModel sampleModel) {
@@ -74,12 +77,14 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
     }
 
     private void updateSearchFilter(final String searchTerm) {
+        // update filter predicate when the search term changes
         sampleModelSection.setFilterFunction(new Function<SampleModel, Boolean>() {
             @Override
             public Boolean apply(SampleModel input) {
                 return input.getName().toLowerCase().startsWith(searchTerm.toLowerCase());
             }
         });
+
         viewCellAdapter.notifyDataSetChanged();
     }
 
@@ -115,5 +120,4 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
