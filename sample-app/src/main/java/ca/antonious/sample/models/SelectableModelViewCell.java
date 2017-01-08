@@ -2,7 +2,6 @@ package ca.antonious.sample.models;
 
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
@@ -24,14 +23,19 @@ public class SelectableModelViewCell extends GenericViewCell<SelectableModelView
     }
 
     @Override
-    public void bindViewCell(SelectableModelViewHolder viewHolder) {
+    public void bindViewCell(final SelectableModelViewHolder viewHolder) {
         SelectableModel selectableModel = getModel();
 
+        viewHolder.setSelectionToggleListener(null);
+
         viewHolder.setName(selectableModel.getName());
+        viewHolder.setIsSelected(isSelected());
+
         viewHolder.setSelectionToggleListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleSelectionState();
+                viewHolder.setIsSelected(isSelected());
             }
         });
     }
@@ -59,14 +63,13 @@ public class SelectableModelViewCell extends GenericViewCell<SelectableModelView
             nameTextView.setText(name);
         }
 
+        public void setIsSelected(boolean isSelected) {
+            selectionCheckBox.setChecked(isSelected);
+        }
+
         public void setSelectionToggleListener(final View.OnClickListener onClickListener) {
             itemView.setOnClickListener(onClickListener);
-            selectionCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    onClickListener.onClick(selectionCheckBox);
-                }
-            });
+            selectionCheckBox.setOnClickListener(onClickListener);
         }
     }
 }

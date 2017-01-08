@@ -98,7 +98,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.selection_example_title))
                 .setDescription(getString(R.string.selection_example_description))
-                .setShowcaseActivityClass(null)
+                .setShowcaseActivityClass(SelectionSample.class)
                 .build();
     }
 }
