@@ -26,6 +26,10 @@
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/basic_homogeneous_example_title"/>
 
+        <activity android:name=".SortedHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/sorted_homogeneous_example_title"/>
+
         <activity android:name=".FilteredHomogeneousSectionSample"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/filtered_homogeneous_example_title"/>

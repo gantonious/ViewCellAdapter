@@ -66,7 +66,7 @@ public class HomeActivity extends BaseActivity {
         return new Sample.Builder()
                 .setTitle(getString(R.string.sorted_homogeneous_example_title))
                 .setDescription(getString(R.string.sorted_homogeneous_example_description))
-                .setShowcaseActivityClass(ComplexSectionSample.class)
+                .setShowcaseActivityClass(SortedHomogeneousSectionSample.class)
                 .build();
     }
 
