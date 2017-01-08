@@ -1,13 +1,13 @@
 package ca.antonious.sample.models;
 
 /**
- * Created by George on 2016-11-17.
+ * Created by George on 2017-01-08.
  */
 
-public class Workout {
+public class SelectableModel {
     private String name;
 
-    public Workout(String name) {
+    public SelectableModel(String name) {
         this.name = name;
     }
 
@@ -17,5 +17,10 @@ public class Workout {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

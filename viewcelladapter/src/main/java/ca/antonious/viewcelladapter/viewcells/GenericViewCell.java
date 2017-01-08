@@ -23,4 +23,9 @@ public abstract class GenericViewCell<TViewHolder extends BaseViewHolder, TModel
     public int getItemId() {
         return model.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return getModel().toString();
+    }
 }

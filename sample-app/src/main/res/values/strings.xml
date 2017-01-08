@@ -1,4 +1,49 @@
 <resources>
-    <string name="app_name">Sample</string>
+    <string name="basic_homogeneous_example_title">Basic Homogeneous Section</string>
+    <string name="basic_homogeneous_example_description">
+        Simple usage of the homogeneous section showing how you can render a list of models.
+    </string>
+
+    <string name="sorted_homogeneous_example_title">Sorted Homogeneous Section</string>
+    <string name="sorted_homogeneous_example_description">
+        Displays a list of items in alphabetical order. Also showcases usage of the empty section decorator.
+    </string>
+
+    <string name="filtered_homogeneous_example_title">Filtered Homogeneous Section</string>
+    <string name="filtered_homogeneous_example_description">
+        Displays a list of items that are filtered by a search term.
+    </string>
+
+    <string name="multiple_sections_example_title">Multiple Sections</string>
+    <string name="multiple_sections_example_description">
+        Displays a list with two sections, and shows how sections can be updated independently.
+        Uses header section decorators to provide headers for the seperate sections.
+    </string>
+
+    <string name="empty_example_title">Empty Section Decorator</string>
+    <string name="empty_example_description">
+        Showcasing how to apply the empty section decorator.
+    </string>
+
+    <string name="complex_example_title">Complex Decorator Composition</string>
+    <string name="complex_example_description">
+        Showcasing how complex list structures can be achieved by correctly
+        composing section decorators.
+    </string>
+
+    <string name="selection_example_title">Selection</string>
+    <string name="selection_example_description">
+        Displays a list of items that can be selected, and showcases how the selected items
+        and be retrieved.
+    </string>
+
+    <string name="heterogeneous_example_title">Heterogeneous Section</string>
+    <string name="heterogeneous_example_description">
+        Displays different view types in the same section.
+    </string>
+
+    <string name="about_activity_title">Information</string>
+
+    <string name="app_name">ViewCellAdapter </string>
     <string name="action_settings">Settings</string>
 </resources>

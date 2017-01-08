@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_add_sample_model"
+          android:orderInCategory="100"
+          android:title="Add SampleModel"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_add_selectable_model"
+          android:orderInCategory="100"
+          android:title="Add SelectableModel"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_show_selections"
+          android:orderInCategory="100"
+          android:title="Show Selections"
+          app:showAsAction="never" />
+
+    <item android:id="@+id/action_remove"
+          android:orderInCategory="100"
+          android:title="Remove first item"
+          app:showAsAction="never" />
+</menu>

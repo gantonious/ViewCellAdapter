@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="Header"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="24sp"/>
+        android:layout_marginTop="-25dp"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif-light"
+        android:textSize="21sp"/>
 
 </RelativeLayout>
