@@ -49,7 +49,8 @@ public class HomeActivity extends BaseActivity {
         samples.add(getFilteredHomogeneousSample());
         samples.add(getMultipleSectionsSample());
         samples.add(getComplexSample());
-        samples.add(getSelecionSample());
+        samples.add(getSelectionSample());
+        samples.add(getHeterogeneousSample());
 
         return samples;
     }
@@ -94,11 +95,19 @@ public class HomeActivity extends BaseActivity {
                 .build();
     }
 
-    private Sample getSelecionSample() {
+    private Sample getSelectionSample() {
         return new Sample.Builder()
                 .setTitle(getString(R.string.selection_example_title))
                 .setDescription(getString(R.string.selection_example_description))
                 .setShowcaseActivityClass(SelectionSample.class)
+                .build();
+    }
+
+    private Sample getHeterogeneousSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.heterogeneous_example_title))
+                .setDescription(getString(R.string.heterogeneous_example_description))
+                .setShowcaseActivityClass(HeterogeneousExample.class)
                 .build();
     }
 }

@@ -43,6 +43,10 @@
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/selection_example_title"/>
 
+        <activity android:name=".HeterogeneousExample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/heterogeneous_example_title"/>
+
     </application>
 
 </manifest>

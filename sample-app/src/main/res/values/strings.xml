@@ -37,6 +37,11 @@
         and be retrieved.
     </string>
 
+    <string name="heterogeneous_example_title">Heterogeneous Section</string>
+    <string name="heterogeneous_example_description">
+        Displays different view types in the same section.
+    </string>
+
     <string name="app_name">ViewCellAdapter </string>
     <string name="action_settings">Settings</string>
 </resources>
