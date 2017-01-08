@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ComplexSectionSample"/>
+        <activity android:name=".ComplexSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".BasicHomogeneousSectionSample"
                   android:theme="@style/AppTheme.NoActionBar"

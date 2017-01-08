@@ -26,6 +26,8 @@ public class BaseActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setHint("Search...");
+        searchView.setHintTextColor(0xC0C0C0);
     }
 
     protected void showSnackbar(String message) {
