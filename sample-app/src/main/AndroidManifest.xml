@@ -19,9 +19,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ComplexSectionSample"
-                  android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity android:name=".BasicHomogeneousSectionSample"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/basic_homogeneous_example_title"/>
@@ -37,6 +34,10 @@
         <activity android:name=".MultipleSectionsSample"
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/multiple_sections_example_title"/>
+
+        <activity android:name=".ComplexDecoratorCompositionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/complex_example_title"/>
 
     </application>
 
