@@ -34,6 +34,10 @@
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/filtered_homogeneous_example_title"/>
 
+        <activity android:name=".MultipleSectionsSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/multiple_sections_example_title"/>
+
     </application>
 
 </manifest>

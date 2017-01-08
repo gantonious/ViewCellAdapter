@@ -47,7 +47,7 @@ public class HomeActivity extends BaseActivity {
         samples.add(getBasicHomogeneousSample());
         samples.add(getSortingHomogeneousSample());
         samples.add(getFilteredHomogeneousSample());
-        samples.add(getHeaderDecoratorSample());
+        samples.add(getMultipleSectionsSample());
         samples.add(getEmptyDecorateSample());
         samples.add(getComplexSample());
 
@@ -78,11 +78,11 @@ public class HomeActivity extends BaseActivity {
                 .build();
     }
 
-    private Sample getHeaderDecoratorSample() {
+    private Sample getMultipleSectionsSample() {
         return new Sample.Builder()
-                .setTitle(getString(R.string.header_example_title))
-                .setDescription(getString(R.string.header_example_description))
-                .setShowcaseActivityClass(ComplexSectionSample.class)
+                .setTitle(getString(R.string.multiple_sections_example_title))
+                .setDescription(getString(R.string.multiple_sections_example_description))
+                .setShowcaseActivityClass(MultipleSectionsSample.class)
                 .build();
     }
 

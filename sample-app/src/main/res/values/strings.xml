@@ -6,17 +6,18 @@
 
     <string name="sorted_homogeneous_example_title">Sorted Homogeneous Section</string>
     <string name="sorted_homogeneous_example_description">
-        Showcasing usage of the sorting feature. Displays a list of items in alphabetical order.
+        Displays a list of items in alphabetical order. Also showcases usage of the empty section decorator.
     </string>
 
     <string name="filtered_homogeneous_example_title">Filtered Homogeneous Section</string>
     <string name="filtered_homogeneous_example_description">
-        Showcasing usage of the filter feature.
+        Displays a list of items that are filtered by a search term.
     </string>
 
-    <string name="header_example_title">Header Section Decorator</string>
-    <string name="header_example_description">
-        Showcasing how to apply the header section decorator, and its features.
+    <string name="multiple_sections_example_title">Multiple Sections</string>
+    <string name="multiple_sections_example_description">
+        Displays a list with two sections, and shows how sections can be updated independently.
+        Uses header section decorators to provide headers for the seperate sections.
     </string>
 
     <string name="empty_example_title">Empty Section Decorator</string>

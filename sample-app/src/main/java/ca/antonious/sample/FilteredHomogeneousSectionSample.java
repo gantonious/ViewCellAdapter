@@ -110,6 +110,7 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_search:
                 searchView.showSearch();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
