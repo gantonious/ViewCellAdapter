@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.antonious.sample.about.AboutActivity;
 import ca.antonious.sample.models.Sample;
 import ca.antonious.sample.viewcells.SampleViewCell;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
@@ -123,6 +124,7 @@ public class HomeActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_info:
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

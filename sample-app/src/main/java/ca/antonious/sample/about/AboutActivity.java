@@ -1,26 +1,26 @@
 package ca.antonious.sample.about;
 
-import android.content.Context;
+import android.os.Bundle;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.antonious.sample.BaseActivity;
 import ca.antonious.sample.R;
 
 /**
  * Created by George on 2017-01-08.
  */
 
-public class ApplicationInfoProvider implements IApplicationInfoProvider {
-    private Context context;
-
-    public ApplicationInfoProvider(Context context) {
-        this.context = context;
-    }
+public class AboutActivity extends BaseActivity {
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     public List<Library> getLibraries() {
         List<Library> libraries = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class ApplicationInfoProvider implements IApplicationInfoProvider {
 
     private String[] getLibraryStringArray() {
         try {
-            return context.getResources().getStringArray(R.array.licenses);
+            return getResources().getStringArray(R.array.licenses);
         } catch (Exception e) {
             return new String[]{};
         }

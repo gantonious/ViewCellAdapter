@@ -42,6 +42,8 @@
         Displays different view types in the same section.
     </string>
 
+    <string name="about_activity_title">Information</string>
+
     <string name="app_name">ViewCellAdapter </string>
     <string name="action_settings">Settings</string>
 </resources>
