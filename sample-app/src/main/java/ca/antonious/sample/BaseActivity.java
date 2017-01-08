@@ -37,4 +37,8 @@ public class BaseActivity extends AppCompatActivity {
     protected void showSnackbar(String message, int duration) {
         Snackbar.make(recyclerView, message, duration).show();
     }
+
+    protected SampleApplication getSampleApplication() {
+        return (SampleApplication) getApplication();
+    }
 }
