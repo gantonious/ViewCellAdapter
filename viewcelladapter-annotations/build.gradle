@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'com.novoda.bintray-release'
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    userOrg = 'gantonious'
+    groupId = 'ca.antonious'
+    artifactId = 'viewcelladapter-annotations'
+    publishVersion = '2.0.0'
+    website = "https://github.com/gantonious/ViewCellAdapter"
+}

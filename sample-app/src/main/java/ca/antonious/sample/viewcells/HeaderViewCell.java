@@ -4,14 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
-import ca.antonious.viewcelladapter.BaseViewHolder;
-import ca.antonious.viewcelladapter.GenericSingleViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
+import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
  * Created by George on 2016-11-17.
  */
 
-public class HeaderViewCell extends GenericSingleViewCell<HeaderViewCell.ViewHolder, String> {
+public class HeaderViewCell extends GenericViewCell<HeaderViewCell.ViewHolder, String> {
 
     public HeaderViewCell(String model) {
         super(model);

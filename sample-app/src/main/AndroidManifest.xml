@@ -1,16 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ca.antonious.sample">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="ca.antonious.sample">
 
-    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name" android:supportsRtl="true" android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:label="@string/app_name"
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".about.AboutActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/about_activity_title"/>
+
+        <activity android:name=".BasicHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/basic_homogeneous_example_title"/>
+
+        <activity android:name=".SortedHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/sorted_homogeneous_example_title"/>
+
+        <activity android:name=".FilteredHomogeneousSectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/filtered_homogeneous_example_title"/>
+
+        <activity android:name=".MultipleSectionsSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/multiple_sections_example_title"/>
+
+        <activity android:name=".ComplexDecoratorCompositionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/complex_example_title"/>
+        
+        <activity android:name=".SelectionSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/selection_example_title"/>
+
+        <activity android:name=".HeterogeneousSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/heterogeneous_example_title"/>
+
     </application>
 
 </manifest>

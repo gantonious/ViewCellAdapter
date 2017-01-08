@@ -1,0 +1,15 @@
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --filter "android-24"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-25.0.0"
+  
+deployment:
+  production:
+    branch: release
+    commands:
+      - ./scripts/release-deploy-all.sh
+
+test:
+  override:
+    - ./gradlew test
+    - cp -r ./viewcelladapter/build/test-results/debug/* $CIRCLE_TEST_REPORTS
