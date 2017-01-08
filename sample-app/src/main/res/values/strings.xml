@@ -33,7 +33,8 @@
 
     <string name="selection_example_title">Selection</string>
     <string name="selection_example_description">
-        Showcasing viewcell selection.
+        Displays a list of items that can be selected, and showcases how the selected items
+        and be retrieved.
     </string>
 
     <string name="app_name">ViewCellAdapter </string>
