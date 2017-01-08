@@ -11,7 +11,7 @@ import java.util.Locale;
 
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.models.SelectableModel;
-import ca.antonious.sample.models.SelectableModelViewCell;
+import ca.antonious.sample.viewcells.SelectableModelViewCell;
 import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;

@@ -1,10 +1,11 @@
-package ca.antonious.sample.models;
+package ca.antonious.sample.viewcells;
 
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
+import ca.antonious.sample.models.SelectableModel;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 

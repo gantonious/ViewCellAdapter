@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import ca.antonious.sample.models.SelectableModel;
-import ca.antonious.sample.models.SelectableModelViewCell;
+import ca.antonious.sample.viewcells.SelectableModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
