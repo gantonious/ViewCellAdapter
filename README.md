@@ -1,6 +1,6 @@
 # ViewCellAdapter [![CircleCI](https://circleci.com/gh/gantonious/ViewCellAdapter.svg?style=svg)](https://circleci.com/gh/gantonious/ViewCellAdapter)
 
-A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adapter.
+A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adapter. View the [sample-app](https://github.com/gantonious/ViewCellAdapter/tree/dev/sample-app/src/main/java/ca/antonious/sample) to see different usage scenarios.
 
 ## Creating a ViewCell
 
@@ -101,8 +101,8 @@ The simplest way to get started is to use a `HomogeneousSection`. A `Homogeneous
 ```java
 ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
 
-HomogeneousSection todaysTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
-HomogeneousSection olderTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+HomogeneousSection<Task, TaskViewCell> olderTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
 
 viewCellAdapter.add(todaysTasksSection);
 viewCellAdapter.add(olderTasksSection);
