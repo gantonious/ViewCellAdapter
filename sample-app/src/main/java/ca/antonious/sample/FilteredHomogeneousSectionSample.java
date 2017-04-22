@@ -40,25 +40,17 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
-        // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        // add section to the adapter
-        viewCellAdapter.add(sampleModelSection);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
-
-        return viewCellAdapter;
+        return new ViewCellAdapter()
+            .addSection(sampleModelSection)
+            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            });
     }
 
     private void initializeSearchView() {

@@ -37,16 +37,9 @@ public class SelectionSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         // create section
         mainSection = new HomogeneousSection<>(SelectableModel.class, SelectableModelViewCell.class);
-
-        // add section to the adapter
-        viewCellAdapter.add(mainSection);
-
-        return viewCellAdapter;
+        return new ViewCellAdapter().addSection(mainSection);
     }
 
     private void populateSectionWithBaseData() {

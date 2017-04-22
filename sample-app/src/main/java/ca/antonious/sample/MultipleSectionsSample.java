@@ -12,6 +12,7 @@ import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
@@ -35,37 +36,30 @@ public class MultipleSectionsSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         // create sections
         importantSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
         normalSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        // decorate important section with a header
-        // don't show header if there are no important items
-        HeaderViewCell importantSectionHeader = new HeaderViewCell("Important");
-        HeaderSectionDecorator importantSectionWithHeader = new HeaderSectionDecorator(importantSection, importantSectionHeader);
-        importantSectionWithHeader.setShowHeaderIfEmpty(false);
-
-        // decorate normal section with a header
-        HeaderViewCell normalSectionHeader = new HeaderViewCell("Normal");
-        HeaderSectionDecorator normalSectionWithHeader = new HeaderSectionDecorator(normalSection, normalSectionHeader);
-
-        // add decorated sections to the adapter
-        viewCellAdapter.add(importantSectionWithHeader);
-        viewCellAdapter.add(normalSectionWithHeader);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
-
-        return viewCellAdapter;
+        return new ViewCellAdapter()
+            .addSection(
+                SectionBuilder.wrap(importantSection)
+                    .wrapWithHeader(new HeaderViewCell("Important"))
+                    .showHeaderIfEmpty()
+                    .build()
+            )
+            .addSection(
+                SectionBuilder.wrap(normalSection)
+                    .wrapWithHeader(new HeaderViewCell("Normal"))
+                    .hideHeaderIfEmpty()
+                    .build()
+            )
+            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            });
     }
 
     private void addToImportantSection() {
