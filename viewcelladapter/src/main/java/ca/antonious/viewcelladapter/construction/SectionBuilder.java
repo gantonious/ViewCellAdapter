@@ -30,6 +30,10 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return getSection();
     }
 
+    public static <TSection extends AbstractSection> SectionBuilder<TSection> wrap(TSection section) {
+        return new SectionBuilder<>(section);
+    }
+
     public static <TModel, TViewCell extends GenericViewCell<?, TModel>> HomogeneousSectionBuilder<TModel, TViewCell> wrap(HomogeneousSection<TModel, TViewCell> section) {
         return new HomogeneousSectionBuilder<>(section);
     }
