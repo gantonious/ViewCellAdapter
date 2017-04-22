@@ -1,8 +1,10 @@
 package ca.antonious.viewcelladapter.construction;
 
+import ca.antonious.viewcelladapter.Function;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.FooterSectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
+import ca.antonious.viewcelladapter.decorators.SectionDecorator;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
@@ -49,6 +51,10 @@ public class SectionBuilder<TSection extends AbstractSection> {
     public EmptySectionBuilder wrapWithEmptyView(AbstractViewCell emptyViewCell) {
         EmptySectionDecorator decorator = new EmptySectionDecorator(getSection(), emptyViewCell);
         return new EmptySectionBuilder(decorator);
+    }
+
+    public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> wrapWithDecorator(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
+        return new SectionBuilder<>(decoratorFactory.apply(getSection()));
     }
 
 }
