@@ -1,6 +1,6 @@
 package ca.antonious.viewcelladapter.construction;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.FooterSectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;

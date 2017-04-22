@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 

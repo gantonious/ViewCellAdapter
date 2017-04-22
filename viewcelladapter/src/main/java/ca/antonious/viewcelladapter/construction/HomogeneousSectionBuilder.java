@@ -2,7 +2,7 @@ package ca.antonious.viewcelladapter.construction;
 
 import java.util.Comparator;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 

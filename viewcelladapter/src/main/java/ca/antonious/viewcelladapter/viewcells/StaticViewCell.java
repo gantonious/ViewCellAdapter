@@ -3,7 +3,7 @@ package ca.antonious.viewcelladapter.viewcells;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 
 /**
  * Created by George on 2017-01-01.

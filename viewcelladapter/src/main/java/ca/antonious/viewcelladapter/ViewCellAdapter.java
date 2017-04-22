@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
