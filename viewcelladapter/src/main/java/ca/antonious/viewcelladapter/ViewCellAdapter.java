@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
@@ -29,6 +30,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private Map<Integer, Function<View, BaseViewHolder>> viewHolderFactories;
 
     public ViewCellAdapter() {
+        this.setHasStableIds(true);
         this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
         this.viewHolderFactories = new HashMap<>();
@@ -50,12 +52,19 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         CollectionUtils.prependAll(this.sections, sections);
     }
 
-    public void addListener(Object listener) {
-        listenerCollection.addListener(listener);
+    public ViewCellAdapter addSection(AbstractSection section) {
+        add(section);
+        return this;
     }
 
-    public void removeListener(Object listener) {
+    public ViewCellAdapter addListener(Object listener) {
+        listenerCollection.addListener(listener);
+        return this;
+    }
+
+    public ViewCellAdapter removeListener(Object listener) {
         listenerCollection.removeListener(listener);
+        return this;
     }
 
     @Override

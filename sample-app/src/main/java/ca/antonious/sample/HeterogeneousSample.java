@@ -15,6 +15,7 @@ import ca.antonious.sample.viewcells.SelectableModelViewCell;
 import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.sections.Section;
 
@@ -37,29 +38,23 @@ public class HeterogeneousSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         // create section
         mainSection = new Section();
 
-        // decorate the section with an empty view
-        EmptyViewCell emptyViewCell = new EmptyViewCell("Add items at the top");
-        EmptySectionDecorator mainSectionWithEmptyView = new EmptySectionDecorator(mainSection, emptyViewCell);
+        return new ViewCellAdapter()
+            .addSection(
+                SectionBuilder.wrap(mainSection)
+                    .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
+                    .build()
+            )
+            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            });
 
-        // add the decorated section to the adapter
-        viewCellAdapter.add(mainSectionWithEmptyView);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
-
-        return viewCellAdapter;
     }
 
     private void addSampleModel() {

@@ -5,7 +5,7 @@ import android.view.View;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 
 /**
  * Created by George on 2016-11-17.

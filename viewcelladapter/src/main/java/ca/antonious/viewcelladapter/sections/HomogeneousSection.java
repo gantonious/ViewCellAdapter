@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;

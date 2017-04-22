@@ -20,11 +20,11 @@ public class Task {
 }
 ```
 
-### Define a Layout 
+### Define a Layout
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -104,8 +104,8 @@ ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
 HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
 HomogeneousSection<Task, TaskViewCell> olderTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
 
-viewCellAdapter.add(todaysTasksSection);
-viewCellAdapter.add(olderTasksSection);
+viewCellAdapter.addSection(todaysTasksSection)
+               .addSection(olderTasksSection);
 ```
 
 Then each section can be updated independently
@@ -120,16 +120,29 @@ olderTasksSection.addAll(olderTasks);
 viewCellAdapter.notifyDataSetChanged();
 ```
 
-Sections can be decorated to add extra functionality. Here is an example of adding a header to a section.
+### Using Section Builders
+
+When you need to build a more complex adapter, `SectionBuilder` provides a clean declarative API to build your adapter. The following example shows how to build an adapter with a header and an empty view.
 
 ```java
-AbstractViewCell headerViewCell = getHeaderViewCell();
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
 
-HeaderSectionDecorator todaysTasksWithHeader = new HeaderSectionDecorator(todaysTasksSection, headerViewCell);
-todaysTasksWithHeader.setShowHeaderIfEmpty(false);
-
-viewCellAdapter.add(todaysTasksWithHeader);
+ViewCellAdapter adapter = new ViewCellAdapter()
+    .addSection(
+        SectionBuilder.wrap(todaysTasksSection)
+            .wrapWithHeader(new HeaderViewCell("Today's Tasks"))
+            .hideHeaderIfEmpty()
+            .wrapWithEmptyView(new EmptyViewCell("You have no tasks to do today!"))
+            .build()
+    )
+    .addListener(new TaskViewCell.OnTaskClickListener() {
+        @Override
+        public void onTaskClicked(Task task) {
+            showSnackbar(task.name);
+        }
+    });
 ```
+
 
 
 ## Handling ViewHolder Events
@@ -154,7 +167,7 @@ public void bindOnTaskClick(TaskViewHolder viewHolder, OnTaskClickListener onTas
         public void onClick(View view) {
             onTaskClickListener.onTaskClicked(getModel());
         }
-    });  
+    });
 }
 ```
 
