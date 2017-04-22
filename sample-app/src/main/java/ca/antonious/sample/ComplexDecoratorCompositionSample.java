@@ -13,6 +13,7 @@ import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.CompositeSection;
@@ -38,45 +39,34 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         // create sections
         section1 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
         section2 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        // decorate section 1 with a header
-        HeaderViewCell section1Header = new HeaderViewCell("Section 1");
-        HeaderSectionDecorator section1WithHeader = new HeaderSectionDecorator(section1, section1Header);
-        section1WithHeader.setShowHeaderIfEmpty(false);
-
-        // decorate section 2 with a header
-        HeaderViewCell section2Header = new HeaderViewCell("Section 2");
-        HeaderSectionDecorator section2WithHeader = new HeaderSectionDecorator(section2, section2Header);
-        section2WithHeader.setShowHeaderIfEmpty(false);
-
-        // combine decorated sections into single composite section
-        CompositeSection compositeSection = new CompositeSection()
-                .addSection(section1WithHeader)
-                .addSection(section2WithHeader);
-
-        // decorate composite section with an empty view
-        EmptyViewCell emptyView = new EmptyViewCell("Add items at the top");
-        EmptySectionDecorator compositeSectionWithEmptyView = new EmptySectionDecorator(compositeSection, emptyView);
-
-        // add decorated composite section
-        viewCellAdapter.add(compositeSectionWithEmptyView);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+        return new ViewCellAdapter().addSection(
+            SectionBuilder.compositeSectionBuilder()
+                .addSection(
+                    SectionBuilder.wrap(section1)
+                        .wrapWithHeader(new HeaderViewCell("Section 1"))
+                        .hideHeaderIfEmpty()
+                        .build()
+                )
+                .addSection(
+                    SectionBuilder.wrap(section2)
+                        .wrapWithHeader(new HeaderViewCell("Section 2"))
+                        .hideHeaderIfEmpty()
+                        .build()
+                )
+                .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
+                .build()
+        )
+        .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
             @Override
             public void onSampleModelClick(SampleModel sampleModel) {
                 String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                 showSnackbar(snackMessage);
             }
         });
-
-        return viewCellAdapter;
     }
 
     private void prependSampleModelToSection1() {
