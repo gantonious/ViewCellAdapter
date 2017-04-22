@@ -43,30 +43,31 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
         section1 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
         section2 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        return new ViewCellAdapter().addSection(
-            SectionBuilder.compositeSectionBuilder()
-                .addSection(
-                    SectionBuilder.wrap(section1)
-                        .wrapWithHeader(new HeaderViewCell("Section 1"))
-                        .hideHeaderIfEmpty()
-                        .build()
-                )
-                .addSection(
-                    SectionBuilder.wrap(section2)
-                        .wrapWithHeader(new HeaderViewCell("Section 2"))
-                        .hideHeaderIfEmpty()
-                        .build()
-                )
-                .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
-                .build()
-        )
-        .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
+        return new ViewCellAdapter()
+            .addSection(
+                SectionBuilder.compositeSectionBuilder()
+                    .addSection(
+                        SectionBuilder.wrap(section1)
+                            .wrapWithHeader(new HeaderViewCell("Section 1"))
+                            .hideHeaderIfEmpty()
+                            .build()
+                    )
+                    .addSection(
+                        SectionBuilder.wrap(section2)
+                            .wrapWithHeader(new HeaderViewCell("Section 2"))
+                            .hideHeaderIfEmpty()
+                            .build()
+                    )
+                    .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
+                    .build()
+            )
+            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            });
     }
 
     private void prependSampleModelToSection1() {
