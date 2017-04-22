@@ -24,11 +24,15 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return section;
     }
 
+    public TSection build() {
+        return getSection();
+    }
+
     public static <TModel, TViewCell extends GenericViewCell<?, TModel>> HomogeneousSectionBuilder<TModel, TViewCell> wrap(HomogeneousSection<TModel, TViewCell> section) {
         return new HomogeneousSectionBuilder<>(section);
     }
 
-    public static CompositeSectionBuilder compositeSection() {
+    public static CompositeSectionBuilder compositeSectionBuilder() {
         return new CompositeSectionBuilder(new CompositeSection());
     }
 
