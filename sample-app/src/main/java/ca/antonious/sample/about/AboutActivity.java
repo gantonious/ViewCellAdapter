@@ -13,7 +13,6 @@ import ca.antonious.sample.R;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
-import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
@@ -43,7 +42,7 @@ public class AboutActivity extends BaseActivity {
             .section(
                 SectionBuilder.wrap(librariesSection)
                     .wrapWithHeader(new HeaderViewCell("Libraries Used"))
-                    .ifEmptyHideHeader()
+                    .hideHeaderIfEmpty()
                     .build()
             )
             .listener(new LibraryViewCell.OnLibraryClickListener() {

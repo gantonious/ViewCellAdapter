@@ -43,7 +43,7 @@ public class HeterogeneousSample extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(mainSection)
-                    .ifEmptyShow(new EmptyViewCell("Add items at the top"))
+                    .showIfEmpty(new EmptyViewCell("Add items at the top"))
                     .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {

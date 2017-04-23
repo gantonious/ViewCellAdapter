@@ -46,7 +46,7 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
                             return model1.getName().compareTo(model2.getName());
                         }
                     })
-                    .ifEmptyShow(new EmptyViewCell("Press the add button to add items!"))
+                    .showIfEmpty(new EmptyViewCell("Press the add button to add items!"))
                     .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {

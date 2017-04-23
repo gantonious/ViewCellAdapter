@@ -11,12 +11,12 @@ public class HeaderDecoratorBuilder extends SectionBuilder<HeaderSectionDecorato
         super(section);
     }
 
-    public HeaderDecoratorBuilder ifEmptyShowHeader() {
+    public HeaderDecoratorBuilder showHeaderIfEmpty() {
         getSection().setShowHeaderIfEmpty(true);
         return this;
     }
 
-    public HeaderDecoratorBuilder ifEmptyHideHeader() {
+    public HeaderDecoratorBuilder hideHeaderIfEmpty() {
         getSection().setShowHeaderIfEmpty(false);
         return this;
     }
