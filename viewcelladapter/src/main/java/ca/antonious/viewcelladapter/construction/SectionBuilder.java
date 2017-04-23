@@ -57,7 +57,7 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return new EmptySectionBuilder(decorator);
     }
 
-    public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> wrapWithDecorator(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
+    public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> decorateWith(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
         return new SectionBuilder<>(decoratorFactory.apply(getSection()));
     }
 
