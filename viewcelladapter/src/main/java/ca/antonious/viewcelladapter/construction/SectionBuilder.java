@@ -52,7 +52,7 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return new FooterDecoratorBuilder(decorator);
     }
 
-    public EmptySectionBuilder wrapWithEmptyView(AbstractViewCell emptyViewCell) {
+    public EmptySectionBuilder ifEmptyShow(AbstractViewCell emptyViewCell) {
         EmptySectionDecorator decorator = new EmptySectionDecorator(getSection(), emptyViewCell);
         return new EmptySectionBuilder(decorator);
     }

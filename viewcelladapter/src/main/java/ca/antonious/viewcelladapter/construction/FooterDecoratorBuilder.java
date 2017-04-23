@@ -11,12 +11,12 @@ public class FooterDecoratorBuilder extends SectionBuilder<FooterSectionDecorato
         super(section);
     }
 
-    public FooterDecoratorBuilder showFooterIfEmpty() {
+    public FooterDecoratorBuilder ifEmptyShowFooter() {
         getSection().setShowFooterIfEmpty(true);
         return this;
     }
 
-    public FooterDecoratorBuilder hideFooterIfEmpty() {
+    public FooterDecoratorBuilder ifEmptyHideFooter() {
         getSection().setShowFooterIfEmpty(false);
         return this;
     }

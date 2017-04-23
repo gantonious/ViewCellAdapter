@@ -13,7 +13,6 @@ import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
-import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
@@ -44,13 +43,13 @@ public class MultipleSectionsSample extends BaseActivity {
             .section(
                 SectionBuilder.wrap(importantSection)
                     .wrapWithHeader(new HeaderViewCell("Important"))
-                    .showHeaderIfEmpty()
+                    .ifEmptyShowHeader()
                     .build()
             )
             .section(
                 SectionBuilder.wrap(normalSection)
                     .wrapWithHeader(new HeaderViewCell("Normal"))
-                    .hideHeaderIfEmpty()
+                    .ifEmptyHideHeader()
                     .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {

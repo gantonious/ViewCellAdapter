@@ -16,7 +16,6 @@ import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.sections.Section;
 
 /**
@@ -44,7 +43,7 @@ public class HeterogeneousSample extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(mainSection)
-                    .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
+                    .ifEmptyShow(new EmptyViewCell("Add items at the top"))
                     .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {

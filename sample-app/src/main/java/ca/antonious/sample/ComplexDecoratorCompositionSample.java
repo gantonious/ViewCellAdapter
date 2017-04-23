@@ -46,16 +46,16 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
                     .section(
                         SectionBuilder.wrap(section1)
                             .wrapWithHeader(new HeaderViewCell("Section 1"))
-                            .hideHeaderIfEmpty()
+                            .ifEmptyHideHeader()
                             .build()
                     )
                     .section(
                         SectionBuilder.wrap(section2)
                             .wrapWithHeader(new HeaderViewCell("Section 2"))
-                            .hideHeaderIfEmpty()
+                            .ifEmptyHideHeader()
                             .build()
                     )
-                    .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
+                    .ifEmptyShow(new EmptyViewCell("Add items at the top"))
                     .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {
