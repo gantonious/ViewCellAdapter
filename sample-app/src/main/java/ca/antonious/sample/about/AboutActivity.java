@@ -12,6 +12,7 @@ import ca.antonious.sample.BaseActivity;
 import ca.antonious.sample.R;
 import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
@@ -38,20 +39,20 @@ public class AboutActivity extends BaseActivity {
     private ViewCellAdapter buildAdapter() {
         librariesSection = new HomogeneousSection<>(Library.class, LibraryViewCell.class);
 
-        HeaderViewCell librariesHeader = new HeaderViewCell("Libraries Used");
-        HeaderSectionDecorator headerSectionDecorator = new HeaderSectionDecorator(librariesSection, librariesHeader);
-        headerSectionDecorator.setShowHeaderIfEmpty(false);
-
-        viewCellAdapter.add(headerSectionDecorator);
-
-        viewCellAdapter.addListener(new LibraryViewCell.OnLibraryClickListener() {
-            @Override
-            public void onLibraryClick(Library library) {
-                openLibraryLink(library);
-            }
-        });
-
-        return viewCellAdapter;
+        return ViewCellAdapter.create()
+            .section(
+                SectionBuilder.wrap(librariesSection)
+                    .wrapWithHeader(new HeaderViewCell("Libraries Used"))
+                    .ifEmptyHideHeader()
+                    .build()
+            )
+            .listener(new LibraryViewCell.OnLibraryClickListener() {
+                @Override
+                public void onLibraryClick(Library library) {
+                    openLibraryLink(library);
+                }
+            })
+            .build();
     }
 
     private void openLibraryLink(Library library) {
