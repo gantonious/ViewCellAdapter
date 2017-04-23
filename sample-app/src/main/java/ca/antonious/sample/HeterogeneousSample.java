@@ -41,19 +41,20 @@ public class HeterogeneousSample extends BaseActivity {
         // create section
         mainSection = new Section();
 
-        return new ViewCellAdapter()
-            .addSection(
+        return ViewCellAdapter.create()
+            .section(
                 SectionBuilder.wrap(mainSection)
                     .wrapWithEmptyView(new EmptyViewCell("Add items at the top"))
                     .build()
             )
-            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
                 public void onSampleModelClick(SampleModel sampleModel) {
                     String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                     showSnackbar(snackMessage);
                 }
-            });
+            })
+            .build();
 
     }
 

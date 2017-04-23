@@ -36,9 +36,6 @@ public class AboutActivity extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         librariesSection = new HomogeneousSection<>(Library.class, LibraryViewCell.class);
 
         HeaderViewCell librariesHeader = new HeaderViewCell("Libraries Used");

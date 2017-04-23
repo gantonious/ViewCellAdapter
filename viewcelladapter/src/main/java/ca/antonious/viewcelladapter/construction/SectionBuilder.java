@@ -38,7 +38,7 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return new HomogeneousSectionBuilder<>(section);
     }
 
-    public static CompositeSectionBuilder compositeSectionBuilder() {
+    public static CompositeSectionBuilder createCompositeSection() {
         return new CompositeSectionBuilder(new CompositeSection());
     }
 

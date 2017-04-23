@@ -42,15 +42,16 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
     private ViewCellAdapter buildAdapter() {
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        return new ViewCellAdapter()
-            .addSection(sampleModelSection)
-            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+        return ViewCellAdapter.create()
+            .section(sampleModelSection)
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
                 public void onSampleModelClick(SampleModel sampleModel) {
                     String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                     showSnackbar(snackMessage);
                 }
-            });
+            })
+            .build();
     }
 
     private void populateSectionWithBaseData() {

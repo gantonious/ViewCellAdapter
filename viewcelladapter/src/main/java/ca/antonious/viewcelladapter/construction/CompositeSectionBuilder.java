@@ -12,7 +12,7 @@ public class CompositeSectionBuilder extends SectionBuilder<CompositeSection> {
         super(section);
     }
 
-    public CompositeSectionBuilder addSection(AbstractSection section) {
+    public CompositeSectionBuilder section(AbstractSection section) {
         getSection().addSection(section);
         return this;
     }
