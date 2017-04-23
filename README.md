@@ -127,20 +127,21 @@ When you need to build a more complex adapter, `SectionBuilder` provides a clean
 ```java
 HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
 
-ViewCellAdapter adapter = new ViewCellAdapter()
-    .addSection(
+ViewCellAdapter adapter = ViewCellAdapter.create()
+    .section(
         SectionBuilder.wrap(todaysTasksSection)
-            .wrapWithHeader(new HeaderViewCell("Today's Tasks"))
+            .header(new HeaderViewCell("Today's Tasks"))
             .hideHeaderIfEmpty()
-            .wrapWithEmptyView(new EmptyViewCell("You have no tasks to do today!"))
+            .showIfEmpty(new EmptyViewCell("You have no tasks to do today!"))
             .build()
     )
-    .addListener(new TaskViewCell.OnTaskClickListener() {
+    .listener(new TaskViewCell.OnTaskClickListener() {
         @Override
         public void onTaskClicked(Task task) {
             showSnackbar(task.name);
         }
-    });
+    })
+    .build();
 ```
 
 
