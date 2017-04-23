@@ -45,13 +45,13 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
                 SectionBuilder.createCompositeSection()
                     .section(
                         SectionBuilder.wrap(section1)
-                            .wrapWithHeader(new HeaderViewCell("Section 1"))
+                            .header(new HeaderViewCell("Section 1"))
                             .hideHeaderIfEmpty()
                             .build()
                     )
                     .section(
                         SectionBuilder.wrap(section2)
-                            .wrapWithHeader(new HeaderViewCell("Section 2"))
+                            .header(new HeaderViewCell("Section 2"))
                             .hideHeaderIfEmpty()
                             .build()
                     )

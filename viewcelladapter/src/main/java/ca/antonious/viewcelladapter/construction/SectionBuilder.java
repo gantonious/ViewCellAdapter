@@ -42,12 +42,12 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return new CompositeSectionBuilder(new CompositeSection());
     }
 
-    public HeaderDecoratorBuilder wrapWithHeader(AbstractViewCell headerViewCell) {
+    public HeaderDecoratorBuilder header(AbstractViewCell headerViewCell) {
         HeaderSectionDecorator decorator = new HeaderSectionDecorator(getSection(), headerViewCell);
         return new HeaderDecoratorBuilder(decorator);
     }
 
-    public FooterDecoratorBuilder wrapWithFooter(AbstractViewCell footerViewCell) {
+    public FooterDecoratorBuilder footer(AbstractViewCell footerViewCell) {
         FooterSectionDecorator decorator = new FooterSectionDecorator(getSection(), footerViewCell);
         return new FooterDecoratorBuilder(decorator);
     }

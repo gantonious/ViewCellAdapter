@@ -42,13 +42,13 @@ public class MultipleSectionsSample extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(importantSection)
-                    .wrapWithHeader(new HeaderViewCell("Important"))
+                    .header(new HeaderViewCell("Important"))
                     .showHeaderIfEmpty()
                     .build()
             )
             .section(
                 SectionBuilder.wrap(normalSection)
-                    .wrapWithHeader(new HeaderViewCell("Normal"))
+                    .header(new HeaderViewCell("Normal"))
                     .hideHeaderIfEmpty()
                     .build()
             )
