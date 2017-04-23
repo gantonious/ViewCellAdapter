@@ -5,15 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
-import ca.antonious.sample.models.Sample;
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
-import ca.antonious.sample.viewcells.SampleViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
