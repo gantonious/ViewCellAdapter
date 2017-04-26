@@ -64,23 +64,19 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
         viewHolder.setOnBackgroundClickedListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleSetting();
-                viewHolder.setSwitchState(isChecked);
+                viewHolder.setSwitchState(!isChecked);
             }
         });
 
         viewHolder.setOnSwitchStateChangedListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                isChecked = checked;
                 if (listener != null) {
                     listener.onSettingToggled(settingId, checked);
                 }
             }
         });
-    }
-
-    public void toggleSetting() {
-        isChecked = !isChecked;
     }
 
     public class MaterialToggleSettingViewHolder extends BaseViewHolder {
