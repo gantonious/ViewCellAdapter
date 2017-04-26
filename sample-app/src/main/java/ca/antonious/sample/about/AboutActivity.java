@@ -41,6 +41,7 @@ public class AboutActivity extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(librariesSection)
+                    .sepearteWithDividers()
                     .header(new HeaderViewCell("Libraries Used"))
                     .hideHeaderIfEmpty()
                     .build()
