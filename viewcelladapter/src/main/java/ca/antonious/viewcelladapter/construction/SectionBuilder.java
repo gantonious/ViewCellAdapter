@@ -1,5 +1,6 @@
 package ca.antonious.viewcelladapter.construction;
 
+import ca.antonious.viewcelladapter.decorators.ItemDividerSectionDecorator;
 import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.FooterSectionDecorator;
@@ -55,6 +56,11 @@ public class SectionBuilder<TSection extends AbstractSection> {
     public EmptySectionBuilder showIfEmpty(AbstractViewCell emptyViewCell) {
         EmptySectionDecorator decorator = new EmptySectionDecorator(getSection(), emptyViewCell);
         return new EmptySectionBuilder(decorator);
+    }
+
+    public ItemDividerBuilder sepearteWithDividers() {
+        ItemDividerSectionDecorator decorator = new ItemDividerSectionDecorator(getSection());
+        return new ItemDividerBuilder(decorator);
     }
 
     public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> decorateWith(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
