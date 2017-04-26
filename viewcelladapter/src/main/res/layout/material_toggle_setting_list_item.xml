@@ -27,7 +27,7 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/setting_switch"
             android:text="Setting"
-            android:textColor="#444444"
+            android:textColor="#777777"
             android:textSize="12sp"/>
 
     </LinearLayout>
@@ -36,6 +36,7 @@
         android:id="@+id/setting_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
 

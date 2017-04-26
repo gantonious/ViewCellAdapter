@@ -71,7 +71,7 @@ public class SettingsSample extends BaseActivity {
     }
 
     private void setupUserSettings() {
-        userSettings.add(buildCommentNotificationSetting());
+        userSettings.add(buildUserProfilePrivacySetting());
     }
 
     private void setupNotificationSettings() {
@@ -83,13 +83,15 @@ public class SettingsSample extends BaseActivity {
         return MaterialToggleSettingViewCell.create()
             .id(USER_PROFILE_PRIVACY_SETTINGS_ID)
             .name("Public Profile")
+            .description("Allow anyone to access your profile")
             .build();
     }
 
     private AbstractViewCell buildCommentNotificationSetting() {
         return MaterialToggleSettingViewCell.create()
             .id(NOTIFIY_ON_COMMENT_SETTING)
-            .name("Notify when someone comments")
+            .name("Notify on Comment")
+            .description("Get notifications pushed when someone comments on a post you created")
             .build();
     }
 
