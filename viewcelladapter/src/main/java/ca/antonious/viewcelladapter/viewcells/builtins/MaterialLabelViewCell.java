@@ -1,5 +1,6 @@
 package ca.antonious.viewcelladapter.viewcells.builtins;
 
+import android.support.annotation.ColorInt;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -88,7 +89,7 @@ public class MaterialLabelViewCell extends GenericViewCell<MaterialLabelViewCell
             return this;
         }
 
-        public Builder textColor(int color) {
+        public Builder textColor(@ColorInt int color) {
             this.labelColor = color;
             return this;
         }
