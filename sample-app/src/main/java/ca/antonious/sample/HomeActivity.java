@@ -55,6 +55,7 @@ public class HomeActivity extends BaseActivity {
         samples.add(getComplexSample());
         samples.add(getSelectionSample());
         samples.add(getHeterogeneousSample());
+        samples.add(getSettingsSample());
 
         return samples;
     }
@@ -112,6 +113,14 @@ public class HomeActivity extends BaseActivity {
                 .setTitle(getString(R.string.heterogeneous_example_title))
                 .setDescription(getString(R.string.heterogeneous_example_description))
                 .setShowcaseActivityClass(HeterogeneousSample.class)
+                .build();
+    }
+
+    private Sample getSettingsSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.settings_example_title))
+                .setDescription(getString(R.string.settings_example_description))
+                .setShowcaseActivityClass(SettingsSample.class)
                 .build();
     }
 
