@@ -12,6 +12,7 @@
         android:layout_toStartOf="@+id/setting_switch"
         android:layout_margin="16dp"
         android:text="Setting"
+        android:textColor="@android:color/black"
         android:layout_centerVertical="true"
         android:textSize="18sp"/>
 
