@@ -124,7 +124,9 @@ public class BindListenerProcessor extends BaseProcessor {
         VariableElement listenerVariable = methodElement.getParameters().get(1);
         TypeMirror listenerType = listenerVariable.asType();
 
-        specBuilder.addListener(new BindListenerSpec(methodName, listenerType));
+        BindListener annotation = methodElement.getAnnotation(BindListener.class);
+
+        specBuilder.addListener(new BindListenerSpec(methodName, listenerType, annotation.bindIfNull()));
     }
 
     private void guardAgainstPrivateMethod(ExecutableElement methodElement) {
