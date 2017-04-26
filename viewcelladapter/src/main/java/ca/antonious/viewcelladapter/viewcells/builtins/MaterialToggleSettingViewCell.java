@@ -22,11 +22,14 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
 
     public MaterialToggleSettingViewCell(int settingId,
                                          String settingName,
-                                         boolean isChecked)
-    {
+                                         boolean isChecked) {
         this.settingId = settingId;
         this.settingName = settingName;
         this.isChecked = isChecked;
+    }
+
+    public static Builder create() {
+        return new Builder();
     }
 
     @Override
@@ -103,6 +106,37 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
 
         public void setOnSwitchStateChangedListener(CompoundButton.OnCheckedChangeListener onSwitchStateChangedListener) {
             settingSwitch.setOnCheckedChangeListener(onSwitchStateChangedListener);
+        }
+    }
+
+    public static class Builder {
+        private int settingId;
+        private String settingName;
+        private boolean isChecked;
+
+        public Builder() {
+            this.settingId = -1;
+            this.settingName = "";
+            this.isChecked = false;
+        }
+
+        public Builder id(int id) {
+            this.settingId = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.settingName = name;
+            return this;
+        }
+
+        public Builder checked(boolean isChecked) {
+            this.isChecked = isChecked;
+            return this;
+        }
+
+        public MaterialToggleSettingViewCell build() {
+            return new MaterialToggleSettingViewCell(settingId, settingName, isChecked);
         }
     }
 }
