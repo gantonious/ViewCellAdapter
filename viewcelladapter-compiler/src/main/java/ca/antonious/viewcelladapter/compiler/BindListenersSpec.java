@@ -85,17 +85,37 @@ public class BindListenersSpec {
     private MethodSpec.Builder buildBindListenersMethodBody(MethodSpec.Builder methodBuilder) {
         for (int i = 0; i < bindListenerSpecs.size(); i++) {
             BindListenerSpec bindListenerSpec = bindListenerSpecs.get(i);
-            TypeName listener = ClassName.get(bindListenerSpec.getListenerType());
-
-            methodBuilder = methodBuilder
-                    .addCode("\n")
-                    .addStatement("$T listener$L = $N.getListener($T.class)", listener, i, LISTENER_COLLECTION_VARIABLE_NAME, listener)
-                    .beginControlFlow("if (listener$L != null)", i)
-                    .addStatement("$N.$N($N, $N)", VIEW_CELL_VARIABLE_NAME, bindListenerSpec.getBindListenerMethodName(), VIEW_HOLDER_VARIABLE_NAME, "listener" + i)
-                    .endControlFlow();
+            methodBuilder = buildBindListenerLines(methodBuilder, bindListenerSpec, i);
         }
 
         return methodBuilder;
+    }
+
+    private MethodSpec.Builder buildBindListenerLines(MethodSpec.Builder methodBuilder, BindListenerSpec bindListenerSpec, int index) {
+        if (bindListenerSpec.shouldBindIfNull()) {
+            return buildBindListenerWithoutNullCheck(methodBuilder, bindListenerSpec, index);
+        }
+        return buildBindListenerWithNullCheck(methodBuilder, bindListenerSpec, index);
+    }
+
+    private MethodSpec.Builder buildBindListenerWithNullCheck(MethodSpec.Builder methodBuilder, BindListenerSpec bindListenerSpec, int index) {
+        TypeName listener = ClassName.get(bindListenerSpec.getListenerType());
+
+        return methodBuilder
+            .addCode("\n")
+            .addStatement("$T listener$L = $N.getListener($T.class)", listener, index, LISTENER_COLLECTION_VARIABLE_NAME, listener)
+            .beginControlFlow("if (listener$L != null)", index)
+            .addStatement("$N.$N($N, $N)", VIEW_CELL_VARIABLE_NAME, bindListenerSpec.getBindListenerMethodName(), VIEW_HOLDER_VARIABLE_NAME, "listener" + index)
+            .endControlFlow();
+    }
+
+    private MethodSpec.Builder buildBindListenerWithoutNullCheck(MethodSpec.Builder methodBuilder, BindListenerSpec bindListenerSpec, int index) {
+        TypeName listener = ClassName.get(bindListenerSpec.getListenerType());
+
+        return methodBuilder
+            .addCode("\n")
+            .addStatement("$T listener$L = $N.getListener($T.class)", listener, index, LISTENER_COLLECTION_VARIABLE_NAME, listener)
+            .addStatement("$N.$N($N, $N)", VIEW_CELL_VARIABLE_NAME, bindListenerSpec.getBindListenerMethodName(), VIEW_HOLDER_VARIABLE_NAME, "listener" + index);
     }
 
     private String getPackageName() {
