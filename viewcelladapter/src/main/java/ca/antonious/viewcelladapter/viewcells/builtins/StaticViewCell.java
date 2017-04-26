@@ -1,9 +1,11 @@
-package ca.antonious.viewcelladapter.viewcells;
+package ca.antonious.viewcelladapter.viewcells.builtins;
 
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
 import ca.antonious.viewcelladapter.internal.Function;
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-01-01.
