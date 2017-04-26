@@ -5,15 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
-import ca.antonious.sample.models.Sample;
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
-import ca.antonious.sample.viewcells.SampleViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
@@ -42,15 +38,16 @@ public class BasicHomogeneousSectionSample extends BaseActivity {
     private ViewCellAdapter buildAdapter() {
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        return new ViewCellAdapter()
-            .addSection(sampleModelSection)
-            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+        return ViewCellAdapter.create()
+            .section(sampleModelSection)
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
                 public void onSampleModelClick(SampleModel sampleModel) {
                     String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                     showSnackbar(snackMessage);
                 }
-            });
+            })
+            .build();
     }
 
     private void populateSectionWithBaseData() {

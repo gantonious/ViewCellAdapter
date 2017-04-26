@@ -38,26 +38,26 @@ public class SectionBuilder<TSection extends AbstractSection> {
         return new HomogeneousSectionBuilder<>(section);
     }
 
-    public static CompositeSectionBuilder compositeSectionBuilder() {
+    public static CompositeSectionBuilder createCompositeSection() {
         return new CompositeSectionBuilder(new CompositeSection());
     }
 
-    public HeaderDecoratorBuilder wrapWithHeader(AbstractViewCell headerViewCell) {
+    public HeaderDecoratorBuilder header(AbstractViewCell headerViewCell) {
         HeaderSectionDecorator decorator = new HeaderSectionDecorator(getSection(), headerViewCell);
         return new HeaderDecoratorBuilder(decorator);
     }
 
-    public FooterDecoratorBuilder wrapWithFooter(AbstractViewCell footerViewCell) {
+    public FooterDecoratorBuilder footer(AbstractViewCell footerViewCell) {
         FooterSectionDecorator decorator = new FooterSectionDecorator(getSection(), footerViewCell);
         return new FooterDecoratorBuilder(decorator);
     }
 
-    public EmptySectionBuilder wrapWithEmptyView(AbstractViewCell emptyViewCell) {
+    public EmptySectionBuilder showIfEmpty(AbstractViewCell emptyViewCell) {
         EmptySectionDecorator decorator = new EmptySectionDecorator(getSection(), emptyViewCell);
         return new EmptySectionBuilder(decorator);
     }
 
-    public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> wrapWithDecorator(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
+    public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> decorateWith(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
         return new SectionBuilder<>(decoratorFactory.apply(getSection()));
     }
 

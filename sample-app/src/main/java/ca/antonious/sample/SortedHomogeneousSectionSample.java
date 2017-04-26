@@ -13,7 +13,6 @@ import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
@@ -38,8 +37,8 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
         // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        return new ViewCellAdapter()
-            .addSection(
+        return ViewCellAdapter.create()
+            .section(
                 SectionBuilder.wrap(sampleModelSection)
                     .withComparator(new Comparator<SampleModel>() {
                         @Override
@@ -47,16 +46,17 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
                             return model1.getName().compareTo(model2.getName());
                         }
                     })
-                    .wrapWithEmptyView(new EmptyViewCell("Press the add button to add items!"))
+                    .showIfEmpty(new EmptyViewCell("Press the add button to add items!"))
                     .build()
             )
-            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
                 public void onSampleModelClick(SampleModel sampleModel) {
                     String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                     showSnackbar(snackMessage);
                 }
-            });
+            })
+            .build();
     }
 
     private SampleModel generateRandomSampleModel() {

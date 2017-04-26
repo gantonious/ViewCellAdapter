@@ -13,7 +13,6 @@ import ca.antonious.sample.viewcells.HeaderViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
-import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
@@ -40,26 +39,27 @@ public class MultipleSectionsSample extends BaseActivity {
         importantSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
         normalSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        return new ViewCellAdapter()
-            .addSection(
+        return ViewCellAdapter.create()
+            .section(
                 SectionBuilder.wrap(importantSection)
-                    .wrapWithHeader(new HeaderViewCell("Important"))
+                    .header(new HeaderViewCell("Important"))
                     .showHeaderIfEmpty()
                     .build()
             )
-            .addSection(
+            .section(
                 SectionBuilder.wrap(normalSection)
-                    .wrapWithHeader(new HeaderViewCell("Normal"))
+                    .header(new HeaderViewCell("Normal"))
                     .hideHeaderIfEmpty()
                     .build()
             )
-            .addListener(new SampleModelViewCell.OnSampleModelClickListener() {
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
                 public void onSampleModelClick(SampleModel sampleModel) {
                     String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
                     showSnackbar(snackMessage);
                 }
-            });
+            })
+            .build();
     }
 
     private void addToImportantSection() {
