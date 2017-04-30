@@ -125,7 +125,7 @@ public class MaterialSettingsItemViewCell extends AbstractViewCell<MaterialSetti
         public Builder() {
             this.settingId = -1;
             this.settingName = "";
-            this.settingNameTextSizeSp = 16;
+            this.settingNameTextSizeSp = 14;
             this.settingValue = "";
             this.settingValueTextSizeSp = 12;
         }
