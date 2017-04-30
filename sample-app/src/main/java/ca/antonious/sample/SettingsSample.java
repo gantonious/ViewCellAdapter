@@ -22,8 +22,8 @@ public class SettingsSample extends BaseActivity {
     private Section notificationSettings;
 
     private static final int USER_PROFILE_PRIVACY_SETTINGS_ID = 0;
-    private static final int NOTIFIY_ON_COMMENT_SETTING = 1;
-    private static final int NOTIFIY_ON_NEW_POST_SETTING = 2;
+    private static final int NOTIFY_ON_COMMENT_SETTING = 1;
+    private static final int NOTIFY_ON_NEW_POST_SETTING = 2;
 
 
     @Override
@@ -96,7 +96,7 @@ public class SettingsSample extends BaseActivity {
 
     private AbstractViewCell buildCommentNotificationSetting() {
         return MaterialToggleSettingViewCell.create()
-            .id(NOTIFIY_ON_COMMENT_SETTING)
+            .id(NOTIFY_ON_COMMENT_SETTING)
             .label("Notify on Comment")
             .secondaryText("Get notifications pushed when someone comments on a post you created")
             .build();
@@ -104,7 +104,7 @@ public class SettingsSample extends BaseActivity {
 
     private AbstractViewCell buildNewPostNotificationSetting() {
         return MaterialToggleSettingViewCell.create()
-            .id(NOTIFIY_ON_NEW_POST_SETTING)
+            .id(NOTIFY_ON_NEW_POST_SETTING)
             .label("Notify when a post is created")
             .build();
     }
