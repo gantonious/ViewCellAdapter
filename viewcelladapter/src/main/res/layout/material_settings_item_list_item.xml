@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:text="Setting"
         android:textColor="#222222"
-        android:fontFamily="sans-serif-medium"
         android:textSize="12sp"/>
 
     <TextView

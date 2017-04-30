@@ -89,8 +89,8 @@ public class SettingsSample extends BaseActivity {
     private AbstractViewCell buildUserProfilePrivacySetting() {
         return MaterialSettingsItemViewCell.create()
             .id(USER_PROFILE_PRIVACY_SETTINGS_ID)
-            .name("Public Profile")
-            .value("Allow anyone to access your profile")
+            .name("Profile visibility")
+            .value("Public")
             .build();
     }
 
