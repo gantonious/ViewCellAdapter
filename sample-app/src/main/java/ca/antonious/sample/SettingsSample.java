@@ -9,6 +9,7 @@ import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.Section;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.builtins.MaterialLabelViewCell;
+import ca.antonious.viewcelladapter.viewcells.builtins.MaterialSettingsItemViewCell;
 import ca.antonious.viewcelladapter.viewcells.builtins.MaterialToggleSettingViewCell;
 
 /**
@@ -54,6 +55,12 @@ public class SettingsSample extends BaseActivity {
                     .header(buildHeader("Notification Settings"))
                     .build()
             )
+            .listener(new MaterialSettingsItemViewCell.OnSettingClickedListener() {
+                @Override
+                public void onSettingClicked(int settingId) {
+                    showSnackbar("Setting " + settingId + " was clicked");
+                }
+            })
             .listener(new MaterialToggleSettingViewCell.OnSettingToggledListener() {
                 @Override
                 public void onSettingToggled(int settingId, boolean isOn) {
@@ -80,10 +87,10 @@ public class SettingsSample extends BaseActivity {
     }
 
     private AbstractViewCell buildUserProfilePrivacySetting() {
-        return MaterialToggleSettingViewCell.create()
+        return MaterialSettingsItemViewCell.create()
             .id(USER_PROFILE_PRIVACY_SETTINGS_ID)
             .name("Public Profile")
-            .description("Allow anyone to access your profile")
+            .value("Allow anyone to access your profile")
             .build();
     }
 

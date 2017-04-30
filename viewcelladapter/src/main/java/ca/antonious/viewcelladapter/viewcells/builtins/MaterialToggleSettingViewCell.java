@@ -124,7 +124,7 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
             settingDescriptionTextView.setText(settingDescription);
         }
 
-        private void setSettingDescriptionTextSizeSp(int textSizeSp) {
+        public void setSettingDescriptionTextSizeSp(int textSizeSp) {
             settingDescriptionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeSp);
 
         }
