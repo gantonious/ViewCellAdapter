@@ -34,7 +34,7 @@ public class HomeActivity extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(samplesSection)
-                    .sepearteWithDividers()
+                    .separateWithDividers()
                     .build()
             )
             .listener(new SampleViewCell.OnSampleClickListener() {

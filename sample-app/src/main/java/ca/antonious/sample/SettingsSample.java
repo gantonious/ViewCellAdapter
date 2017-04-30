@@ -44,13 +44,13 @@ public class SettingsSample extends BaseActivity {
         return ViewCellAdapter.create()
             .section(
                 SectionBuilder.wrap(userSettings)
-                    .sepearteWithDividers()
+                    .separateWithDividers()
                     .header(buildHeader("User Settings"))
                     .build()
             )
             .section(
                 SectionBuilder.wrap(notificationSettings)
-                    .sepearteWithDividers()
+                    .separateWithDividers()
                     .header(buildHeader("Notification Settings"))
                     .build()
             )
