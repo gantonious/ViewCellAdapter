@@ -16,25 +16,16 @@ import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
  * Created by George on 2017-04-26.
  */
 
-public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialToggleSettingViewCell.MaterialToggleSettingViewHolder> {
-    private int settingId;
-    private String settingName;
-    private int settingNameTextSizeSp;
-    private String settingDescription;
-    private int settingDescriptionTextSizeSp;
+public class MaterialToggleSettingViewCell extends BaseMaterialSettingViewCell<MaterialToggleSettingViewCell.MaterialToggleSettingViewHolder> {
     private boolean isChecked;
 
     public MaterialToggleSettingViewCell(int settingId,
-                                         String settingName,
-                                         int settingNameTextSizeSp,
-                                         String settingDescription,
-                                         int settingDescriptionTextSizeSp,
+                                         String label,
+                                         int labelTextSizeSp,
+                                         String secondaryText,
+                                         int secondaryTextSizeSp,
                                          boolean isChecked) {
-        this.settingId = settingId;
-        this.settingName = settingName;
-        this.settingNameTextSizeSp = settingNameTextSizeSp;
-        this.settingDescription = settingDescription;
-        this.settingDescriptionTextSizeSp = settingDescriptionTextSizeSp;
+        super(settingId, label, labelTextSizeSp, secondaryText, secondaryTextSizeSp);
         this.isChecked = isChecked;
     }
 
@@ -64,10 +55,10 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
 
     @Override
     public void bindViewCell(MaterialToggleSettingViewHolder viewHolder) {
-        viewHolder.setSettingName(settingName);
-        viewHolder.setSettingNameTextSizeSp(settingNameTextSizeSp);
-        viewHolder.setSettingDescription(settingDescription);
-        viewHolder.setSettingDescriptionTextSizeSp(settingDescriptionTextSizeSp);
+        viewHolder.setLabel(label);
+        viewHolder.setLabelTextSizeSp(labelTextSizeSp);
+        viewHolder.setSecondaryText(secondaryText);
+        viewHolder.setSecondaryTextTextSizeSp(secondaryTextSizeSp);
         viewHolder.setSwitchState(isChecked);
     }
 
@@ -95,46 +86,16 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
         });
     }
 
-    public class MaterialToggleSettingViewHolder extends BaseViewHolder {
-        private TextView settingNameTextView;
-        private TextView settingDescriptionTextView;
+    public class MaterialToggleSettingViewHolder extends BaseMaterialSettingViewCell.BaseMaterialSettingViewHolder {
         private Switch settingSwitch;
 
         public MaterialToggleSettingViewHolder(View itemView) {
             super(itemView);
-            settingNameTextView = (TextView) itemView.findViewById(R.id.setting_name);
-            settingDescriptionTextView = (TextView) itemView.findViewById(R.id.setting_description);
             settingSwitch = (Switch) itemView.findViewById(R.id.setting_switch);
-        }
-
-        public void setSettingName(String settingName) {
-            settingNameTextView.setText(settingName);
-        }
-
-        public void setSettingNameTextSizeSp(int textSizeSp) {
-            settingNameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeSp);
-        }
-
-        public void setSettingDescription(String settingDescription) {
-            if (settingDescription.isEmpty()) {
-                settingDescriptionTextView.setVisibility(View.GONE);
-            } else {
-                settingDescriptionTextView.setVisibility(View.VISIBLE);
-            }
-            settingDescriptionTextView.setText(settingDescription);
-        }
-
-        public void setSettingDescriptionTextSizeSp(int textSizeSp) {
-            settingDescriptionTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeSp);
-
         }
 
         public void setSwitchState(boolean isChecked) {
             settingSwitch.setChecked(isChecked);
-        }
-
-        public void setOnBackgroundClickedListener(View.OnClickListener onClickListener) {
-            itemView.setOnClickListener(onClickListener);
         }
 
         public void setOnSwitchStateChangedListener(CompoundButton.OnCheckedChangeListener onSwitchStateChangedListener) {
@@ -142,46 +103,12 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
         }
     }
 
-    public static class Builder {
-        private int settingId;
-        private String settingName;
-        private int settingNameTextSizeSp;
-        private String settingDescription;
-        private int settingDescriptionTextSizeSp;
+    public static class Builder extends BaseMaterialSettingViewCell.Builder<MaterialToggleSettingViewCell> {
         private boolean isChecked;
 
         public Builder() {
-            this.settingId = -1;
-            this.settingName = "";
-            this.settingNameTextSizeSp = 16;
-            this.settingDescription = "";
-            this.settingDescriptionTextSizeSp = 12;
+            super();
             this.isChecked = false;
-        }
-
-        public Builder id(int id) {
-            this.settingId = id;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.settingName = name;
-            return this;
-        }
-
-        public Builder nameTextSizeSp(int textSizeSp) {
-            this.settingNameTextSizeSp = textSizeSp;
-            return this;
-        }
-
-        public Builder description(String description) {
-            this.settingDescription = description;
-            return this;
-        }
-
-        public Builder descriptionTextSizeSp(int textSizeSp) {
-            this.settingDescriptionTextSizeSp = textSizeSp;
-            return this;
         }
 
         public Builder checked(boolean isChecked) {
@@ -190,8 +117,8 @@ public class MaterialToggleSettingViewCell extends AbstractViewCell<MaterialTogg
         }
 
         public MaterialToggleSettingViewCell build() {
-            return new MaterialToggleSettingViewCell(settingId, settingName, settingNameTextSizeSp,
-                    settingDescription, settingDescriptionTextSizeSp, isChecked);
+            return new MaterialToggleSettingViewCell(settingId, label, labelTextSizeSp,
+                    secondaryText, secondaryTextSizeSp, isChecked);
         }
     }
 }

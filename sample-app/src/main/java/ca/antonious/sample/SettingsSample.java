@@ -89,23 +89,23 @@ public class SettingsSample extends BaseActivity {
     private AbstractViewCell buildUserProfilePrivacySetting() {
         return MaterialSettingsItemViewCell.create()
             .id(USER_PROFILE_PRIVACY_SETTINGS_ID)
-            .name("Profile visibility")
-            .value("Public")
+            .label("Profile visibility")
+            .secondaryText("Public")
             .build();
     }
 
     private AbstractViewCell buildCommentNotificationSetting() {
         return MaterialToggleSettingViewCell.create()
             .id(NOTIFIY_ON_COMMENT_SETTING)
-            .name("Notify on Comment")
-            .description("Get notifications pushed when someone comments on a post you created")
+            .label("Notify on Comment")
+            .secondaryText("Get notifications pushed when someone comments on a post you created")
             .build();
     }
 
     private AbstractViewCell buildNewPostNotificationSetting() {
         return MaterialToggleSettingViewCell.create()
             .id(NOTIFIY_ON_NEW_POST_SETTING)
-            .name("Notify when a post is created")
+            .label("Notify when a post is created")
             .build();
     }
 

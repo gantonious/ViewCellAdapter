@@ -7,7 +7,7 @@
                 android:padding="16dp">
 
     <TextView
-        android:id="@+id/setting_name"
+        android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Setting"
@@ -15,7 +15,7 @@
         android:textSize="12sp"/>
 
     <TextView
-        android:id="@+id/setting_value"
+        android:id="@+id/secondary_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
