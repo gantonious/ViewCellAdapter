@@ -1,6 +1,7 @@
 package ca.antonious.sample;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,8 @@ import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
+import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
+import ca.antonious.viewcelladapter.viewcells.builtins.MaterialLabelViewCell;
 
 /**
  * Created by George on 2017-01-08.
@@ -45,13 +48,13 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
                 SectionBuilder.createCompositeSection()
                     .section(
                         SectionBuilder.wrap(section1)
-                            .header(new HeaderViewCell("Section 1"))
+                            .header(buildHeader("Section 1"))
                             .hideHeaderIfEmpty()
                             .build()
                     )
                     .section(
                         SectionBuilder.wrap(section2)
-                            .header(new HeaderViewCell("Section 2"))
+                            .header(buildHeader("Section 2"))
                             .hideHeaderIfEmpty()
                             .build()
                     )
@@ -65,6 +68,13 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
                     showSnackbar(snackMessage);
                 }
             })
+            .build();
+    }
+
+    private AbstractViewCell buildHeader(String headerLabel) {
+        return MaterialLabelViewCell.create()
+            .label(headerLabel)
+            .textColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             .build();
     }
 

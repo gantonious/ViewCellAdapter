@@ -12,6 +12,7 @@ import java.util.List;
 import ca.antonious.sample.about.AboutActivity;
 import ca.antonious.sample.models.Sample;
 import ca.antonious.sample.viewcells.SampleViewCell;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 
@@ -25,24 +26,24 @@ public class HomeActivity extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         HomogeneousSection<Sample, SampleViewCell> samplesSection =
                 new HomogeneousSection<>(Sample.class, SampleViewCell.class);
 
         samplesSection.addAll(getSamples());
 
-        viewCellAdapter.add(samplesSection);
-
-        viewCellAdapter.addListener(new SampleViewCell.OnSampleClickListener() {
-            @Override
-            public void onSampleClicked(Sample sample) {
-                startActivity(new Intent(HomeActivity.this, sample.getShowcaseActivityClass()));
-            }
-        });
-
-        return viewCellAdapter;
+        return ViewCellAdapter.create()
+            .section(
+                SectionBuilder.wrap(samplesSection)
+                    .separateWithDividers()
+                    .build()
+            )
+            .listener(new SampleViewCell.OnSampleClickListener() {
+                @Override
+                public void onSampleClicked(Sample sample) {
+                    startActivity(new Intent(HomeActivity.this, sample.getShowcaseActivityClass()));
+                }
+            })
+            .build();
     }
 
     private List<Sample> getSamples() {
@@ -54,6 +55,7 @@ public class HomeActivity extends BaseActivity {
         samples.add(getComplexSample());
         samples.add(getSelectionSample());
         samples.add(getHeterogeneousSample());
+        samples.add(getSettingsSample());
 
         return samples;
     }
@@ -111,6 +113,14 @@ public class HomeActivity extends BaseActivity {
                 .setTitle(getString(R.string.heterogeneous_example_title))
                 .setDescription(getString(R.string.heterogeneous_example_description))
                 .setShowcaseActivityClass(HeterogeneousSample.class)
+                .build();
+    }
+
+    private Sample getSettingsSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.settings_example_title))
+                .setDescription(getString(R.string.settings_example_description))
+                .setShowcaseActivityClass(SettingsSample.class)
                 .build();
     }
 

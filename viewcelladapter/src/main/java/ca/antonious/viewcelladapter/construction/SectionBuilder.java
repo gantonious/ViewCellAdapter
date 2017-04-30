@@ -1,5 +1,6 @@
 package ca.antonious.viewcelladapter.construction;
 
+import ca.antonious.viewcelladapter.decorators.ItemDividerSectionDecorator;
 import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
 import ca.antonious.viewcelladapter.decorators.FooterSectionDecorator;
@@ -10,6 +11,7 @@ import ca.antonious.viewcelladapter.sections.CompositeSection;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
+import ca.antonious.viewcelladapter.viewcells.builtins.MaterialDividerViewCell;
 
 /**
  * Created by George on 2017-04-22.
@@ -55,6 +57,20 @@ public class SectionBuilder<TSection extends AbstractSection> {
     public EmptySectionBuilder showIfEmpty(AbstractViewCell emptyViewCell) {
         EmptySectionDecorator decorator = new EmptySectionDecorator(getSection(), emptyViewCell);
         return new EmptySectionBuilder(decorator);
+    }
+
+    public ItemDividerBuilder separateWithDividers() {
+        return separateWithDividers(new Function<AbstractViewCell, AbstractViewCell>() {
+            @Override
+            public AbstractViewCell apply(AbstractViewCell viewCellBeforeDivider) {
+                return new MaterialDividerViewCell(viewCellBeforeDivider.getItemId());
+            }
+        });
+    }
+
+    public ItemDividerBuilder separateWithDividers(Function<? super AbstractViewCell, ? extends AbstractViewCell> viewCellFactory) {
+        ItemDividerSectionDecorator decorator = new ItemDividerSectionDecorator(getSection(), viewCellFactory);
+        return new ItemDividerBuilder(decorator);
     }
 
     public <TDecorator extends SectionDecorator> SectionBuilder<TDecorator> decorateWith(Function<? super AbstractSection, ? extends TDecorator> decoratorFactory) {
