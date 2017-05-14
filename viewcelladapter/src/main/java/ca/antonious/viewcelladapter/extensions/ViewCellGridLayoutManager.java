@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 
 import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 
 /**
  * Created by George on 2017-05-14.
@@ -30,12 +31,8 @@ public class ViewCellGridLayoutManager extends GridLayoutManager {
         setSpanSizeLookup(new SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return getSpanFor(position);
+                return ViewCellUtils.getSpanSizeFor(viewCellAdapter.get(position), getSpanCount());
             }
         });
-    }
-
-    private int getSpanFor(int position) {
-        return Math.max(1, getSpanCount() - (viewCellAdapter.get(position).getTotalPerLine() - 1));
     }
 }

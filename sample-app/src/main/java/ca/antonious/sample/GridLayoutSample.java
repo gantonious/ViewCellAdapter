@@ -37,7 +37,7 @@ public class GridLayoutSample extends BaseActivity {
         recyclerView.setAdapter(viewCellAdapter);
         recyclerView.setLayoutManager(ViewCellGridLayoutManager.create(this, viewCellAdapter, 3));
     }
-
+ 
     private ViewCellAdapter buildAdapter() {
         // create sections
         section1 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
@@ -45,21 +45,21 @@ public class GridLayoutSample extends BaseActivity {
 
         return ViewCellAdapter.create()
                 .section(
-                        SectionBuilder.createCompositeSection()
-                                .section(
-                                        SectionBuilder.wrap(section1)
-                                                .header(buildHeader("Section 1"))
-                                                .hideHeaderIfEmpty()
-                                                .build()
-                                )
-                                .section(
-                                        SectionBuilder.wrap(section2)
-                                                .header(buildHeader("Section 2"))
-                                                .hideHeaderIfEmpty()
-                                                .build()
-                                )
-                                .showIfEmpty(new EmptyViewCell("Add items at the top"))
-                                .build()
+                    SectionBuilder.createCompositeSection()
+                        .section(
+                            SectionBuilder.wrap(section1)
+                                    .header(buildHeader("Section 1"))
+                                    .hideHeaderIfEmpty()
+                                    .build()
+                        )
+                        .section(
+                            SectionBuilder.wrap(section2)
+                                    .header(buildHeader("Section 2"))
+                                    .hideHeaderIfEmpty()
+                                    .build()
+                        )
+                        .showIfEmpty(new EmptyViewCell("Add items at the top"))
+                        .build()
                 )
                 .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                     @Override
