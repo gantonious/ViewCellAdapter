@@ -53,4 +53,8 @@ public class ViewCellUtils {
 
         return sections.get(sectionIndex).get(viewCellIndex);
     }
+
+    public static int getSpanSizeFor(AbstractViewCell viewCell, int spanCount) {
+        return Math.max(1, spanCount - (viewCell.getTotalPerLine() - 1));
+    }
 }
