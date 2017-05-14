@@ -55,6 +55,7 @@ public class HomeActivity extends BaseActivity {
         samples.add(getComplexSample());
         samples.add(getSelectionSample());
         samples.add(getHeterogeneousSample());
+        samples.add(getGridLayoutSample());
         samples.add(getSettingsSample());
 
         return samples;
@@ -113,6 +114,14 @@ public class HomeActivity extends BaseActivity {
                 .setTitle(getString(R.string.heterogeneous_example_title))
                 .setDescription(getString(R.string.heterogeneous_example_description))
                 .setShowcaseActivityClass(HeterogeneousSample.class)
+                .build();
+    }
+
+    private Sample getGridLayoutSample() {
+        return new Sample.Builder()
+                .setTitle(getString(R.string.grid_example_title))
+                .setDescription(getString(R.string.grid_example_description))
+                .setShowcaseActivityClass(GridLayoutSample.class)
                 .build();
     }
 
