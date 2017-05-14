@@ -35,9 +35,9 @@ public class GridLayoutSample extends BaseActivity {
         viewCellAdapter = buildAdapter();
 
         recyclerView.setAdapter(viewCellAdapter);
-        recyclerView.setLayoutManager(ViewCellGridLayoutManager.create(this, viewCellAdapter, 4));
+        recyclerView.setLayoutManager(ViewCellGridLayoutManager.create(this, viewCellAdapter, 3));
     }
-
+ 
     private ViewCellAdapter buildAdapter() {
         // create sections
         section1 = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
