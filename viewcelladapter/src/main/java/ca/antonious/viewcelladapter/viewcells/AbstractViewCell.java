@@ -37,6 +37,10 @@ public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> imple
         isSelected = false;
     }
 
+    public int getTotalPerLine() {
+        return 1;
+    }
+
     public Function<View, BaseViewHolder> getViewHolderFactory() {
         return new ReflectionBasedViewHolderFactory(getViewHolderClass());
     }

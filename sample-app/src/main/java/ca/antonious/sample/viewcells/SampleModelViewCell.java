@@ -29,6 +29,11 @@ public class SampleModelViewCell extends GenericViewCell<SampleModelViewCell.Sam
         viewHolder.setName(sampleModel.getName());
     }
 
+    @Override
+    public int getTotalPerLine() {
+        return 3;
+    }
+
     public interface OnSampleModelClickListener {
         void onSampleModelClick(SampleModel sampleModel);
     }
