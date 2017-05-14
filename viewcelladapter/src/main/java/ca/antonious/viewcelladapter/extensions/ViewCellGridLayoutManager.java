@@ -15,14 +15,18 @@ public class ViewCellGridLayoutManager extends GridLayoutManager {
     public ViewCellGridLayoutManager(Context context, ViewCellAdapter viewCellAdapter, int spanCount, int orientation, boolean reverseLayout) {
         super(context, spanCount, orientation, reverseLayout);
         this.viewCellAdapter = viewCellAdapter;
-        init();
+        setupSpanLookup();
     }
 
     public static ViewCellGridLayoutManager create(Context context, ViewCellAdapter viewCellAdapter, int spanCount) {
-        return new ViewCellGridLayoutManager(context, viewCellAdapter, spanCount, VERTICAL, false);
+        return ViewCellGridLayoutManager.create(context, viewCellAdapter, spanCount, VERTICAL);
     }
 
-    private void init() {
+    public static ViewCellGridLayoutManager create(Context context, ViewCellAdapter viewCellAdapter, int spanCount, int orientation) {
+        return new ViewCellGridLayoutManager(context, viewCellAdapter, spanCount, orientation, false);
+    }
+
+    private void setupSpanLookup() {
         setSpanSizeLookup(new SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
