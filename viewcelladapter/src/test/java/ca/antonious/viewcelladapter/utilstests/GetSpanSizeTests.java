@@ -32,9 +32,13 @@ public class GetSpanSizeTests {
     @Parameterized.Parameters(name = "(spanCount:{0}, totalPerLine:{1}) -> spanSize:{2}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-            { 3, 3, 1 },
-            { 3, 2, 2 },
-            { 3, 1, 3 },
+                { 3, 3, 1 },
+                { 3, 2, 2 },
+                { 3, 1, 3 },
+                { 4, 4, 1 },
+                { 4, 3, 2 },
+                { 4, 2, 2 },
+                { 4, 1, 4 }
         });
     }
 
