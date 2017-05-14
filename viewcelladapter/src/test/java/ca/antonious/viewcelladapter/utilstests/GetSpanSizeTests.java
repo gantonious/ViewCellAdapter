@@ -1,6 +1,11 @@
 package ca.antonious.viewcelladapter.utilstests;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import ca.antonious.viewcelladapter.TestViewCell;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
@@ -12,24 +17,30 @@ import static org.junit.Assert.*;
  * Created by George on 2017-05-14.
  */
 
+@RunWith(Parameterized.class)
 public class GetSpanSizeTests {
-    @Test
-    public void test_totalPerLineOf1_spanCountOf3_shouldReturnSpanSizeOf3() {
-        AbstractViewCell viewCell = new TestViewCell("id", 1);
+    private int spanCount;
+    private int totalPerLine;
+    private int expectedSpanSize;
 
-        int expectedSpanSize = 3;
-        int actualSpanSize = ViewCellUtils.getSpanSizeFor(viewCell, 3);
+    public GetSpanSizeTests(int spanCount, int totalPerLine, int expectedSpanSize) {
+        this.spanCount = spanCount;
+        this.totalPerLine = totalPerLine;
+        this.expectedSpanSize = expectedSpanSize;
+    }
 
-        assertEquals(expectedSpanSize, actualSpanSize);
+    @Parameterized.Parameters(name = "(spanCount:{0}, totalPerLine:{1}) -> spanSize:{2}")
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+            { 3, 3, 1 },
+            { 3, 2, 2 },
+            { 3, 1, 3 },
+        });
     }
 
     @Test
-    public void test_totalPerLineOf3_spanCountOf3_shouldReturnSpanSizeOf1() {
-        AbstractViewCell viewCell = new TestViewCell("id", 3);
-
-        int expectedSpanSize = 1;
-        int actualSpanSize = ViewCellUtils.getSpanSizeFor(viewCell, 3);
-
-        assertEquals(expectedSpanSize, actualSpanSize);
+    public void test() {
+        AbstractViewCell viewCell = new TestViewCell("id", totalPerLine);
+        assertEquals(expectedSpanSize, ViewCellUtils.getSpanSizeFor(viewCell, spanCount));
     }
 }
