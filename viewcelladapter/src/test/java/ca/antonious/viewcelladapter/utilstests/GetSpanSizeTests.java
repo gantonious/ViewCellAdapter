@@ -33,10 +33,10 @@ public class GetSpanSizeTests {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 { 3, 3, 1 },
-                { 3, 2, 2 },
+                { 3, 2, 3 },
                 { 3, 1, 3 },
                 { 4, 4, 1 },
-                { 4, 3, 2 },
+                { 4, 3, 4 },
                 { 4, 2, 2 },
                 { 4, 1, 4 }
         });
