@@ -1,7 +1,10 @@
 package ca.antonious.viewcelladapter.sections;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
+import ca.antonious.viewcelladapter.internal.SectionObserver;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 
 /**
@@ -9,9 +12,25 @@ import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
  */
 
 public abstract class AbstractSection {
-    public abstract AbstractViewCell get(int position);
-    public abstract void remove(int position);
-    public abstract int getItemCount();
+    private Set<SectionObserver> sectionObservers;
+
+    public AbstractSection() {
+        sectionObservers = new HashSet<>();
+    }
+
+    public void addObserver(SectionObserver observer) {
+        sectionObservers.add(observer);
+    }
+
+    public void removeObserver(SectionObserver observer) {
+        sectionObservers.remove(observer);
+    }
+
+    public void notifyDataChanged() {
+        for (SectionObserver observer: sectionObservers) {
+            observer.onDataChanged();
+        }
+    }
 
     public boolean isEmpty() {
         return getItemCount() == 0;
@@ -25,6 +44,10 @@ public abstract class AbstractSection {
             }
         };
     }
+
+    public abstract AbstractViewCell get(int position);
+    public abstract void remove(int position);
+    public abstract int getItemCount();
 
     public static class AbstractSectionIterator implements Iterator<AbstractViewCell> {
         private int currentIndex;

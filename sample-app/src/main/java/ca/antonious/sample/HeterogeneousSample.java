@@ -62,7 +62,6 @@ public class HeterogeneousSample extends BaseActivity {
         SampleModelViewCell viewCell = new SampleModelViewCell(new SampleModel(sampleModelName));
 
         mainSection.prependAll(Arrays.asList(viewCell));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void addSelectableModel() {
@@ -70,7 +69,6 @@ public class HeterogeneousSample extends BaseActivity {
         SelectableModelViewCell viewCell = new SelectableModelViewCell(new SelectableModel(sampleModelName));
 
         mainSection.prependAll(Arrays.asList(viewCell));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void showCurrentSelections() {
@@ -82,7 +80,6 @@ public class HeterogeneousSample extends BaseActivity {
     private void removeFirstViewCell() {
         if (!mainSection.isEmpty()) {
             mainSection.remove(0);
-            viewCellAdapter.notifyDataSetChanged();
         }
     }
 

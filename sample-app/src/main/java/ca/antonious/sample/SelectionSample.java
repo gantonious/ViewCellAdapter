@@ -55,7 +55,6 @@ public class SelectionSample extends BaseActivity {
 
     private void addSampleModel() {
         mainSection.prependAll(Arrays.asList(generateRandomSampleModel()));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void showCurrentSelections() {

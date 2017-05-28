@@ -43,6 +43,7 @@ public class FooterSectionDecorator extends SectionDecorator {
 
     public void setShowFooterIfEmpty(boolean showFooterIfEmpty) {
         this.showFooterIfEmpty = showFooterIfEmpty;
+        notifyDataChanged();
     }
 
     private boolean isSectionEmpty() {

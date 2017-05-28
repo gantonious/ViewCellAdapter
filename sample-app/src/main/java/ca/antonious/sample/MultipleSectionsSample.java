@@ -65,13 +65,11 @@ public class MultipleSectionsSample extends BaseActivity {
     private void addToImportantSection() {
         String sampleModelName = String.format(Locale.getDefault(), "IMPORTANT: %s Test %d", Utils.getRandomLetter(), importantSection.getItemCount());
         importantSection.prependAll(Arrays.asList(new SampleModel(sampleModelName)));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void addToNormalSection() {
         String sampleModelName = String.format(Locale.getDefault(), "%s Test %d", Utils.getRandomLetter(), normalSection.getItemCount());
         normalSection.prependAll(Arrays.asList(new SampleModel(sampleModelName)));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     @Override

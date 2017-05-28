@@ -3,6 +3,7 @@ package ca.antonious.viewcelladapter.sections;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.antonious.viewcelladapter.internal.SectionObserver;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 
@@ -10,7 +11,7 @@ import ca.antonious.viewcelladapter.utils.ViewCellUtils;
  * Created by George on 2016-12-17.
  */
 
-public class CompositeSection extends AbstractSection {
+public class CompositeSection extends AbstractSection implements SectionObserver {
     private List<AbstractSection> sections;
 
     public CompositeSection() {
@@ -36,12 +37,19 @@ public class CompositeSection extends AbstractSection {
     }
 
     public CompositeSection addSection(AbstractSection section) {
+        section.addObserver(this);
         sections.add(section);
         return this;
     }
 
     public CompositeSection removeSection(AbstractSection section) {
+        section.removeObserver(this);
         sections.remove(section);
         return this;
+    }
+
+    @Override
+    public void onDataChanged() {
+        notifyDataChanged();
     }
 }

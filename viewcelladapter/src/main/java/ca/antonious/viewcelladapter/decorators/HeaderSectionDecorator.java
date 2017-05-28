@@ -43,6 +43,7 @@ public class HeaderSectionDecorator extends SectionDecorator {
 
     public void setShowHeaderIfEmpty(boolean showHeaderIfEmpty) {
         this.showHeaderIfEmpty = showHeaderIfEmpty;
+        notifyDataChanged();
     }
 
     private boolean isSectionEmpty() {

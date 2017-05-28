@@ -81,23 +81,19 @@ public class GridLayoutSample extends BaseActivity {
     private void prependSampleModelToSection1() {
         String sampleModelName = String.format(Locale.getDefault(), "%s Test %d", Utils.getRandomLetter(), section1.getItemCount());
         section1.prependAll(Arrays.asList(new SampleModel(sampleModelName)));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void clearSection1() {
         section1.clear();
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void prependSampleModelToSection2() {
         String sampleModelName = String.format(Locale.getDefault(), "%s Test %d", Utils.getRandomLetter(), section2.getItemCount());
         section2.prependAll(Arrays.asList(new SampleModel(sampleModelName)));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void clearSection2() {
         section2.clear();
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     @Override
