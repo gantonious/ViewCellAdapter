@@ -72,27 +72,27 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     public void add(TModel model) {
         this.viewCells.add(viewCellFactory.apply(model));
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     public void addAll(Collection<? extends TModel> models) {
         this.viewCells.addAll(convertToViewCells(models));
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     public void setAll(Collection<? extends TModel> models) {
         CollectionUtils.setAll(this.viewCells, convertToViewCells(models));
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     public void prependAll(Collection<? extends TModel> models) {
         CollectionUtils.prependAll(this.viewCells, convertToViewCells(models));
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     public void clear() {
         viewCells.clear();
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     private List<TViewCell> convertToViewCells(Collection<? extends TModel> models) {
@@ -103,6 +103,11 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         }
 
         return output;
+    }
+
+    private void invalidateData() {
+        prepareViewCellsToRender();
+        notifyDataChanged();
     }
 
     private void prepareViewCellsToRender() {
@@ -120,7 +125,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     public HomogeneousSection<TModel, TViewCell> setModelComparator(Comparator<? super TModel> modelComparator) {
         this.modelComparator = modelComparator;
-        prepareViewCellsToRender();
+        invalidateData();
 
         return this;
     }
@@ -140,7 +145,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
     public HomogeneousSection<TModel, TViewCell> setFilterFunction(Function<? super TModel, ? extends Boolean> filterFunction) {
         this.filterFunction = filterFunction;
-        prepareViewCellsToRender();
+        invalidateData();
 
         return this;
     }
@@ -173,7 +178,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         TViewCell viewCellToRemove = viewCellsToRender.get(position);
         viewCells.remove(viewCellToRemove);
 
-        prepareViewCellsToRender();
+        invalidateData();
     }
 
     @Override
