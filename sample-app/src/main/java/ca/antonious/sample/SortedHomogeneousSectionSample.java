@@ -67,13 +67,11 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
 
     private void addSampleModel() {
         sampleModelSection.add(generateRandomSampleModel());
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void removeSampleModel() {
         if (!sampleModelSection.isEmpty()) {
             sampleModelSection.remove(0);
-            viewCellAdapter.notifyDataSetChanged();
         }
     }
 
@@ -94,7 +92,6 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
                 return true;
             case R.id.action_clear:
                 sampleModelSection.clear();
-                viewCellAdapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

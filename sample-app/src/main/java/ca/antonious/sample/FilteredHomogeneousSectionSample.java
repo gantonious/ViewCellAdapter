@@ -77,8 +77,6 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
                 return input.getName().toLowerCase().startsWith(searchTerm.toLowerCase());
             }
         });
-
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void populateSectionWithBaseData() {
@@ -94,7 +92,6 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
 
     private void addSampleModel() {
         sampleModelSection.prependAll(Arrays.asList(generateRandomSampleModel()));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     @Override
