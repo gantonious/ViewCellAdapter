@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import ca.antonious.viewcelladapter.construction.ViewCellAdapterBuilder;
 import ca.antonious.viewcelladapter.internal.Function;
+import ca.antonious.viewcelladapter.internal.SectionObserver;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
@@ -25,7 +27,7 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
  * Created by George on 2016-11-15.
  */
 
-public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implements SectionObserver {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, Function<View, BaseViewHolder>> viewHolderFactories;
@@ -43,23 +45,39 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void add(AbstractSection section) {
         this.sections.add(section);
+        section.addObserver(this);
     }
 
     public void addAll(Collection<? extends AbstractSection> sections) {
         this.sections.addAll(sections);
+        observe(sections);
     }
 
     public void setAll(Collection<? extends AbstractSection> sections) {
         CollectionUtils.setAll(this.sections, sections);
+        observe(sections);
     }
 
     public void prependAll(Collection<? extends AbstractSection> sections) {
         CollectionUtils.prependAll(this.sections, sections);
+        observe(sections);
     }
 
     public ViewCellAdapter addSection(AbstractSection section) {
         add(section);
+        section.addObserver(this);
         return this;
+    }
+
+    private void observe(Collection<? extends AbstractSection> sections) {
+        for (AbstractSection section: sections) {
+            section.addObserver(this);
+        }
+    }
+
+    @Override
+    public void onDataChanged() {
+        notifyDataSetChanged();
     }
 
     public ViewCellAdapter addListener(Object listener) {
