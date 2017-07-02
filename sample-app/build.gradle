@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "ca.antonious.sample"
-        minSdkVersion 14
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
