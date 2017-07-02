@@ -14,7 +14,7 @@ dependencies {
 publish {
     userOrg = rootProject.ext.userOrg
     groupId = rootProject.ext.groupId
-    artifactId = rootProject.ext.artifactId
+    artifactId = 'viewcelladapter-compiler'
     publishVersion = rootProject.ext.publishVersion
     website = rootProject.ext.website
 }
