@@ -2,6 +2,21 @@
 
 A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adapter. View the [sample-app](https://github.com/gantonious/ViewCellAdapter/tree/dev/sample-app/src/main/java/ca/antonious/sample) to see different usage scenarios.
 
+## Features
+
+- Lists with different view types ([HeterogeneousSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/HeterogeneousSample.java))
+- Easy event handling ([SampleModelViewCell](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/viewcells/SampleModelViewCell.java#L42), [BasicHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/BasicHomogeneousSectionSample.java#L38))
+- Multiple independent sections ([MultipleSectionsSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/MultipleSectionsSample.java))
+- Easy to extend
+- Headers ([MultipleSectionsSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/MultipleSectionsSample.java#L37))
+- Footers
+- Empty state handling ([HeterogeneousSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/HeterogeneousSample.java#L39 ))
+- Easy to compose section decorations ([ComplexDecoratorCompositionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/ComplexDecoratorCompositionSample.java#L41))
+- Filtering ([FilteredHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/FilteredHomogeneousSectionSample.java#L72))
+- Sorting ([SortedHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/SortedHomogeneousSectionSample.java#L36))
+- Dynamic span sizes ([SampleModelViewCell](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/viewcells/SampleModelViewCell.java#L33), [GridLayoutSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/GridLayoutSample.java#L32))
+- Selection ([SelectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/SelectionSample.java))
+
 ## Creating a ViewCell
 
 When you want to bind an item to a ViewCellAdapter you need a model to bind, a layout to bind to, and a ViewCell to handle the binding logic.
@@ -185,7 +200,7 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
 
 ## Download
 
-```
+```groovy
 dependencies {
     compile 'ca.antonious:viewcelladapter:2.0.0'
     annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.0.0'
