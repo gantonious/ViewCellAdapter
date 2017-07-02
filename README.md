@@ -250,8 +250,8 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
 
 ```groovy
 dependencies {
-    compile 'ca.antonious:viewcelladapter:2.0.0'
-    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.0.0'
+    compile 'ca.antonious:viewcelladapter:2.1.0'
+    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.1.0'
 }
 ```
 
