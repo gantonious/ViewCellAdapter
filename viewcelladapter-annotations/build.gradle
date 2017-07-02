@@ -7,7 +7,7 @@ targetCompatibility = "1.7"
 publish {
     userOrg = rootProject.ext.userOrg
     groupId = rootProject.ext.groupId
-    artifactId = rootProject.ext.artifactId
+    artifactId = 'viewcelladapter-annotations'
     publishVersion = rootProject.ext.publishVersion
     website = rootProject.ext.website
 }
