@@ -5,7 +5,7 @@ import android.view.View;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
 
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 
 /**
  * Created by George on 2016-11-17.
@@ -35,6 +35,10 @@ public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> imple
     @Override
     public void deselect() {
         isSelected = false;
+    }
+
+    public int getTotalPerLine() {
+        return 1;
     }
 
     public Function<View, BaseViewHolder> getViewHolderFactory() {

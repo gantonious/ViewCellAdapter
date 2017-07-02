@@ -15,7 +15,7 @@ import ca.antonious.sample.viewcells.SelectableModelViewCell;
 import ca.antonious.sample.viewcells.EmptyViewCell;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.Section;
 
 /**
@@ -37,29 +37,24 @@ public class HeterogeneousSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
         // create section
         mainSection = new Section();
 
-        // decorate the section with an empty view
-        EmptyViewCell emptyViewCell = new EmptyViewCell("Add items at the top");
-        EmptySectionDecorator mainSectionWithEmptyView = new EmptySectionDecorator(mainSection, emptyViewCell);
+        return ViewCellAdapter.create()
+            .section(
+                SectionBuilder.wrap(mainSection)
+                    .showIfEmpty(new EmptyViewCell("Add items at the top"))
+                    .build()
+            )
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            })
+            .build();
 
-        // add the decorated section to the adapter
-        viewCellAdapter.add(mainSectionWithEmptyView);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
-
-        return viewCellAdapter;
     }
 
     private void addSampleModel() {
@@ -67,7 +62,6 @@ public class HeterogeneousSample extends BaseActivity {
         SampleModelViewCell viewCell = new SampleModelViewCell(new SampleModel(sampleModelName));
 
         mainSection.prependAll(Arrays.asList(viewCell));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void addSelectableModel() {
@@ -75,7 +69,6 @@ public class HeterogeneousSample extends BaseActivity {
         SelectableModelViewCell viewCell = new SelectableModelViewCell(new SelectableModel(sampleModelName));
 
         mainSection.prependAll(Arrays.asList(viewCell));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void showCurrentSelections() {
@@ -87,7 +80,6 @@ public class HeterogeneousSample extends BaseActivity {
     private void removeFirstViewCell() {
         if (!mainSection.isEmpty()) {
             mainSection.remove(0);
-            viewCellAdapter.notifyDataSetChanged();
         }
     }
 

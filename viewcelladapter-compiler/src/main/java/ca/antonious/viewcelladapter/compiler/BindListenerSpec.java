@@ -9,10 +9,12 @@ import javax.lang.model.type.TypeMirror;
 public class BindListenerSpec {
     private String bindListenerMethodName;
     private TypeMirror listenerType;
+    private boolean bindIfNull;
 
-    public BindListenerSpec(String bindListenerMethodName, TypeMirror listenerType) {
+    public BindListenerSpec(String bindListenerMethodName, TypeMirror listenerType, boolean bindIfNull) {
         this.bindListenerMethodName = bindListenerMethodName;
         this.listenerType = listenerType;
+        this.bindIfNull = bindIfNull;
     }
 
     public String getBindListenerMethodName() {
@@ -21,5 +23,9 @@ public class BindListenerSpec {
 
     public TypeMirror getListenerType() {
         return listenerType;
+    }
+
+    public boolean shouldBindIfNull() {
+        return bindIfNull;
     }
 }

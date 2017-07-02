@@ -1,6 +1,21 @@
 # ViewCellAdapter [![CircleCI](https://circleci.com/gh/gantonious/ViewCellAdapter.svg?style=svg)](https://circleci.com/gh/gantonious/ViewCellAdapter)
 
-A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adapter.
+A RecyclerView adapter that can handle holding hetrogeneuous data types, and provides the ability to set up sections in your adapter. View the [sample-app](https://github.com/gantonious/ViewCellAdapter/tree/dev/sample-app/src/main/java/ca/antonious/sample) to see different usage scenarios.
+
+## Features
+
+- Lists with different view types ([HeterogeneousSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/HeterogeneousSample.java))
+- Easy event handling ([SampleModelViewCell](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/viewcells/SampleModelViewCell.java#L42), [BasicHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/BasicHomogeneousSectionSample.java#L38))
+- Multiple independent sections ([MultipleSectionsSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/MultipleSectionsSample.java))
+- Easy to extend
+- Headers ([MultipleSectionsSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/MultipleSectionsSample.java#L37))
+- Footers
+- Empty state handling ([HeterogeneousSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/HeterogeneousSample.java#L39 ))
+- Easy to compose section decorators ([ComplexDecoratorCompositionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/ComplexDecoratorCompositionSample.java#L41))
+- Filtering ([FilteredHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/FilteredHomogeneousSectionSample.java#L72))
+- Sorting ([SortedHomogeneousSectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/SortedHomogeneousSectionSample.java#L36))
+- Dynamic span sizes ([SampleModelViewCell](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/viewcells/SampleModelViewCell.java#L33), [GridLayoutSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/GridLayoutSample.java#L32))
+- Selection ([SelectionSample](https://github.com/gantonious/ViewCellAdapter/blob/dev/sample-app/src/main/java/ca/antonious/sample/SelectionSample.java))
 
 ## Creating a ViewCell
 
@@ -20,11 +35,11 @@ public class Task {
 }
 ```
 
-### Define a Layout 
+### Define a Layout
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -92,44 +107,106 @@ public class TaskViewCell extends GenericViewCell<TaskViewCell.TaskViewHolder, T
 
 ## Using the Adapter
 
-The `ViewCellAdapter` takes in a list of sections. You can then provide each section with a set of view cells.
+The `ViewCellAdapter` takes in a list of sections. You can then update each section independently to change what is being rendered.
 
-### Using sections
+### Using a HomogeneousSection
 
 The simplest way to get started is to use a `HomogeneousSection`. A `HomogeneousSection` assumes all view cells in the section are binding the same data type.
 
 ```java
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+HomogeneousSection<Task, TaskViewCell> olderTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+
 ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+viewCellAdapter.addSection(todaysTasksSection);
+viewCellAdapter.addSection(olderTasksSection);
 
-HomogeneousSection todaysTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
-HomogeneousSection olderTasksSection = new HomogeneousSection(Task.class, TaskViewCell.class);
-
-viewCellAdapter.add(todaysTasksSection);
-viewCellAdapter.add(olderTasksSection);
+recyclerView.setAdapter(viewCellAdapter);
 ```
 
 Then each section can be updated independently
 
 ```java
 List<Task> todaysTasks = getTodaysTasks();
+todaysTasksSection.addAll(todaysTasks);
+
 List<Task> olderTasks = getOlderTasks();
-
-todaysTasksSection.addAll(todaysTasks)
 olderTasksSection.addAll(olderTasks);
-
-viewCellAdapter.notifyDataSetChanged();
 ```
 
-Sections can be decorated to add extra functionality. Here is an example of adding a header to a section.
+### Using a Section
+
+A `Section` does not assume all of it's viewcells are the same type. This allows it to be populated with different view cells that don't share the same view type.
 
 ```java
-AbstractViewCell headerViewCell = getHeaderViewCell();
+Section heterogeneousSection = new Section();
 
-HeaderSectionDecorator todaysTasksWithHeader = new HeaderSectionDecorator(todaysTasksSection, headerViewCell);
+ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+viewCellAdapter.addSection(heterogeneousSection);
+
+recyclerView.setAdapter(viewCellAdapter);
+```
+
+A `Section` can be populated by doing the following (notice the extra level of indirection required to convert the models into viewcells)
+
+```java
+Task importantTask = new Task("Important Task", 0);
+Task normalTask = new Task("Normal Task", 0);
+
+heterogeneousSection.add(new ImportantTaskViewCell(importantTask));
+heterogeneousSection.add(new TaskViewCell(normalTask));
+```
+
+### Decorating Sections
+
+It's common to want to add a header or a footer to a list of items. Rather than manually inserting a viewcell at the beginning or end of a section, a `SectionDecorator` can be used to decorate a section with a header or footer.
+
+```java
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+
+HeaderSectionDecorator todaysTasksWithHeader = new HeaderSectionDecorator(todaysTasksSection, new HeaderViewCell("Today's Tasks"));
 todaysTasksWithHeader.setShowHeaderIfEmpty(false);
 
-viewCellAdapter.add(todaysTasksWithHeader);
+ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+viewCellAdapter.addSection(todaysTasksWithHeader);
+
+recyclerView.setAdapter(viewCellAdapter);
 ```
+
+Since a `SectionDecorator` is a section, you can decorate a decorator to construct complex list setups with ease. The following example applies a header and an empty view to a single section.
+
+```java
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+
+HeaderSectionDecorator todaysTasksWithHeader = new HeaderSectionDecorator(todaysTasksSection, new HeaderViewCell("Today's Tasks"));
+todaysTasksWithHeader.setShowHeaderIfEmpty(false);
+
+EmptySectionDecorator todaysTasksWithHeaderAndEmptyView = new EmptySectionDecorator(todaysTasksWithHeader, new EmptyViewCell("You have no tasks to do today!"));
+
+ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
+viewCellAdapter.addSection(todaysTasksWithHeaderAndEmptyView);
+
+recyclerView.setAdapter(viewCellAdapter);
+```
+
+### Using Section Builders
+
+When you need to build a more complex adapter, `SectionBuilder` provides a clean declarative API to build your adapter. The following example shows how to build the same setup described in the last example using the `SectionBuilder` API.
+
+```java
+HomogeneousSection<Task, TaskViewCell> todaysTasksSection = new HomogeneousSection<>(Task.class, TaskViewCell.class);
+
+ViewCellAdapter adapter = ViewCellAdapter.create()
+    .section(
+        SectionBuilder.wrap(todaysTasksSection)
+            .header(new HeaderViewCell("Today's Tasks"))
+            .hideHeaderIfEmpty()
+            .showIfEmpty(new EmptyViewCell("You have no tasks to do today!"))
+            .build()
+    )
+    .build();
+```
+
 
 
 ## Handling ViewHolder Events
@@ -154,7 +231,7 @@ public void bindOnTaskClick(TaskViewHolder viewHolder, OnTaskClickListener onTas
         public void onClick(View view) {
             onTaskClickListener.onTaskClicked(getModel());
         }
-    });  
+    });
 }
 ```
 
@@ -171,10 +248,10 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
 
 ## Download
 
-```
+```groovy
 dependencies {
-    compile 'ca.antonious:viewcelladapter:2.0.0'
-    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.0.0'
+    compile 'ca.antonious:viewcelladapter:2.1.0'
+    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.1.0'
 }
 ```
 

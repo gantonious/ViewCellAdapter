@@ -1,5 +1,8 @@
 .DS_Store
 *.iml
+**/.classpath
+**/.project
+**/.settings
 
 # Built application files
 *.ap_

@@ -3,15 +3,13 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="?attr/selectableItemBackground">
+              android:background="?attr/selectableItemBackground"
+              android:padding="16dp">
 
     <TextView
         android:id="@+id/library_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:text="ViewCellAdapter"
         android:textSize="22sp"
         android:textColor="@android:color/black"
@@ -22,16 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:text="https://github.com/gantonious/ViewCellAdapter"
         android:textSize="13sp"
         android:fontFamily="sans-serif-light"/>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/grey"/>
 
 </LinearLayout>

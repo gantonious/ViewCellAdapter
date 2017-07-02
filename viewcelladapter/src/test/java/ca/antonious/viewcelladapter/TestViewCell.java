@@ -10,8 +10,15 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
  */
 
 public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, String> {
+    private int totalPerLine;
+
     public TestViewCell(String identifier) {
+        this(identifier, 1);
+    }
+
+    public TestViewCell(String identifier, int totalPerLine) {
         super(identifier);
+        this.totalPerLine = totalPerLine;
     }
 
     @Override
@@ -22,6 +29,11 @@ public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, Strin
     @Override
     public int getItemId() {
         return getModel().length();
+    }
+
+    @Override
+    public int getTotalPerLine() {
+        return totalPerLine;
     }
 
     @Override

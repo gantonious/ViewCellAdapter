@@ -36,22 +36,27 @@ public class Section extends AbstractSection {
 
     public void add(AbstractViewCell viewCell) {
         this.viewCells.add(viewCell);
+        invalidateData();
     }
 
     public void addAll(Collection<? extends AbstractViewCell> viewCells) {
         this.viewCells.addAll(viewCells);
+        invalidateData();
     }
 
     public void setAll(Collection<? extends AbstractViewCell> viewCells) {
         CollectionUtils.setAll(this.viewCells, viewCells);
+        invalidateData();
     }
 
     public void prependAll(Collection<? extends AbstractViewCell> viewCells) {
         CollectionUtils.prependAll(this.viewCells, viewCells);
+        invalidateData();
     }
 
     public void clear() {
         viewCells.clear();
+        invalidateData();
     }
 
     @Override
@@ -62,10 +67,15 @@ public class Section extends AbstractSection {
     @Override
     public void remove(int position) {
         viewCells.remove(position);
+        invalidateData();
     }
 
     @Override
     public int getItemCount() {
         return viewCells.size();
+    }
+
+    private void invalidateData() {
+        notifyDataChanged();
     }
 }

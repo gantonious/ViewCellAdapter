@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import ca.antonious.sample.models.SampleModel;
 import ca.antonious.sample.viewcells.SampleModelViewCell;
-import ca.antonious.viewcelladapter.Function;
+import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
@@ -40,25 +40,18 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
     }
 
     private ViewCellAdapter buildAdapter() {
-        ViewCellAdapter viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-
-        // create section
         sampleModelSection = new HomogeneousSection<>(SampleModel.class, SampleModelViewCell.class);
 
-        // add section to the adapter
-        viewCellAdapter.add(sampleModelSection);
-
-        // register on sample model clicked listener
-        viewCellAdapter.addListener(new SampleModelViewCell.OnSampleModelClickListener() {
-            @Override
-            public void onSampleModelClick(SampleModel sampleModel) {
-                String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
-                showSnackbar(snackMessage);
-            }
-        });
-
-        return viewCellAdapter;
+        return ViewCellAdapter.create()
+            .section(sampleModelSection)
+            .listener(new SampleModelViewCell.OnSampleModelClickListener() {
+                @Override
+                public void onSampleModelClick(SampleModel sampleModel) {
+                    String snackMessage = String.format(Locale.getDefault(), "%s was clicked!", sampleModel.getName());
+                    showSnackbar(snackMessage);
+                }
+            })
+            .build();
     }
 
     private void initializeSearchView() {
@@ -84,8 +77,6 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
                 return input.getName().toLowerCase().startsWith(searchTerm.toLowerCase());
             }
         });
-
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void populateSectionWithBaseData() {
@@ -101,7 +92,6 @@ public class FilteredHomogeneousSectionSample extends BaseActivity {
 
     private void addSampleModel() {
         sampleModelSection.prependAll(Arrays.asList(generateRandomSampleModel()));
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     @Override

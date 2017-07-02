@@ -12,6 +12,17 @@ buildscript {
     }
 }
 
+ext {
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.2"
+    supportLibVersion = "25.3.1"
+    userOrg = 'gantonious'
+    groupId = 'ca.antonious'
+    artifactId = 'viewcelladapter-annotations'
+    publishVersion = '2.1.0'
+    website = "https://github.com/gantonious/ViewCellAdapter"
+}
+
 allprojects {
     repositories {
         jcenter()

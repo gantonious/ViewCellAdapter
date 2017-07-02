@@ -42,6 +42,17 @@
         Displays different view types in the same section.
     </string>
 
+    <string name="grid_example_title">Grid Layout</string>
+    <string name="grid_example_description">
+        Displays viewcells in a grid with different span counts.
+    </string>
+
+    <string name="settings_example_title">Settings</string>
+    <string name="settings_example_description">
+        Showcases how builtin viewcells can be used to build powerful
+        setting screens easily.
+    </string>
+
     <string name="about_activity_title">Information</string>
 
     <string name="app_name">ViewCellAdapter </string>

@@ -51,6 +51,14 @@
                   android:theme="@style/AppTheme.NoActionBar"
                   android:label="@string/heterogeneous_example_title"/>
 
+        <activity android:name=".GridLayoutSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/grid_example_title"/>
+
+        <activity android:name=".SettingsSample"
+                  android:theme="@style/AppTheme.NoActionBar"
+                  android:label="@string/settings_example_title"/>
+
     </application>
 
 </manifest>
