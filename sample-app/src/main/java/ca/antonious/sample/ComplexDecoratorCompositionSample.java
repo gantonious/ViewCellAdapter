@@ -50,16 +50,13 @@ public class ComplexDecoratorCompositionSample extends BaseActivity {
                         SectionBuilder.wrap(section1)
                             .header(buildHeader("Section 1"))
                             .hideHeaderIfEmpty()
-                            .build()
                     )
                     .section(
                         SectionBuilder.wrap(section2)
                             .header(buildHeader("Section 2"))
                             .hideHeaderIfEmpty()
-                            .build()
                     )
                     .showIfEmpty(new EmptyViewCell("Add items at the top"))
-                    .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override

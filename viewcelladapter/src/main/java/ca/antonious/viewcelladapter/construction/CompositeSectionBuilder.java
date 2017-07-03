@@ -16,4 +16,9 @@ public class CompositeSectionBuilder extends SectionBuilder<CompositeSection> {
         getSection().addSection(section);
         return this;
     }
+
+    public CompositeSectionBuilder section(SectionBuilder sectionBuilder) {
+        getSection().addSection(sectionBuilder.build());
+        return this;
+    }
 }

@@ -44,13 +44,11 @@ public class MultipleSectionsSample extends BaseActivity {
                 SectionBuilder.wrap(importantSection)
                     .header(new HeaderViewCell("Important"))
                     .showHeaderIfEmpty()
-                    .build()
             )
             .section(
                 SectionBuilder.wrap(normalSection)
                     .header(new HeaderViewCell("Normal"))
                     .hideHeaderIfEmpty()
-                    .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override
