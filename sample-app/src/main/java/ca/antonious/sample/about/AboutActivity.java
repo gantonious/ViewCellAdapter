@@ -44,7 +44,6 @@ public class AboutActivity extends BaseActivity {
                     .separateWithDividers()
                     .header(new HeaderViewCell("Libraries Used"))
                     .hideHeaderIfEmpty()
-                    .build()
             )
             .listener(new LibraryViewCell.OnLibraryClickListener() {
                 @Override

@@ -44,7 +44,6 @@ public class HeterogeneousSample extends BaseActivity {
             .section(
                 SectionBuilder.wrap(mainSection)
                     .showIfEmpty(new EmptyViewCell("Add items at the top"))
-                    .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override

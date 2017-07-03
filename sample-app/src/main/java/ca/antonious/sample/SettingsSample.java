@@ -47,13 +47,11 @@ public class SettingsSample extends BaseActivity {
                 SectionBuilder.wrap(userSettings)
                     .separateWithDividers()
                     .header(buildHeader("User Settings"))
-                    .build()
             )
             .section(
                 SectionBuilder.wrap(notificationSettings)
                     .separateWithDividers()
                     .header(buildHeader("Notification Settings"))
-                    .build()
             )
             .listener(new MaterialSettingsItemViewCell.OnSettingClickedListener() {
                 @Override
