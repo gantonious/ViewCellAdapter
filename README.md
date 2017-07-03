@@ -202,7 +202,6 @@ ViewCellAdapter adapter = ViewCellAdapter.create()
             .header(new HeaderViewCell("Today's Tasks"))
             .hideHeaderIfEmpty()
             .showIfEmpty(new EmptyViewCell("You have no tasks to do today!"))
-            .build()
     )
     .build();
 ```
