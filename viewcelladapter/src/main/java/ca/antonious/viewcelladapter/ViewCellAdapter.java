@@ -124,11 +124,4 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public AbstractViewCell get(int position) {
         return ViewCellUtils.getViewCell(sections, position);
     }
-
-    public void remove(int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
-
-        sections.get(sectionIndex).remove(viewCellIndex);
-    }
 }

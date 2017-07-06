@@ -27,13 +27,6 @@ public class ItemDividerSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public void remove(int position) {
-        if (position % 2 == 0) {
-            getDecoratedSection().remove(getInnerPosition(position));
-        }
-    }
-
-    @Override
     public int getItemCount() {
         return getDecoratedSection().getItemCount() + getTotalDividers();
     }

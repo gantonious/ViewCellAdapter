@@ -25,11 +25,6 @@ public class FooterSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public void remove(int position) {
-        getDecoratedSection().remove(position);
-    }
-
-    @Override
     public int getItemCount() {
         if (isSectionEmpty()) {
             return 0;
