@@ -44,13 +44,8 @@ public class MaterialToggleSettingViewCell extends BaseMaterialSettingViewCell<M
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View view) {
-                return new MaterialToggleSettingViewHolder(view);
-            }
-        };
+    public MaterialToggleSettingViewHolder createViewHolder(View view) {
+        return new MaterialToggleSettingViewHolder(view);
     }
 
     @Override

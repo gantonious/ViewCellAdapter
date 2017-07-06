@@ -30,13 +30,8 @@ public class MaterialSettingsItemViewCell extends BaseMaterialSettingViewCell<Ma
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View view) {
-                return new MaterialSettingsItemViewHolder(view);
-            }
-        };
+    public MaterialSettingsItemViewHolder createViewHolder(View view) {
+        return new MaterialSettingsItemViewHolder(view);
     }
 
     @Override

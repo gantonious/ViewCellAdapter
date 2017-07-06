@@ -1,11 +1,12 @@
 package ca.antonious.viewcelladapter.viewcells;
 
+import android.support.annotation.LayoutRes;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.ParameterizedType;
-
-import ca.antonious.viewcelladapter.internal.Function;
 
 /**
  * Created by George on 2016-11-17.
@@ -18,7 +19,6 @@ public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> imple
         this.isSelected = false;
     }
 
-    public abstract int getLayoutId();
     public abstract int getItemId();
     public abstract void bindViewCell(TViewHolder viewHolder);
 
@@ -37,12 +37,37 @@ public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> imple
         isSelected = false;
     }
 
+    public int getLayoutId() {
+        return -1;
+    }
+
+    public int getViewType() {
+        return getClass().getCanonicalName().hashCode();
+    }
+
     public int getTotalPerLine() {
         return 1;
     }
 
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new ReflectionBasedViewHolderFactory(getViewHolderClass());
+    public View createView(ViewGroup parent) {
+        return inflate(parent, getLayoutId());
+    }
+
+    public TViewHolder createViewHolder(View view) {
+        try {
+            Constructor<? extends TViewHolder> viewHolderConstructor = getViewHolderClass().getConstructor(View.class);
+            return viewHolderConstructor.newInstance(view);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public TViewHolder createViewHolder(ViewGroup parent) {
+        return createViewHolder(createView(parent));
+    }
+
+    public View inflate(ViewGroup parent, @LayoutRes int layoutId) {
+        return LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -51,21 +76,5 @@ public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> imple
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public static class ReflectionBasedViewHolderFactory implements Function<View, BaseViewHolder> {
-        private Class<? extends BaseViewHolder> viewHolderClass;
 
-        public ReflectionBasedViewHolderFactory(Class<? extends BaseViewHolder> viewHolderClass) {
-            this.viewHolderClass = viewHolderClass;
-        }
-
-        @Override
-        public BaseViewHolder apply(View view) {
-            try {
-                Constructor<? extends BaseViewHolder> viewHolderConstructor = viewHolderClass.getConstructor(View.class);
-                return viewHolderConstructor.newInstance(view);
-            } catch (Exception e) {
-                return null;
-            }
-        }
-    }
 }

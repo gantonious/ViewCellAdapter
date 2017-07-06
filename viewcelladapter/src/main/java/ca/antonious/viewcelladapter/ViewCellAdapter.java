@@ -1,19 +1,15 @@
 package ca.antonious.viewcelladapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ca.antonious.viewcelladapter.construction.ViewCellAdapterBuilder;
-import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.internal.SectionObserver;
 import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
@@ -30,13 +26,13 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implements SectionObserver {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
-    private Map<Integer, Function<View, BaseViewHolder>> viewHolderFactories;
+    private Map<Integer, AbstractViewCell> viewCellTypes;
 
     public ViewCellAdapter() {
         this.setHasStableIds(true);
         this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
-        this.viewHolderFactories = new HashMap<>();
+        this.viewCellTypes = new HashMap<>();
     }
 
     public static ViewCellAdapterBuilder create() {
@@ -92,8 +88,7 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return viewHolderFactories.get(viewType).apply(view);
+        return viewCellTypes.get(viewType).createViewHolder(parent);
     }
 
     @Override
@@ -115,12 +110,10 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
     public int getItemViewType(int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
-        int itemId = viewCell.getLayoutId();
-        Function<View, BaseViewHolder> viewHolderFactory = viewCell.getViewHolderFactory();
+        int viewType = viewCell.getViewType();
+        viewCellTypes.put(viewType, viewCell);
 
-        viewHolderFactories.put(itemId, viewHolderFactory);
-
-        return itemId;
+        return viewType;
     }
 
     @Override
