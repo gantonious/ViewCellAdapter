@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.viewcelladapter.R;
-import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 

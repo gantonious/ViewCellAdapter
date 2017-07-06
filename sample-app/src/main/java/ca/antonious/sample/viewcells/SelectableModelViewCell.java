@@ -1,12 +1,12 @@
 package ca.antonious.sample.viewcells;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
 import ca.antonious.sample.models.SelectableModel;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
@@ -49,7 +49,7 @@ public class SelectableModelViewCell extends GenericViewCell<SelectableModelView
         }
     }
 
-    public static class SelectableModelViewHolder extends BaseViewHolder {
+    public static class SelectableModelViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
         private CheckBox selectionCheckBox;
 

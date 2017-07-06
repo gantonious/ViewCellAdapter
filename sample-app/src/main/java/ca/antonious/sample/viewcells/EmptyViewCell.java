@@ -1,10 +1,10 @@
 package ca.antonious.sample.viewcells;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
@@ -27,7 +27,7 @@ public class EmptyViewCell extends GenericViewCell<EmptyViewCell.ViewHolder, Str
         viewHolder.setHeaderText(getModel());
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView emptyTextView;
 
         public ViewHolder(View itemView) {
