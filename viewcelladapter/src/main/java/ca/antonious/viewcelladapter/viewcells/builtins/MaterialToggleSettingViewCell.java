@@ -1,16 +1,11 @@
 package ca.antonious.viewcelladapter.viewcells.builtins;
 
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import ca.antonious.viewcelladapter.R;
 import ca.antonious.viewcelladapter.annotations.BindListener;
-import ca.antonious.viewcelladapter.internal.Function;
-import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-04-26.

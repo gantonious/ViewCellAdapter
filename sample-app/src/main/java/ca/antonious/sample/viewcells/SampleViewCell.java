@@ -1,12 +1,12 @@
 package ca.antonious.sample.viewcells;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.sample.R;
 import ca.antonious.sample.models.Sample;
 import ca.antonious.viewcelladapter.annotations.BindListener;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 /**
@@ -45,7 +45,7 @@ public class SampleViewCell extends GenericViewCell<SampleViewCell.SampleViewHol
         });
     }
 
-    public static class SampleViewHolder extends BaseViewHolder {
+    public static class SampleViewHolder extends RecyclerView.ViewHolder {
         private TextView titleTextView;
         private TextView descriptionTextView;
 

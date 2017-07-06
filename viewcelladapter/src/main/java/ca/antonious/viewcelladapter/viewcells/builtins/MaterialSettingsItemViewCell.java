@@ -4,8 +4,6 @@ import android.view.View;
 
 import ca.antonious.viewcelladapter.R;
 import ca.antonious.viewcelladapter.annotations.BindListener;
-import ca.antonious.viewcelladapter.internal.Function;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-04-29.

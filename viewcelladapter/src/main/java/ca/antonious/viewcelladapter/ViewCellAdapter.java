@@ -23,7 +23,7 @@ import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
  * Created by George on 2016-11-15.
  */
 
-public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implements SectionObserver {
+public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SectionObserver {
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, AbstractViewCell> viewCellTypes;
@@ -87,13 +87,13 @@ public class ViewCellAdapter extends RecyclerView.Adapter<BaseViewHolder> implem
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return viewCellTypes.get(viewType).createViewHolder(parent);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AbstractViewCell viewCell = ViewCellUtils.getViewCell(sections, position);
 
         ListenerBinderHelper.bindListenersTo(viewCell, holder, listenerCollection);

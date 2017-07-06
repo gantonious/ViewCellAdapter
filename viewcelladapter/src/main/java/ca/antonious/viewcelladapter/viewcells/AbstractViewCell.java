@@ -1,6 +1,7 @@
 package ca.antonious.viewcelladapter.viewcells;
 
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import java.lang.reflect.ParameterizedType;
  * Created by George on 2016-11-17.
  */
 
-public abstract class AbstractViewCell<TViewHolder extends BaseViewHolder> implements Selectable {
+public abstract class AbstractViewCell<TViewHolder extends RecyclerView.ViewHolder> implements Selectable {
     private boolean isSelected;
 
     public AbstractViewCell() {
