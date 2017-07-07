@@ -25,11 +25,6 @@ public class HeaderSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public void remove(int position) {
-        getDecoratedSection().remove(position - 1);
-    }
-
-    @Override
     public int getItemCount() {
         if (isSectionEmpty()) {
             return 0;

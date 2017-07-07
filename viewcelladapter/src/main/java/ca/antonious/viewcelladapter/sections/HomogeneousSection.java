@@ -90,6 +90,14 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         invalidateData();
     }
 
+    public void remove(int position) {
+        TViewCell viewCellToRemove = viewCellsToRender.get(position);
+        viewCells.remove(viewCellToRemove);
+
+        invalidateData();
+    }
+
+
     public void clear() {
         viewCells.clear();
         invalidateData();
@@ -171,14 +179,6 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     @Override
     public AbstractViewCell get(int position) {
         return viewCellsToRender.get(position);
-    }
-
-    @Override
-    public void remove(int position) {
-        TViewCell viewCellToRemove = viewCellsToRender.get(position);
-        viewCells.remove(viewCellToRemove);
-
-        invalidateData();
     }
 
     @Override

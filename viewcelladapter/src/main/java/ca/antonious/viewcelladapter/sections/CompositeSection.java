@@ -24,14 +24,6 @@ public class CompositeSection extends AbstractSection implements SectionObserver
     }
 
     @Override
-    public void remove(int position) {
-        int sectionIndex = ViewCellUtils.getSectionIndex(sections, position);
-        int viewCellIndex = ViewCellUtils.getViewCellIndex(sections, position);
-
-        sections.get(sectionIndex).remove(viewCellIndex);
-    }
-
-    @Override
     public int getItemCount() {
         return ViewCellUtils.getTotalCount(sections);
     }

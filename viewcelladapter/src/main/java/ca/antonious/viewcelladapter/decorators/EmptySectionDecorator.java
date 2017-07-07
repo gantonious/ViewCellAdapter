@@ -24,13 +24,6 @@ public class EmptySectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public void remove(int position) {
-        if (!getDecoratedSection().isEmpty()) {
-            getDecoratedSection().remove(position);
-        }
-    }
-
-    @Override
     public int getItemCount() {
         if (getDecoratedSection().isEmpty()) {
             return 1;
