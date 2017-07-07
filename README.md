@@ -206,7 +206,16 @@ ViewCellAdapter adapter = ViewCellAdapter.create()
     .build();
 ```
 
+### Using your old adapters
 
+If you have a legacy adapter that is not easy to convert to this library's API you can wrap it in an `AdapterWrapperSection`. This allows you to insert your old adapter as a section in a `ViewCellAdapter`. It also lets you decorate it using any `SectionDecorator`.
+
+```java
+RecyclerView.Adapter legacyTasksAdapter = ...;
+AbstractSection tasksSection = new AdapterWrapperSection<>(legacyTasksAdapter);
+
+// integrate this section with the ViewCellAdapter API
+```
 
 ## Handling ViewHolder Events
 
@@ -249,8 +258,8 @@ viewCellAdapter.addListener(new TaskViewCell.OnTaskClickListener() {
 
 ```groovy
 dependencies {
-    compile 'ca.antonious:viewcelladapter:2.1.0'
-    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.1.0'
+    compile 'ca.antonious:viewcelladapter:2.2.0'
+    annotationProcessor 'ca.antonious:viewcelladapter-compiler:2.2.0'
 }
 ```
 
