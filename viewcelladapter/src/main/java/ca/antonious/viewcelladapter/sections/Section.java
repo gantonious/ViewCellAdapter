@@ -54,6 +54,11 @@ public class Section extends AbstractSection {
         invalidateData();
     }
 
+    public void remove(int position) {
+        viewCells.remove(position);
+        invalidateData();
+    }
+
     public void clear() {
         viewCells.clear();
         invalidateData();
@@ -62,12 +67,6 @@ public class Section extends AbstractSection {
     @Override
     public AbstractViewCell get(int position) {
         return viewCells.get(position);
-    }
-
-    @Override
-    public void remove(int position) {
-        viewCells.remove(position);
-        invalidateData();
     }
 
     @Override

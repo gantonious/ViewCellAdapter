@@ -1,5 +1,7 @@
 package ca.antonious.viewcelladapter.viewcells.eventhandling;
 
+import android.support.v7.widget.RecyclerView;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -17,7 +19,7 @@ public class ListenerBinderHelper {
     private static Map<Class<?>, Set<ListenerBinder>> listenerBinderMappings = new HashMap<>();
 
     @SuppressWarnings("unchecked")
-    public static void bindListenersTo(AbstractViewCell viewCell, BaseViewHolder viewHolder, ListenerCollection listeners) {
+    public static void bindListenersTo(AbstractViewCell viewCell, RecyclerView.ViewHolder viewHolder, ListenerCollection listeners) {
         for (ListenerBinder listenerBinder: getListenerBindersFor(viewCell.getClass())) {
             listenerBinder.bindListeners(viewCell, viewHolder, listeners);
         }

@@ -1,16 +1,11 @@
 package ca.antonious.viewcelladapter.viewcells.builtins;
 
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import ca.antonious.viewcelladapter.R;
 import ca.antonious.viewcelladapter.annotations.BindListener;
-import ca.antonious.viewcelladapter.internal.Function;
-import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-04-26.
@@ -44,13 +39,8 @@ public class MaterialToggleSettingViewCell extends BaseMaterialSettingViewCell<M
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View view) {
-                return new MaterialToggleSettingViewHolder(view);
-            }
-        };
+    public MaterialToggleSettingViewHolder createViewHolder(View view) {
+        return new MaterialToggleSettingViewHolder(view);
     }
 
     @Override

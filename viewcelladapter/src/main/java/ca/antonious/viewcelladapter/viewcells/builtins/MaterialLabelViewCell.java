@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.viewcelladapter.R;
-import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
@@ -36,13 +35,8 @@ public class MaterialLabelViewCell extends GenericViewCell<MaterialLabelViewCell
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View view) {
-                return new MaterialLabelViewHolder(view);
-            }
-        };
+    public MaterialLabelViewHolder createViewHolder(View view) {
+        return new MaterialLabelViewHolder(view);
     }
 
     @Override

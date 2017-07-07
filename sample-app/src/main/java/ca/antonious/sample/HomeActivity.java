@@ -35,7 +35,6 @@ public class HomeActivity extends BaseActivity {
             .section(
                 SectionBuilder.wrap(samplesSection)
                     .separateWithDividers()
-                    .build()
             )
             .listener(new SampleViewCell.OnSampleClickListener() {
                 @Override

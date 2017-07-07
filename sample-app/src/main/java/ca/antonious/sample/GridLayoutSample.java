@@ -48,18 +48,15 @@ public class GridLayoutSample extends BaseActivity {
                     SectionBuilder.createCompositeSection()
                         .section(
                             SectionBuilder.wrap(section1)
-                                    .header(buildHeader("Section 1"))
-                                    .hideHeaderIfEmpty()
-                                    .build()
+                                .header(buildHeader("Section 1"))
+                                .hideHeaderIfEmpty()
                         )
                         .section(
                             SectionBuilder.wrap(section2)
-                                    .header(buildHeader("Section 2"))
-                                    .hideHeaderIfEmpty()
-                                    .build()
+                                .header(buildHeader("Section 2"))
+                                .hideHeaderIfEmpty()
                         )
                         .showIfEmpty(new EmptyViewCell("Add items at the top"))
-                        .build()
                 )
                 .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                     @Override

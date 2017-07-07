@@ -47,7 +47,6 @@ public class SortedHomogeneousSectionSample extends BaseActivity {
                         }
                     })
                     .showIfEmpty(new EmptyViewCell("Press the add button to add items!"))
-                    .build()
             )
             .listener(new SampleModelViewCell.OnSampleModelClickListener() {
                 @Override

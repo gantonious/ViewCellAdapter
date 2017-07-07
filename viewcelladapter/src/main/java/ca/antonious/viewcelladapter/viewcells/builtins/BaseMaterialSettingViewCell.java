@@ -1,12 +1,12 @@
 package ca.antonious.viewcelladapter.viewcells.builtins;
 
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import ca.antonious.viewcelladapter.R;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-04-29.
@@ -36,7 +36,7 @@ public abstract class BaseMaterialSettingViewCell<TViewCell extends BaseMaterial
         return settingId;
     }
 
-    public static class BaseMaterialSettingViewHolder extends BaseViewHolder {
+    public static class BaseMaterialSettingViewHolder extends RecyclerView.ViewHolder {
         private TextView labelTextView;
         private TextView secondaryTextTextView;
 

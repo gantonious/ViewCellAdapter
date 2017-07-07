@@ -4,8 +4,6 @@ import android.view.View;
 
 import ca.antonious.viewcelladapter.R;
 import ca.antonious.viewcelladapter.annotations.BindListener;
-import ca.antonious.viewcelladapter.internal.Function;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
 /**
  * Created by George on 2017-04-29.
@@ -30,13 +28,8 @@ public class MaterialSettingsItemViewCell extends BaseMaterialSettingViewCell<Ma
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View view) {
-                return new MaterialSettingsItemViewHolder(view);
-            }
-        };
+    public MaterialSettingsItemViewHolder createViewHolder(View view) {
+        return new MaterialSettingsItemViewHolder(view);
     }
 
     @Override

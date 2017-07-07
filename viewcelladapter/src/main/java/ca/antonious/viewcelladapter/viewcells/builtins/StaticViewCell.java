@@ -37,13 +37,8 @@ public class StaticViewCell extends AbstractViewCell<BaseViewHolder> {
     }
 
     @Override
-    public Function<View, BaseViewHolder> getViewHolderFactory() {
-        return new Function<View, BaseViewHolder>() {
-            @Override
-            public BaseViewHolder apply(View input) {
-                return new BaseViewHolder(input);
-            }
-        };
+    public BaseViewHolder createViewHolder(View view) {
+        return new BaseViewHolder(view);
     }
 
     @Override

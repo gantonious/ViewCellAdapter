@@ -19,6 +19,11 @@ public class ViewCellAdapterBuilder {
         return this;
     }
 
+    public ViewCellAdapterBuilder section(SectionBuilder sectionBuilder) {
+        viewCellAdapter.add(sectionBuilder.build());
+        return this;
+    }
+
     public ViewCellAdapterBuilder listener(Object listener) {
         viewCellAdapter.addListener(listener);
         return this;
