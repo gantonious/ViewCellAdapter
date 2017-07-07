@@ -50,6 +50,10 @@ public abstract class AbstractViewCell<TViewHolder extends RecyclerView.ViewHold
         return 1;
     }
 
+    public void unbindViewCell(TViewHolder viewHolder) {
+
+    }
+
     public View createView(ViewGroup parent) {
         return inflate(parent, getLayoutId());
     }
