@@ -3,9 +3,8 @@ package ca.antonious.viewcelladapter.viewcells.builtins;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
-import java.security.SecureRandom;
+import java.util.Random;
 
-import ca.antonious.viewcelladapter.internal.Function;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 
@@ -18,12 +17,17 @@ public class StaticViewCell extends AbstractViewCell<BaseViewHolder> {
     private int itemId;
 
     public StaticViewCell(@LayoutRes int layoutId) {
-        this(layoutId, new SecureRandom().nextInt());
+        this(layoutId, new Random(System.nanoTime()).nextInt());
     }
 
     public StaticViewCell(@LayoutRes int layoutId, int itemId) {
         this.layoutId = layoutId;
         this.itemId = itemId;
+    }
+
+    @Override
+    public int getViewType() {
+        return getLayoutId();
     }
 
     @Override
