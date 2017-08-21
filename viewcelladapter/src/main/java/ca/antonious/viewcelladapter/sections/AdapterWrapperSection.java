@@ -23,7 +23,7 @@ public class AdapterWrapperSection<TViewHolder extends RecyclerView.ViewHolder> 
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         return adapter.getItemCount();
     }
 

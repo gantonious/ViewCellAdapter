@@ -27,7 +27,7 @@ public class ItemDividerSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         return getDecoratedSection().getItemCount() + getTotalDividers();
     }
 

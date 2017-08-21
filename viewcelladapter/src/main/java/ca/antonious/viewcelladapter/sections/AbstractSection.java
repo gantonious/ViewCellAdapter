@@ -12,9 +12,11 @@ import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
  */
 
 public abstract class AbstractSection {
+    private boolean isVisible;
     private Set<SectionObserver> sectionObservers;
 
     public AbstractSection() {
+        this.isVisible = true;
         sectionObservers = new HashSet<>();
     }
 
@@ -32,9 +34,26 @@ public abstract class AbstractSection {
         }
     }
 
+    public final int getItemCount() {
+        if (isVisible) {
+            return getInternalItemCount();
+        }
+        return 0;
+    }
+
     public boolean isEmpty() {
         return getItemCount() == 0;
     }
+
+    public void setVisibile(boolean isVisible) {
+        if (this.isVisible != isVisible) {
+            this.isVisible = isVisible;
+            notifyDataChanged();
+        }
+    }
+
+    public abstract AbstractViewCell get(int position);
+    public abstract int getInternalItemCount();
 
     public Iterable<AbstractViewCell> viewCellIterator() {
         return new Iterable<AbstractViewCell>() {
@@ -44,9 +63,6 @@ public abstract class AbstractSection {
             }
         };
     }
-
-    public abstract AbstractViewCell get(int position);
-    public abstract int getItemCount();
 
     public static class AbstractSectionIterator implements Iterator<AbstractViewCell> {
         private int currentIndex;
