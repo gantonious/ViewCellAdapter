@@ -25,7 +25,7 @@ public class FooterSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         if (isSectionEmpty()) {
             return 0;
         }

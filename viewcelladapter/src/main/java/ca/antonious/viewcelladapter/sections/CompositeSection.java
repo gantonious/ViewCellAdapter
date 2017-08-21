@@ -24,7 +24,7 @@ public class CompositeSection extends AbstractSection implements SectionObserver
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         return ViewCellUtils.getTotalCount(sections);
     }
 
