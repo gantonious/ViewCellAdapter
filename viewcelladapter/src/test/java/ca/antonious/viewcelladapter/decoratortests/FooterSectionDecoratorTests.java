@@ -71,4 +71,18 @@ public class FooterSectionDecoratorTests {
 
         assertEquals(expectedItemCount, actualItemCount);
     }
+
+    @Test
+    public void test_getItemCount_ifFooterIsNotVisible_thenDoesNotIncludeFooterInCount() {
+        AbstractSection section = new Section();
+        AbstractViewCell footerViewCell = new TestViewCell("FOOTER");
+
+        FooterSectionDecorator footerSectionDecorator = new FooterSectionDecorator(section, footerViewCell);
+        footerSectionDecorator.setIsFooterVisible(false);
+
+        int expectedItemCount = 0;
+        int actualItemCount = footerSectionDecorator.getItemCount();
+
+        assertEquals(expectedItemCount, actualItemCount);
+    }
 }
