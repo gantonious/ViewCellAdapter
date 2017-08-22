@@ -20,4 +20,9 @@ public class HeaderDecoratorBuilder extends SectionBuilder<HeaderSectionDecorato
         getSection().setShowHeaderIfEmpty(false);
         return this;
     }
+
+    public HeaderDecoratorBuilder hideHeader() {
+        getSection().setIsHeaderVisible(false);
+        return this;
+    }
 }

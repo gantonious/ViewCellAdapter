@@ -10,6 +10,7 @@ import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
 public class FooterSectionDecorator extends SectionDecorator {
     private AbstractViewCell footerViewCell;
     private boolean showFooterIfEmpty = true;
+    private boolean isFooterVisible = true;
 
     public FooterSectionDecorator(AbstractSection decoratedSection, AbstractViewCell footerViewCell) {
         super(decoratedSection);
@@ -25,15 +26,13 @@ public class FooterSectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         if (isSectionEmpty()) {
             return 0;
+        } else if (isFooterVisible) {
+            return getDecoratedSection().getItemCount() + 1;
         }
-        return getDecoratedSection().getItemCount() + 1;
-    }
-
-    public boolean shouldShowFooterIfEmpty() {
-        return showFooterIfEmpty;
+        return getDecoratedSection().getItemCount();
     }
 
     public void setShowFooterIfEmpty(boolean showFooterIfEmpty) {
@@ -41,7 +40,12 @@ public class FooterSectionDecorator extends SectionDecorator {
         notifyDataChanged();
     }
 
+    public void setIsFooterVisible(boolean isFooterVisible) {
+        this.isFooterVisible = isFooterVisible;
+        notifyDataChanged();
+    }
+
     private boolean isSectionEmpty() {
-        return getDecoratedSection().isEmpty() && !shouldShowFooterIfEmpty();
+        return getDecoratedSection().isEmpty() && !showFooterIfEmpty;
     }
 }

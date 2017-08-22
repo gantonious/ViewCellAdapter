@@ -70,7 +70,7 @@ public class Section extends AbstractSection {
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         return viewCells.size();
     }
 

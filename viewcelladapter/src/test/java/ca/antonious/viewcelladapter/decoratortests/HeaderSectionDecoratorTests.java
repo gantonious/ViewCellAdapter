@@ -29,6 +29,23 @@ public class HeaderSectionDecoratorTests {
     }
 
     @Test
+    public void test_getZero_ifHeaderIsNotVisible_thenReturnsFirstItemInSection() {
+        AbstractViewCell headerViewCell = new TestViewCell("HEADER");
+        AbstractViewCell sectionItem1 = new TestViewCell("ITEM1");
+
+        Section section = new Section();
+        section.add(sectionItem1);
+
+        HeaderSectionDecorator headerSectionDecorator = new HeaderSectionDecorator(section, headerViewCell);
+        headerSectionDecorator.setIsHeaderVisible(false);
+
+        AbstractViewCell expectedViewCell = sectionItem1;
+        AbstractViewCell actualViewCell = headerSectionDecorator.get(0);
+
+        assertEquals(expectedViewCell, actualViewCell);
+    }
+
+    @Test
     public void test_getOne_ifDecoratedSectionIsNotEmpty_thenReturnsFirstItemInSection() {
         AbstractViewCell headerViewCell = new TestViewCell("HEADER");
         AbstractViewCell sectionItem1 = new TestViewCell("ITEM1");
@@ -68,5 +85,4 @@ public class HeaderSectionDecoratorTests {
 
         assertEquals(expectedItemCount, actualItemCount);
     }
-
 }

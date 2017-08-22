@@ -20,4 +20,9 @@ public class FooterDecoratorBuilder extends SectionBuilder<FooterSectionDecorato
         getSection().setShowFooterIfEmpty(false);
         return this;
     }
+
+    public FooterDecoratorBuilder hideFooter() {
+        getSection().setIsFooterVisible(false);
+        return this;
+    }
 }

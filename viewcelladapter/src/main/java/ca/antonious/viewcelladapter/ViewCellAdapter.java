@@ -15,7 +15,6 @@ import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
@@ -27,16 +26,22 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, AbstractViewCell> viewCellTypes;
+    private boolean shouldUpdateOnSectionChanges;
 
     public ViewCellAdapter() {
         this.setHasStableIds(true);
         this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
         this.viewCellTypes = new HashMap<>();
+        this.shouldUpdateOnSectionChanges = true;
     }
 
     public static ViewCellAdapterBuilder create() {
         return new ViewCellAdapterBuilder();
+    }
+
+    public void setShouldUpdateOnSectionChanges(boolean shouldUpdateOnSectionChanges) {
+        this.shouldUpdateOnSectionChanges = shouldUpdateOnSectionChanges;
     }
 
     public void add(AbstractSection section) {
@@ -73,7 +78,9 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onDataChanged() {
-        notifyDataSetChanged();
+        if (shouldUpdateOnSectionChanges) {
+            notifyDataSetChanged();
+        }
     }
 
     public ViewCellAdapter addListener(Object listener) {
@@ -124,5 +131,20 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public AbstractViewCell get(int position) {
         return ViewCellUtils.getViewCell(sections, position);
+    }
+
+    public int getAdapterPositionFor(AbstractViewCell abstractViewCell) {
+        int position = 0;
+
+        for (AbstractSection section: sections) {
+            for (AbstractViewCell viewCell: section.viewCellIterator()) {
+                if (viewCell.equals(abstractViewCell)) {
+                    return position;
+                }
+                position++;
+            }
+        }
+
+        return -1;
     }
 }

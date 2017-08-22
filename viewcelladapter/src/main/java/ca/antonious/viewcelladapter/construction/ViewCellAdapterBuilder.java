@@ -14,6 +14,16 @@ public class ViewCellAdapterBuilder {
         this.viewCellAdapter = new ViewCellAdapter();
     }
 
+    public ViewCellAdapterBuilder enableUpdateOnDataChanges() {
+        viewCellAdapter.setShouldUpdateOnSectionChanges(true);
+        return this;
+    }
+
+    public ViewCellAdapterBuilder disableUpdateOnDataChanges() {
+        viewCellAdapter.setShouldUpdateOnSectionChanges(false);
+        return this;
+    }
+
     public ViewCellAdapterBuilder section(AbstractSection section) {
         viewCellAdapter.add(section);
         return this;

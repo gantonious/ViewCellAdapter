@@ -24,7 +24,7 @@ public class EmptySectionDecorator extends SectionDecorator {
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         if (getDecoratedSection().isEmpty()) {
             return 1;
         }

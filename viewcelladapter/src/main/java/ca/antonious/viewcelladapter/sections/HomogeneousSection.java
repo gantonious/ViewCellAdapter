@@ -182,7 +182,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     @Override
-    public int getItemCount() {
+    public int getInternalItemCount() {
         return viewCellsToRender.size();
     }
 
