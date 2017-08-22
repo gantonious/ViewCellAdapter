@@ -81,5 +81,19 @@ public abstract class AbstractViewCell<TViewHolder extends RecyclerView.ViewHold
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    @Override
+    public boolean equals(Object otherViewCell) {
+        if (this == otherViewCell) return true;
+        if (otherViewCell == null || getClass() != otherViewCell.getClass()) return false;
 
+        AbstractViewCell<?> viewCell = (AbstractViewCell<?>) otherViewCell;
+
+        return getItemId() == viewCell.getItemId();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getItemId();
+    }
 }

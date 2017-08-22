@@ -15,7 +15,6 @@ import ca.antonious.viewcelladapter.sections.AbstractSection;
 import ca.antonious.viewcelladapter.utils.CollectionUtils;
 import ca.antonious.viewcelladapter.utils.ViewCellUtils;
 import ca.antonious.viewcelladapter.viewcells.AbstractViewCell;
-import ca.antonious.viewcelladapter.viewcells.BaseViewHolder;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerBinderHelper;
 import ca.antonious.viewcelladapter.viewcells.eventhandling.ListenerCollection;
 
@@ -132,5 +131,20 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public AbstractViewCell get(int position) {
         return ViewCellUtils.getViewCell(sections, position);
+    }
+
+    public int getAdapterPositionFor(AbstractViewCell abstractViewCell) {
+        int position = 0;
+
+        for (AbstractSection section: sections) {
+            for (AbstractViewCell viewCell: section.viewCellIterator()) {
+                if (viewCell.equals(abstractViewCell)) {
+                    return position;
+                }
+                position++;
+            }
+        }
+
+        return -1;
     }
 }
