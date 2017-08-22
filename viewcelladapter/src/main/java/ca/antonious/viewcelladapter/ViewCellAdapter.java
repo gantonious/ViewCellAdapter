@@ -27,16 +27,22 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<AbstractSection> sections;
     private ListenerCollection listenerCollection;
     private Map<Integer, AbstractViewCell> viewCellTypes;
+    private boolean shouldUpdateOnSectionChanges;
 
     public ViewCellAdapter() {
         this.setHasStableIds(true);
         this.sections = new ArrayList<>();
         this.listenerCollection = new ListenerCollection();
         this.viewCellTypes = new HashMap<>();
+        this.shouldUpdateOnSectionChanges = true;
     }
 
     public static ViewCellAdapterBuilder create() {
         return new ViewCellAdapterBuilder();
+    }
+
+    public void setShouldUpdateOnSectionChanges(boolean shouldUpdateOnSectionChanges) {
+        this.shouldUpdateOnSectionChanges = shouldUpdateOnSectionChanges;
     }
 
     public void add(AbstractSection section) {
@@ -73,7 +79,9 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onDataChanged() {
-        notifyDataSetChanged();
+        if (shouldUpdateOnSectionChanges) {
+            notifyDataSetChanged();
+        }
     }
 
     public ViewCellAdapter addListener(Object listener) {
