@@ -13,8 +13,8 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 public class EmptyViewCell extends GenericViewCell<EmptyViewCell.ViewHolder, String> {
 
-    public EmptyViewCell(String model) {
-        super(model);
+    public EmptyViewCell(String data) {
+        super(data);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class EmptyViewCell extends GenericViewCell<EmptyViewCell.ViewHolder, Str
 
     @Override
     public void bindViewCell(ViewHolder viewHolder) {
-        viewHolder.setHeaderText(getModel());
+        viewHolder.setHeaderText(getData());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

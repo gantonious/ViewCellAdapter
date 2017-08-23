@@ -13,8 +13,8 @@ import ca.antonious.viewcelladapter.viewcells.GenericViewCell;
 
 public class HeaderViewCell extends GenericViewCell<HeaderViewCell.ViewHolder, String> {
 
-    public HeaderViewCell(String model) {
-        super(model);
+    public HeaderViewCell(String data) {
+        super(data);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class HeaderViewCell extends GenericViewCell<HeaderViewCell.ViewHolder, S
 
     @Override
     public void bindViewCell(HeaderViewCell.ViewHolder viewHolder) {
-        viewHolder.setHeaderText(getModel());
+        viewHolder.setHeaderText(getData());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

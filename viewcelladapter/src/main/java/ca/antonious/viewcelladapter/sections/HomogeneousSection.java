@@ -43,7 +43,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         List<TModel> models = new ArrayList<>();
 
         for (TViewCell viewCell: viewCellsToRender) {
-            models.add(viewCell.getModel());
+            models.add(viewCell.getData());
         }
 
         return models;
@@ -54,7 +54,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
 
         for (TViewCell viewCell: viewCellsToRender) {
             if (viewCell.isSelected()) {
-                selectedModels.add(viewCell.getModel());
+                selectedModels.add(viewCell.getData());
             }
         }
 
@@ -146,7 +146,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
         Collections.sort(viewCellsToRender, new Comparator<TViewCell>() {
             @Override
             public int compare(TViewCell viewCell1, TViewCell viewCell2) {
-                return modelComparator.compare(viewCell1.getModel(), viewCell2.getModel());
+                return modelComparator.compare(viewCell1.getData(), viewCell2.getData());
             }
         });
     }
@@ -163,7 +163,7 @@ public class HomogeneousSection<TModel, TViewCell extends GenericViewCell<?, TMo
     }
 
     public boolean shouldDisplayViewCell(TViewCell viewCell) {
-        return filterFunction.apply(viewCell.getModel());
+        return filterFunction.apply(viewCell.getData());
     }
 
     private void filterViewCells() {
