@@ -147,4 +147,8 @@ public class ViewCellAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         return -1;
     }
+
+    public int toSectionPosition(int adapterPosition) {
+        return ViewCellUtils.getViewCellIndex(sections, adapterPosition);
+    }
 }
