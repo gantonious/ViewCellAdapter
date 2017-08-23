@@ -23,12 +23,12 @@ public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, Strin
 
     @Override
     public int getLayoutId() {
-        return getModel().length();
+        return getData().length();
     }
 
     @Override
     public int getItemId() {
-        return getModel().length();
+        return getData().length();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, Strin
 
     @Override
     public String toString() {
-        return String.format("[ViewCell: %s]", getModel());
+        return String.format("[ViewCell: %s]", getData());
     }
 
     @Override
@@ -64,11 +64,11 @@ public class TestViewCell extends GenericViewCell<TestViewCell.ViewHolder, Strin
 
         TestViewCell that = (TestViewCell) o;
 
-        return getModel() != null ? getModel().equals(that.getModel()) : that.getModel() == null;
+        return getData() != null ? getData().equals(that.getData()) : that.getData() == null;
     }
 
     @Override
     public int hashCode() {
-        return getModel() != null ? getModel().hashCode() : 0;
+        return getData() != null ? getData().hashCode() : 0;
     }
 }

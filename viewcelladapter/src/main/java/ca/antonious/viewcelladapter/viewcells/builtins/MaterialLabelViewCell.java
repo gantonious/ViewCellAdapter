@@ -41,7 +41,7 @@ public class MaterialLabelViewCell extends GenericViewCell<MaterialLabelViewCell
 
     @Override
     public void bindViewCell(MaterialLabelViewHolder viewHolder) {
-        viewHolder.setLabel(getModel());
+        viewHolder.setLabel(getData());
         viewHolder.setLabelColor(labelColor);
         viewHolder.setLabelTextSizeSp(textSizeSp);
     }

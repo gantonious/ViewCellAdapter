@@ -24,7 +24,7 @@ public class LibraryViewCell extends GenericViewCell<LibraryViewCell.LibraryView
 
     @Override
     public void bindViewCell(LibraryViewHolder viewHolder) {
-        Library library = getModel();
+        Library library = getData();
 
         viewHolder.setName(library.getTitle());
         viewHolder.setSourceControlUrl(library.getSourceControlUrl());
@@ -39,7 +39,7 @@ public class LibraryViewCell extends GenericViewCell<LibraryViewCell.LibraryView
         libraryViewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onLibraryClick(getModel());
+                listener.onLibraryClick(getData());
             }
         });
     }

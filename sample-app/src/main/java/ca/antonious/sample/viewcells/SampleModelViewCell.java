@@ -25,7 +25,7 @@ public class SampleModelViewCell extends GenericViewCell<SampleModelViewCell.Sam
 
     @Override
     public void bindViewCell(SampleModelViewHolder viewHolder) {
-        SampleModel sampleModel = getModel();
+        SampleModel sampleModel = getData();
         viewHolder.setName(sampleModel.getName());
     }
 
@@ -43,7 +43,7 @@ public class SampleModelViewCell extends GenericViewCell<SampleModelViewCell.Sam
         viewHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onSampleModelClick(getModel());
+                listener.onSampleModelClick(getData());
             }
         });
     }
