@@ -25,7 +25,7 @@ public class SelectableModelViewCell extends GenericViewCell<SelectableModelView
 
     @Override
     public void bindViewCell(final SelectableModelViewHolder viewHolder) {
-        SelectableModel selectableModel = getModel();
+        SelectableModel selectableModel = getData();
 
         viewHolder.setSelectionToggleListener(null);
 
